@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class EditLoadoutUIManager : MonoBehaviour
 {
@@ -15,35 +16,25 @@ public class EditLoadoutUIManager : MonoBehaviour
     }
 
     void Update() {
-        SetLoadoutHP();
-        SetLoadoutAD();
-        SetLoadoutAS();
-        SetLoadoutAR();
-        SetLoadoutMS();
+        Set(Attribute.HP, hpTextComponent);
+        Set(Attribute.AD, adTextComponent);
+        Set(Attribute.AS, asTextComponent);
+        Set(Attribute.AR, arTextComponent);
+        Set(Attribute.MS, msTextComponent);
     }
 
-    public void SetLoadoutHP() {
-        double hpValue = LoadoutManager.instance.GetAttributeValue(Attribute.HP);
-        hpTextComponent.text = hpValue.ToString();
-    }
-
-    public void SetLoadoutAD() {
-        double adValue = LoadoutManager.instance.GetAttributeValue(Attribute.AD);
-        adTextComponent.text = adValue.ToString();
-    }
-
-    public void SetLoadoutAS() {
-        double asValue = LoadoutManager.instance.GetAttributeValue(Attribute.AS);
-        asTextComponent.text = asValue.ToString();
-    }
-
-    public void SetLoadoutAR() {
-        double arValue = LoadoutManager.instance.GetAttributeValue(Attribute.AR);
-        arTextComponent.text = arValue.ToString();
-    }
-
-    public void SetLoadoutMS() {
-        double msValue = LoadoutManager.instance.GetAttributeValue(Attribute.MS);
-        msTextComponent.text = msValue.ToString();
+    void Set(Attribute attribute, Text component) {
+        double val = LoadoutManager.instance.GetAttributeValue(attribute);
+        double increase = val - Data.BASE_ATTRIBUTES.GetAttributeValue(attribute);
+        component.text = val.ToString();
+        if (increase > 0.0) {
+            component.text = component.text + " (+" + increase.ToString() + ")";
+            component.GetComponent<Text>().color = Color.green;
+        } else if (increase < 0.0) {
+            component.text = component.text + " (-" + Math.Abs(increase).ToString() + ")";
+            component.GetComponent<Text>().color = Color.red;
+        } else {
+            component.GetComponent<Text>().color = Color.black;
+        }
     }
 }

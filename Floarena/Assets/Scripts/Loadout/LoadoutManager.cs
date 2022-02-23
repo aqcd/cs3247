@@ -1,10 +1,17 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LoadoutManager : MonoBehaviour
 {
     public static LoadoutManager instance;
 
+    [SerializeField]
+    Button[] buttons;
+
+    Loadout[] savedLoadouts;
+
     Loadout loadout;
+    int loadoutIdx;
 
     void Awake() {
         if (instance == null) {
@@ -13,12 +20,30 @@ public class LoadoutManager : MonoBehaviour
     }
     
     void Start() {
-        loadout = new Loadout();
+        this.loadout = new Loadout();
+        this.loadoutIdx = 0;
+        this.savedLoadouts = new Loadout[]{new Loadout(), new Loadout(), new Loadout(), new Loadout(), new Loadout(), new Loadout()};
+        this.savedLoadouts[this.loadoutIdx] = this.loadout;
+        FillButton();
     }
 
     // Position is 1-indexed.
     public bool SetItem(Item item, int position) {
-        return this.loadout.SetItem(item, position);
+        bool ret = this.loadout.SetItem(item, position);
+        savedLoadouts[loadoutIdx] = loadout;
+        return ret;
+    }
+
+    public void SetLoadoutIdx(int idx) {
+        UnfillButton();
+        if (idx < 0 || idx > 6) {
+            return;
+        }
+        this.loadoutIdx = idx;
+        this.loadout = this.savedLoadouts[this.loadoutIdx];
+        ItemSelectionManager.instance.SetFromLoadout(this.loadout);
+        FillButton();
+        return;
     }
 
     public Loadout GetLoadout() {
@@ -28,5 +53,13 @@ public class LoadoutManager : MonoBehaviour
     public double GetAttributeValue(Attribute attribute) {
         PlayerStats stats = loadout.GetLoadoutStats();
         return stats.GetAttributeValue(attribute);
+    }
+
+    void FillButton() {
+        buttons[this.loadoutIdx].GetComponent<Image>().color = Color.yellow;
+    }
+
+    void UnfillButton() {
+        buttons[this.loadoutIdx].GetComponent<Image>().color = Color.white;
     }
 }

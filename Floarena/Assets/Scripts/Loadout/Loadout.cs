@@ -1,6 +1,6 @@
 public class Loadout
 {
-    Item[] items;
+    public Item[] items;
 
     public Loadout(Item item1, Item item2) {
         items = new Item[]{item1, item2};

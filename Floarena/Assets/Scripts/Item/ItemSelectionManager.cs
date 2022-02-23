@@ -30,4 +30,11 @@ public class ItemSelectionManager : MonoBehaviour
             this.isItemSelected = false;
         }
     }
+
+    public void SetFromLoadout(Loadout loadout) {
+        for (int i = 0; i < itemSelections.Length; i++) {
+            this.itemSelections[i].SetItem(loadout.items[i]);
+        }
+        this.isItemSelected = false;
+    }
 }
