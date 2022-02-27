@@ -2,6 +2,12 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
+
+# Ignoring dependency files
+/[Aa]ssets/Mirror*
+/[Aa]ssets/ScriptTemplates*
+/[Aa]ssets/ParrelSync*
+
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
