@@ -67,9 +67,9 @@ namespace StarterAssets
 		private float _speed;
 		private float _animationBlend;
 		private float _targetRotation = 0.0f;
-		private float _rotationVelocity;
-		private float _verticalVelocity;
-		private float _terminalVelocity = 53.0f;
+		public float _rotationVelocity;
+		public float _verticalVelocity;
+		public float _terminalVelocity = 53.0f;
 
 		// timeout deltatime
 		private float _jumpTimeoutDelta;
@@ -82,10 +82,10 @@ namespace StarterAssets
 		private int _animIDFreeFall;
 		private int _animIDMotionSpeed;
 
-		private Animator _animator;
-		private CharacterController _controller;
-		private StarterAssetsInputs _input;
-		private GameObject _mainCamera;
+		public Animator _animator;
+		public CharacterController _controller;
+		public StarterAssetsInputs _input;
+		public GameObject _mainCamera;
 
 		private const float _threshold = 0.01f;
 
