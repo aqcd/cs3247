@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using Cinemachine;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
@@ -14,7 +15,7 @@ using UnityEngine.InputSystem;
 public class MultiplayerThirdPersonController : NetworkBehaviour {
     [Header("Player")]
     [Tooltip("Move speed of the character in m/s")]
-    public float MoveSpeed = 2.0f;
+    public float MoveSpeed = 10.0f;
     [Tooltip("Sprint speed of the character in m/s")]
     public float SprintSpeed = 5.335f;
     [Tooltip("How fast the character turns to face movement direction")]
@@ -97,6 +98,31 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
             _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         }
     }
+    
+    public override void OnStartLocalPlayer()
+    {
+        CinemachineVirtualCamera vCam = GameObject.FindGameObjectWithTag("PlayerCamera").GetComponent<CinemachineVirtualCamera>();
+        Transform cameraRootTransform = transform.GetChild(0).transform;
+        vCam.Follow = cameraRootTransform;
+        vCam.LookAt = cameraRootTransform;
+
+        GameObject canvas = GameObject.Find("UI_Canvas");
+        canvas.GetComponent<Canvas>().enabled = true;
+        // Link UI Inputs to Character
+        MultiplayerUICanvasControllerInput canvasController = canvas.GetComponent<MultiplayerUICanvasControllerInput>();
+        canvasController.AttachMultiplayerInputs(gameObject.GetComponent<MultiplayerInputs>());
+        
+        MultiplayerMobileDisableAutoSwitchControls disableSwitch = canvas.GetComponent<MultiplayerMobileDisableAutoSwitchControls>();
+        disableSwitch.AttachPlayerInput(gameObject.GetComponent<PlayerInput>());
+    }
+
+    public override void OnStartAuthority()
+    {
+        base.OnStartAuthority();
+
+        PlayerInput playerInput = GetComponent<PlayerInput>();
+        playerInput.enabled = true;
+    }
 
     private void Start()
     {
@@ -113,16 +139,13 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
 
     private void Update()
     {
+        if (!isLocalPlayer) return;
+
         _hasAnimator = TryGetComponent(out _animator);
 
         JumpAndGravity();
         GroundedCheck();
         Move();
-    }
-
-    private void LateUpdate()
-    {
-        CameraRotation();
     }
 
     private void AssignAnimationIDs()
@@ -145,23 +168,6 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         {
             _animator.SetBool(_animIDGrounded, Grounded);
         }
-    }
-
-    private void CameraRotation()
-    {
-        // if there is an input and camera position is not fixed
-        if (_input.look.sqrMagnitude >= _threshold && !LockCameraPosition)
-        {
-            _cinemachineTargetYaw += _input.look.x * Time.deltaTime;
-            _cinemachineTargetPitch += _input.look.y * Time.deltaTime;
-        }
-
-        // clamp our rotations so our values are limited 360 degrees
-        _cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
-        _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
-
-        // Cinemachine will follow this target
-        // CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride, _cinemachineTargetYaw, 0.0f);
     }
 
     private void Move()
