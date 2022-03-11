@@ -152,7 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3e825038a54e5646be899847d61d435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundPrefab: {fileID: 1670623712}
+  groundPrefab: {fileID: 6616142317143122160, guid: f8aa396952c169d4c898e4d8204c6b60,
+    type: 3}
 --- !u!4 &26431115
 Transform:
   m_ObjectHideFlags: 0
@@ -212,9 +213,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridVisualizer: {fileID: 26431114}
   mapVisualizer: {fileID: 1566078621}
-  numOfPickupItems: 5
-  width: 20
-  length: 20
+  numOfPickupItems: 10
+  numOfBrush: 20
+  width: 60
+  length: 60
 --- !u!1001 &1123159516
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -401,6 +403,8 @@ MonoBehaviour:
   - {fileID: 471655705233793389, guid: 0d5b3b07e06cc614b8df5ca94c007ada, type: 3}
   wallPrefab: {fileID: 1507879402583065680, guid: f5afe6ece1be7aa4f80b85d6a40fcc2a,
     type: 3}
+  brushPrefab: {fileID: 8689998506251213869, guid: 5866e83bd853b59439b4555bee7fd699,
+    type: 3}
 --- !u!4 &1566078622
 Transform:
   m_ObjectHideFlags: 0
@@ -415,12 +419,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1670623712 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6616142317143122160, guid: f8aa396952c169d4c898e4d8204c6b60,
-    type: 3}
-  m_PrefabInstance: {fileID: 1123159516}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2019325823
 GameObject:
   m_ObjectHideFlags: 0

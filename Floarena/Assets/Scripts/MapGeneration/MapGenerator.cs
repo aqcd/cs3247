@@ -9,14 +9,17 @@ public class MapGenerator : MonoBehaviour {
     [Range(1, 10)] // Range of number of items on map
     public int numOfPickupItems;
 
-    [Range(10, 20)] // Range of map width and length
-    public int width, length = 11;
+    [Range(10, 20)] // Range of number of grass patches
+    public int numOfBrush;
+
+    [Range(40, 60)] // Range of map width and length
+    public int width, length = 20;
     private MapGrid grid;
 
     void Start() {
         grid = new MapGrid(width, length);
         gridVisualizer.VisualizeGrid(width, length);
-        CandidateMap map = new CandidateMap(grid, numOfPickupItems);
+        CandidateMap map = new CandidateMap(grid, numOfPickupItems, numOfBrush);
         map.CreateMap();
         mapVisualizer.VisualizeMap(grid, map.ReturnMapData());
     }

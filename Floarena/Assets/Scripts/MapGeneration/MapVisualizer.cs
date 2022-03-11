@@ -6,6 +6,7 @@ public class MapVisualizer : MonoBehaviour {
     private Transform parent;
     public List<GameObject> liGoSpawn = new List<GameObject>(); // Prefabs for pickup items
     public GameObject wallPrefab; // Prefab for wall structure
+    public GameObject brushPrefab; // Prefab for brush
 
     private void Awake() {
         parent = this.transform;
@@ -14,12 +15,16 @@ public class MapVisualizer : MonoBehaviour {
     public void VisualizeMap(MapGrid grid, MapData data) {
         PlaceFixedStructures(grid, data);
 
-        for (int i = 0; i < data.pickupItemsArray.Length; i++) {
-            if (data.pickupItemsArray[i]) {
+        for (int i = 0; i < data.mapItemsArray.Length; i++) {
+            if (data.mapItemsArray[i]) {
                 var positionOnGrid = grid.CalculateCoordinatesFromIndex(i);
                 grid.SetCell(positionOnGrid.x, positionOnGrid.z, CellObjectType.PickupItem);
 
                 if (PlacePickupItem(data, positionOnGrid)) { // Place pickup items
+                    continue;
+                }
+                
+                if (PlaceBrush(data, positionOnGrid)) {
                     continue;
                 }
             }
@@ -32,6 +37,17 @@ public class MapVisualizer : MonoBehaviour {
                 Vector3 offset = new Vector3(0f, -0.5f, 0f);
                 GameObject goToSpawn = liGoSpawn[Random.Range(0, liGoSpawn.Count)];
                 Instantiate(goToSpawn, positionOnGrid + offset, Quaternion.identity);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private bool PlaceBrush(MapData data, Vector3 positionOnGrid) {
+        foreach (var brushItem in data.brushList) {
+            if (brushItem.Position == positionOnGrid) {
+                Vector3 offset = new Vector3(0f, -1.0f, 0f);
+                Instantiate(brushPrefab, positionOnGrid + offset, Quaternion.identity);
                 return true;
             }
         }
