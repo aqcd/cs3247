@@ -34,6 +34,13 @@ public class LoadoutManager : MonoBehaviour
         return ret;
     }
 
+    // Position is 1-indexed.
+    public bool SetSkill(Skill skill, int position) {
+        bool ret = this.loadout.SetSkill(skill, position);
+        savedLoadouts[loadoutIdx] = loadout;
+        return ret;
+    }
+
     public void SetLoadoutIdx(int idx) {
         UnfillButton();
         if (idx < 0 || idx > 6) {
@@ -41,7 +48,7 @@ public class LoadoutManager : MonoBehaviour
         }
         this.loadoutIdx = idx;
         this.loadout = this.savedLoadouts[this.loadoutIdx];
-        ItemSelectionManager.instance.SetFromLoadout(this.loadout);
+        SelectionManager.instance.SetFromLoadout(this.loadout);
         FillButton();
         return;
     }
