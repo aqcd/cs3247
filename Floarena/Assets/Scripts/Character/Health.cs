@@ -5,15 +5,15 @@ using Mirror;
 
 public class Health : NetworkBehaviour
 {
-
     public int maxHealth = 200;
     [SyncVar]
     public int currentHealth = 0;
 
+    public bool hasBar = true;
     public HealthBar healthBar;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         currentHealth = maxHealth;
     }
@@ -21,7 +21,14 @@ public class Health : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        healthBar.SetHealth(currentHealth);
+        if (hasBar) {
+            healthBar.SetHealth(currentHealth);
+        }
+
+        // Testing
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            this.TakeDamage(10);
+        }
     }
 
     [Command]
@@ -43,6 +50,9 @@ public class Health : NetworkBehaviour
 
     [ClientRpc]
     void DestroyRoutine() {
+        if (hasBar) {
+            GameObject.Destroy(healthBar.gameObject);
+        }
         GameObject.Destroy(gameObject);
     }
 }

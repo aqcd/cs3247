@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class LockRotation : MonoBehaviour
 {
-    Quaternion initialRotation;
+    public Quaternion initialRotation;
+
     void Start() {
-    initialRotation = transform.rotation;
+        initialRotation = transform.rotation;
     }
+
     void Update() {
-    transform.rotation = initialRotation;
+        transform.rotation = initialRotation;
     }
 }

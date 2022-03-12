@@ -5,22 +5,27 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    public Slider healthBar;
+    private Slider healthBarSlider;
     public Health objectHealth;
     //public Text healthString;
+    public float positionOffset;
 
     private void Start()
     {
-        objectHealth = gameObject.transform.parent.parent.gameObject.GetComponent<Health>();
-        healthBar = GetComponent<Slider>();
+        healthBarSlider = GetComponent<Slider>();
         //healthString = gameObject.transform.GetChild(1).transform.GetComponent<Text>();
-        healthBar.maxValue = objectHealth.maxHealth;
-        healthBar.value = objectHealth.maxHealth;
+        healthBarSlider.maxValue = objectHealth.maxHealth;
+        healthBarSlider.value = objectHealth.maxHealth;
     }
 
     public void SetHealth(int hp)
     {
-        healthBar.value = hp;
+        healthBarSlider.value = hp;
         //healthString.text = hp.ToString();
+    }
+
+    private void LateUpdate()
+    {
+        transform.position = Camera.main.WorldToScreenPoint(objectHealth.transform.position + Vector3.up * positionOffset);
     }
 }
