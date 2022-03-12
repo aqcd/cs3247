@@ -8,7 +8,7 @@ public class SnakeyScript : MonoBehaviour {
     public CharacterController charaControl;
 
     [SerializeField] private float speed = 2.0f;
-    [SerializeField] private float turnSpeed = 180.0f;
+    [SerializeField] private float turnSpeed = 90.0f;
 
     Vector3 moveDirection;
     Vector3 lastPosition;
