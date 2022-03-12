@@ -5,14 +5,13 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    private Slider healthBarSlider;
+    public Slider healthBarSlider;
     public Health objectHealth;
     //public Text healthString;
     public float positionOffset;
 
     private void Start()
     {
-        healthBarSlider = GetComponent<Slider>();
         //healthString = gameObject.transform.GetChild(1).transform.GetComponent<Text>();
         healthBarSlider.maxValue = objectHealth.maxHealth;
         healthBarSlider.value = objectHealth.maxHealth;

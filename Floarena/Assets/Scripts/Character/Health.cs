@@ -12,13 +12,11 @@ public class Health : NetworkBehaviour
     public bool hasBar = true;
     public HealthBar healthBar;
 
-    // Start is called before the first frame update
     void Awake()
     {
         currentHealth = maxHealth;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (hasBar) {

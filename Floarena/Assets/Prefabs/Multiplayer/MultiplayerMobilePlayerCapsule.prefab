@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 892526050137027684}
   - component: {fileID: 1791320778194258391}
   - component: {fileID: 3832574732836120252}
-  - component: {fileID: 3815959907594370692}
+  - component: {fileID: 4685578440851156034}
   m_Layer: 8
   m_Name: MultiplayerMobilePlayerCapsule
   m_TagString: Player
@@ -244,7 +244,7 @@ MonoBehaviour:
   currentHealth: 0
   hasBar: 1
   healthBar: {fileID: 0}
---- !u!114 &3815959907594370692
+--- !u!114 &4685578440851156034
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -253,12 +253,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 289330726155884093}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 541429904bd7fe84aa1386621e72b3f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b1649b9ca12a4c49b63180be84bb30a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6586083376061544133, guid: 98b7eebb90361b0438c10e80a6a9f71d,
     type: 3}
   positionOffset: 11
+  health: {fileID: 3832574732836120252}
 --- !u!1 &441215531186513685
 GameObject:
   m_ObjectHideFlags: 0
