@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : NetworkBehaviour {
     public static GameManager instance;
     Loadout loadout;
     private NetworkManager networkManager;
@@ -11,7 +12,7 @@ public class GameManager : MonoBehaviour {
     private void Awake() {
         if (instance == null) {
             instance = this;
-        }
+        }        
         networkManager = transform.GetComponent<NetworkManager>();
         DontDestroyOnLoad(gameObject.transform);
     }
@@ -19,18 +20,11 @@ public class GameManager : MonoBehaviour {
     void Update() {
         // If client is now ready
         if (NetworkClient.isConnected && !NetworkClient.ready) {
-            // Debug.Log("Client is ready");
             NetworkClient.Ready();
             if (NetworkClient.localPlayer == null) {
                 NetworkClient.AddPlayer();
             }
         }
-
-        // if (NetworkServer.active && NetworkClient.active) {
-        //     Debug.Log("Host is running");
-        // } else if (NetworkClient.isConnected) {
-        //     Debug.Log("Client connected!");
-        // }
     }
 
     public void HostGame() {
@@ -54,6 +48,19 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    [ClientRpc]
+    public void LoadMultiplayerMapScene() {
+        StartCoroutine(LoadMultiplayerMapSceneCoroutine());
+    }
+
+    IEnumerator LoadMultiplayerMapSceneCoroutine() {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("MapWithPlayer");
+
+        while (!asyncLoad.isDone) {
+            Debug.Log("Progress: " + asyncLoad.progress);
+            yield return null;
+        }
+    }
 
     // To call at the start of each round.
     void StartGame() {
