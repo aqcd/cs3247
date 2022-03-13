@@ -9,10 +9,14 @@ public class EditLoadoutUIManager : MonoBehaviour
     [SerializeField]
     Text hpTextComponent, adTextComponent, asTextComponent, arTextComponent, msTextComponent;
 
+    [SerializeField]
+    Text descriptionComponent;
+
     void Awake() {
         if (instance == null) {
             instance = this;
         }
+        UnsetDescription();
     }
 
     void Update() {
@@ -36,5 +40,13 @@ public class EditLoadoutUIManager : MonoBehaviour
         } else {
             component.GetComponent<Text>().color = Color.black;
         }
+    }
+
+    public void SetDescription(string description) {
+        descriptionComponent.text = description;
+    }
+
+    public void UnsetDescription() {
+        descriptionComponent.text = "";
     }
 }
