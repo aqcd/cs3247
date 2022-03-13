@@ -139,7 +139,7 @@ MonoBehaviour:
   clientAuthority: 1
   sendInterval: 0.05
   syncPosition: 1
-  syncRotation: 1
+  syncRotation: 0
   syncScale: 0
   interpolatePosition: 1
   interpolateRotation: 0
@@ -244,7 +244,7 @@ MonoBehaviour:
   maxHealth: 200
   currentHealth: 0
   hasBar: 1
-  healthBar: {fileID: 0}
+  healthBar: {fileID: 4905271140810903950}
 --- !u!114 &6411473271582147331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,13 +259,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  clientAuthority: 0
+  clientAuthority: 1
   sendInterval: 0.05
-  syncPosition: 1
-  syncRotation: 0
+  syncPosition: 0
+  syncRotation: 1
   syncScale: 0
-  interpolatePosition: 1
-  interpolateRotation: 0
+  interpolatePosition: 0
+  interpolateRotation: 1
   interpolateScale: 0
   bufferTimeMultiplier: 1
   bufferSizeLimit: 64
@@ -279,7 +279,7 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
-  target: {fileID: 579429690461920720}
+  target: {fileID: 8213605002920487470}
 --- !u!1 &441215531186513685
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,17 +336,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687447999751667219}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: -0.749678, z: 0.6618027, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3906086949809572565}
   m_Father: {fileID: 481444229203096910}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 97.125, y: 0, z: 180}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 2.93}
+  m_AnchoredPosition: {x: 0, y: 2.6}
   m_SizeDelta: {x: 6, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &522517368801278106
@@ -497,6 +497,7 @@ GameObject:
   - component: {fileID: 6315285327978932520}
   - component: {fileID: 1450383121761413712}
   - component: {fileID: 8278140569367215680}
+  - component: {fileID: 4905271140810903950}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -613,6 +614,20 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4905271140810903950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5016356273874981581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35f49b8dad71ca84ab34d3407fea6ec3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBarSlider: {fileID: 8278140569367215680}
+  objectHealth: {fileID: 3832574732836120252}
 --- !u!1 &5892636305219482909
 GameObject:
   m_ObjectHideFlags: 0
