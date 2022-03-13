@@ -177,12 +177,6 @@ namespace StarterAssets
 			// if there is no input, set the target speed to 0
 			if (_input.move == Vector2.zero) targetSpeed = 0.0f;
 
-			if (_input.sprint && targetSpeed > 0) {
-				_animator.SetBool("Sprint", true);
-			} else {
-				_animator.SetBool("Sprint", false);
-			}
-
 			// a reference to the players current horizontal velocity
 			float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
