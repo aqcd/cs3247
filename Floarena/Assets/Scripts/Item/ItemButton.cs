@@ -22,6 +22,14 @@ public class ItemButton : MonoBehaviour
     }
 
     public void SelectItem() {
-        ItemSelectionManager.instance.SetItem(this.item);
+        SelectionManager.instance.SetItem(this.item);
+    }
+
+    public void SetDescription() {
+        EditLoadoutUIManager.instance.SetDescription(this.item.GetDescription());
+    }
+
+    public void UnsetDescription() {
+        EditLoadoutUIManager.instance.UnsetDescription();
     }
 }
