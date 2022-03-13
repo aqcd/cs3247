@@ -258,7 +258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 6586083376061544133, guid: 98b7eebb90361b0438c10e80a6a9f71d,
     type: 3}
-  positionOffset: 11
+  positionOffset: 6
   health: {fileID: 3832574732836120252}
 --- !u!1 &441215531186513685
 GameObject:
