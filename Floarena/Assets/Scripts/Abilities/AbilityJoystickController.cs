@@ -18,6 +18,12 @@ public class AbilityJoystickController : MonoBehaviour
 
     public Canvas abilityCanvas;
 
+    public float RotationSmoothTime = 0.12f;
+
+    private GameObject mainCamera;
+    
+    private float rotationVelocity;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +51,11 @@ public class AbilityJoystickController : MonoBehaviour
     }
 
     public void UpdateAbility(Vector2 pointerPosition) {
+        Vector3 position = new Vector3(pointerPosition.x, 0.0f, pointerPosition.y).normalized;
+        float targetRotation = Mathf.Atan2(position.x, position.z) * Mathf.Rad2Deg + mainCamera.transform.eulerAngles.y;
+        float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref rotationVelocity, RotationSmoothTime);
+        Canvas skillshotCanvas = (abilityCanvas.transform.GetChild(2).gameObject.GetComponent<Canvas>());
+        skillshotCanvas.transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
         // apply relevant logic to the canvas
         // if canvas is not enabled, enable it
 

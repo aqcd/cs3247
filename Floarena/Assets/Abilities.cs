@@ -7,8 +7,12 @@ using StarterAssets;
 public class Abilities : MonoBehaviour
 {
 
-    private ThirdPersonController controller;
     private StarterAssetsInputs inputs;
+    private GameObject mainCamera;
+    
+    private float rotationVelocity;
+
+    public float RotationSmoothTime = 0.12f;
 
     [Header("Ability 1")]
     public Image ability1Image;
@@ -36,8 +40,7 @@ public class Abilities : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        controller = GetComponent<ThirdPersonController>();
-        inputs = controller.getInput();
+        inputs = GetComponent<StarterAssetsInputs>();
         ability1Image.fillAmount = 0;
         ability2Image.fillAmount = 0;
 
@@ -51,17 +54,21 @@ public class Abilities : MonoBehaviour
     {
         Ability1();
         Ability2();
+        Ability3();
 
 
         //Ability 1 Input
         position = new Vector3(inputs.skillshot.x, 0.0f, inputs.skillshot.y).normalized;
 
         //Ability 2 Input
-        // posUp = new Vector3(inputs.targetCircle.x, 10f, inputs.targetCircle.y).normalized;
-        // position = new Vector3(inputs.targetCircle.x, 0.0f, inputs.targetCircle.y).normalized;
+        posUp = new Vector3(inputs.targetCircle.x, 10f, inputs.targetCircle.y).normalized;
+        position = new Vector3(inputs.targetCircle.x, 0.0f, inputs.targetCircle.y).normalized;
 
 
         //Ability 1 Canvas Input
+        float targetRotation = Mathf.Atan2(position.x, position.z) * Mathf.Rad2Deg + mainCamera.transform.eulerAngles.y;
+        float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref rotationVelocity, RotationSmoothTime);
+        ability1Canvas.transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
         // Quatenion transRot = Quatenion.LookRotation(position - player.transform.position);
         // ability1Canvas.transform.rotation = Quatenion.Lerp(transRot, ability1Canvas.transform.rotation, 0f);
 
@@ -138,5 +145,10 @@ public class Abilities : MonoBehaviour
         //         isCooldown2 = false;
         //     }
         // }
+    }
+
+    void Ability3()
+    {
+
     }
 }
