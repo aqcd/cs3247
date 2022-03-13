@@ -112,8 +112,8 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         MultiplayerUICanvasControllerInput canvasController = canvas.GetComponent<MultiplayerUICanvasControllerInput>();
         canvasController.AttachMultiplayerInputs(gameObject.GetComponent<MultiplayerInputs>());
         
-        MultiplayerMobileDisableAutoSwitchControls disableSwitch = canvas.GetComponent<MultiplayerMobileDisableAutoSwitchControls>();
-        disableSwitch.AttachPlayerInput(gameObject.GetComponent<PlayerInput>());
+        //MultiplayerMobileDisableAutoSwitchControls disableSwitch = canvas.GetComponent<MultiplayerMobileDisableAutoSwitchControls>();
+        //disableSwitch.AttachPlayerInput(gameObject.GetComponent<PlayerInput>());
     }
 
     public override void OnStartAuthority()
