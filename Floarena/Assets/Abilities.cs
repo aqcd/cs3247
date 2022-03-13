@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using StarterAssets;
 
 public class Abilities : MonoBehaviour
 {
 
-    public ThirdPersonController controller;
+    private ThirdPersonController controller;
+    private StarterAssetsInputs inputs;
 
     [Header("Ability 1")]
     public Image ability1Image;
@@ -34,7 +36,8 @@ public class Abilities : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        controller = GetComponent<ThirdPersonController()>
+        controller = GetComponent<ThirdPersonController>();
+        inputs = controller.getInput();
         ability1Image.fillAmount = 0;
         ability2Image.fillAmount = 0;
 
@@ -51,30 +54,30 @@ public class Abilities : MonoBehaviour
 
 
         //Ability 1 Input
-        position = new Vector3(controller._input.skillshot.x, 0.0f, controller._input.skillshot.y).normalized;
+        position = new Vector3(inputs.skillshot.x, 0.0f, inputs.skillshot.y).normalized;
 
         //Ability 2 Input
-        posUp = new Vector3(controller._input.targetCircle.x, 10f, controller._input.targetCircle.y).normalized;
-        position = new Vector3(controller._input.move.x, 0.0f, controller._input.move.y).normalized;
+        // posUp = new Vector3(inputs.targetCircle.x, 10f, inputs.targetCircle.y).normalized;
+        // position = new Vector3(inputs.targetCircle.x, 0.0f, inputs.targetCircle.y).normalized;
 
 
         //Ability 1 Canvas Input
-        Quartenion transRot = Quartenion.LookRotation(position - player.transform.position);
-        ability1Canvas.transform.rotation = Quartenion.Lerp(transRot, ability1Canvas.transform.rotation, 0f);
+        // Quatenion transRot = Quatenion.LookRotation(position - player.transform.position);
+        // ability1Canvas.transform.rotation = Quatenion.Lerp(transRot, ability1Canvas.transform.rotation, 0f);
 
         //Ability 2 Canvas Input
-        var hitPosDir = (position - transform.position).normalized;
-        float distance = Vector3.Distance(position, transform.position);
-        distance = Mathf.Min(distance, maxAbility2Distance);
+        // var hitPosDir = (position - transform.position).normalized;
+        // float distance = Vector3.Distance(position, transform.position);
+        // distance = Mathf.Min(distance, maxAbility2Distance);
 
-        var newHitPos = transform.position + hitPosDir + distance;
-        ability2Canvas.transform.position = (newHitPos);
+        // var newHitPos = transform.position + hitPosDir + distance;
+        // ability2Canvas.transform.position = (newHitPos);
 
     }
 
     void Ability1()
     {
-        if ( controller._input.skillshotPressed && isCooldown1 == false)
+        if (inputs.skillshotPressed && isCooldown1 == false)
         {
             skillshot.GetComponent<Image>().enabled = true;
 
@@ -83,29 +86,29 @@ public class Abilities : MonoBehaviour
             
         }
 
-        if (skillshot.GetComponent<Image>().enabled = true && !controller._input.skillshotPressed)
-        {
-            isCooldown1 = false;
-            ability1Image.fillAmount = 1;
-        }
+        // if (skillshot.GetComponent<Image>().enabled = true && !inputs.skillshotPressed)
+        // {
+        //     isCooldown1 = false;
+        //     ability1Image.fillAmount = 1;
+        // }
 
-        if (isCooldown1)
-        {
-            ability1.fillAmount -= 1 / cooldown1 * Time.deltaTime;
-            skillshot.GetComponent<Image>().enabled = false;
+        // if (isCooldown1)
+        // {
+        //     ability1Image.fillAmount -= 1 / cooldown1 * Time.deltaTime;
+        //     skillshot.GetComponent<Image>().enabled = false;
 
-            if (ability1Image.fillAmount <= 0)
-            {
-                ability1Image.fillAmount = 0;
-                isCooldown = false;
-            }
-        }
+        //     if (ability1Image.fillAmount <= 0)
+        //     {
+        //         ability1Image.fillAmount = 0;
+        //         isCooldown1 = false;
+        //     }
+        // }
     }
 
 
     void Ability2()
     {
-        if (controller._input.targetCirclePressed && isCooldown2 == false)
+        if (inputs.targetCirclePressed && isCooldown2 == false)
         {
             indicatorRangeCircle.GetComponent<Image>().enabled = true;
             targetCircle.GetComponent<Image>().enabled = true;
@@ -116,24 +119,24 @@ public class Abilities : MonoBehaviour
             ability2Image.fillAmount = 1;
         }
 
-        if (targetCircle.GetComponent<Image>().enabled = true && !controller._input.targetCirclePressed)
-        {
-            isCooldown2 = true;
-            ability2Image.fillAmount = 1;
-        }
+        // if (targetCircle.GetComponent<Image>().enabled = true && !inputs.targetCirclePressed)
+        // {
+        //     isCooldown2 = true;
+        //     ability2Image.fillAmount = 1;
+        // }
 
-        if (isCooldown2)
-        {
-            ability2Image.fillAmount -= 1 / cooldown2 * Time.deltaTime;
+        // if (isCooldown2)
+        // {
+        //     ability2Image.fillAmount -= 1 / cooldown2 * Time.deltaTime;
 
-            indicatorRangeCircle.GetComponent<Image>().enabled = false;
-            targetCircle.GetComponent<Image>().enabled = false;
+        //     indicatorRangeCircle.GetComponent<Image>().enabled = false;
+        //     targetCircle.GetComponent<Image>().enabled = false;
 
-            if (ability2Image.fillAmount <= 0)
-            {
-                ability2Image.fillAmount = 0;
-                isCooldown2 = false;
-            }
-        }
+        //     if (ability2Image.fillAmount <= 0)
+        //     {
+        //         ability2Image.fillAmount = 0;
+        //         isCooldown2 = false;
+        //     }
+        // }
     }
 }
