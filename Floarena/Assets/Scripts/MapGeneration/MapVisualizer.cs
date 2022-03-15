@@ -36,7 +36,7 @@ public class MapVisualizer : MonoBehaviour {
     private bool PlacePickupItem(MapData data, Vector3 positionOnGrid) {
         foreach (var pickupItem in data.pickupItemsList) {
             if (pickupItem.Position == positionOnGrid) {
-                Vector3 offset = new Vector3(0f, -0.5f, 0f);
+                Vector3 offset = new Vector3(0f, -1.0f, 0f);
                 GameObject goToSpawn = liGoSpawn[Random.Range(0, liGoSpawn.Count)];
                 Instantiate(goToSpawn, positionOnGrid + offset, Quaternion.identity);
                 return true;
