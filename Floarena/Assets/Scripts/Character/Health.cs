@@ -53,11 +53,4 @@ public class Health : NetworkBehaviour
         }
         GameObject.Destroy(gameObject);
     }
-
-    public override void OnStopClient()
-    {
-        if (hasBar) {
-            GameObject.Destroy(healthBar.gameObject);
-        }
-    }
 }

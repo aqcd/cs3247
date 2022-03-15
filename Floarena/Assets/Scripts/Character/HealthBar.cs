@@ -8,8 +8,11 @@ public class HealthBar : MonoBehaviour
     public Slider healthBarSlider;
     public Health objectHealth;
     //public Text healthString;
-    public float positionOffset;
     private float barWidth;
+
+    public GameObject dividerPrefab;
+
+    [SerializeField]
     private int division = 100;
 
     private void Start()
@@ -17,29 +20,25 @@ public class HealthBar : MonoBehaviour
         //healthString = gameObject.transform.GetChild(1).transform.GetComponent<Text>();
         healthBarSlider.maxValue = objectHealth.maxHealth;
         healthBarSlider.value = objectHealth.maxHealth;
-
         RectTransform rt = gameObject.GetComponent<RectTransform>();
         barWidth = rt.rect.width;
 
-        float pixelsPerHP = (float)barWidth / objectHealth.maxHealth;//~0.6f
-        int lineOffset = Mathf.RoundToInt(pixelsPerHP * division);//~60
+        float pixelsPerHP = (float)barWidth / objectHealth.maxHealth;
+        float lineOffset = pixelsPerHP * division;
         int numberOfLines = Mathf.RoundToInt((float)objectHealth.maxHealth / division);
+        RectTransform dividerRt = (RectTransform)dividerPrefab.transform;
+        float dividerWidth = dividerRt.rect.width;
         for (int i = 1; i < numberOfLines + 1; i++) {
-            int offset_current = i * lineOffset;
-            //Draw line using offset_current
+            float offset_current = i * lineOffset - dividerWidth;
+            GameObject divider = Instantiate(dividerPrefab, transform);
+            divider.transform.position -= new Vector3(offset_current, 0 , 0);
         }
+        
     }
 
     public void SetHealth(int hp)
     {
         healthBarSlider.value = hp;
         //healthString.text = hp.ToString();
-    }
-
-    private void LateUpdate()
-    {
-        if (objectHealth) {
-            transform.position = Camera.main.WorldToScreenPoint(objectHealth.transform.position + Vector3.up * positionOffset);
-        }
     }
 }
