@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using Cinemachine;
+using UnityEngine.UI;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
@@ -85,6 +86,7 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
     private CharacterController _controller;
     private MultiplayerInputs _input;
     private GameObject _mainCamera;
+    private GameObject _slider;
 
     private const float _threshold = 0.01f;
 
@@ -129,6 +131,7 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         _hasAnimator = TryGetComponent(out _animator);
         _controller = GetComponent<CharacterController>();
         _input = GetComponent<MultiplayerInputs>();
+        _slider = _controller.GetComponentInChildren<HealthBar>().healthBarSlider.gameObject;
 
         AssignAnimationIDs();
 
@@ -321,7 +324,8 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
 
     private void OnTriggerEnter(Collider collider) {
         if (collider.tag == "Brush") {
-            _controller.GetComponentInChildren<MeshRenderer>().enabled = false; // Turn invisible
+            _controller.GetComponentInChildren<MeshRenderer>().enabled = false; // Turn mesh invisible
+            _slider.SetActive(false); 
         } else if (collider.tag == "HealthConsumable") {
             _controller.GetComponent<Health>().TakeHealing(20); // Increase health
             Vector3 positionOnGrid = collider.transform.position;
@@ -334,12 +338,14 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
     private void OnTriggerStay(Collider collider) {
         if (collider.tag == "Brush") {
             _controller.GetComponentInChildren<MeshRenderer>().enabled = false; // Turn invisible
+            _slider.SetActive(false);
         }
     }
 
     private void OnTriggerExit(Collider collider) {
         if (collider.tag == "Brush") {
             _controller.GetComponentInChildren<MeshRenderer>().enabled = true; // Turn visible
+            _slider.SetActive(true); 
         } 
     }
 }

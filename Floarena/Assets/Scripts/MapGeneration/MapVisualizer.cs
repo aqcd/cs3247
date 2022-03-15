@@ -53,7 +53,6 @@ public class MapVisualizer : MonoBehaviour {
 
     public void SpawnPickupItem(Vector3 positionOnGrid) {
         coroutine = PlacePickupItemWithDelay(5.0f, positionOnGrid);
-        Debug.Log("here");
         StartCoroutine(coroutine);
     }
 
