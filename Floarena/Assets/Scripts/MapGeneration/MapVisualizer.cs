@@ -8,6 +8,8 @@ public class MapVisualizer : MonoBehaviour {
     public GameObject wallPrefab; // Prefab for wall structure
     public GameObject brushPrefab; // Prefab for brush
 
+    private IEnumerator coroutine;
+
     private void Awake() {
         parent = this.transform;
     }
@@ -41,6 +43,18 @@ public class MapVisualizer : MonoBehaviour {
             }
         }
         return false;
+    }
+
+    private IEnumerator PlacePickupItemWithDelay(float waitTime, Vector3 positionOnGrid) {
+        yield return new WaitForSeconds(waitTime);
+        GameObject goToSpawn = liGoSpawn[Random.Range(0, liGoSpawn.Count)];
+        Instantiate(goToSpawn, positionOnGrid, Quaternion.identity);
+    }
+
+    public void SpawnPickupItem(Vector3 positionOnGrid) {
+        coroutine = PlacePickupItemWithDelay(5.0f, positionOnGrid);
+        Debug.Log("here");
+        StartCoroutine(coroutine);
     }
 
     private bool PlaceBrush(MapData data, Vector3 positionOnGrid) {

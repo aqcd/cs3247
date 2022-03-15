@@ -318,4 +318,28 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         // when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
         Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
     }
+
+    private void OnTriggerEnter(Collider collider) {
+        if (collider.tag == "Brush") {
+            _controller.GetComponentInChildren<MeshRenderer>().enabled = false; // Turn invisible
+        } else if (collider.tag == "HealthConsumable") {
+            _controller.GetComponent<Health>().TakeHealing(20); // Increase health
+            Vector3 positionOnGrid = collider.transform.position;
+            GameObject mapVisualizer = GameObject.Find("MapVisualizer");
+            mapVisualizer.GetComponent<MapVisualizer>().SpawnPickupItem(positionOnGrid); // Respawn after delay
+            Destroy(collider.gameObject); // Destroy HealthConsumable
+        }
+    }
+
+    private void OnTriggerStay(Collider collider) {
+        if (collider.tag == "Brush") {
+            _controller.GetComponentInChildren<MeshRenderer>().enabled = false; // Turn invisible
+        }
+    }
+
+    private void OnTriggerExit(Collider collider) {
+        if (collider.tag == "Brush") {
+            _controller.GetComponentInChildren<MeshRenderer>().enabled = true; // Turn visible
+        } 
+    }
 }

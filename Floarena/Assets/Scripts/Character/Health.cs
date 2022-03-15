@@ -38,7 +38,7 @@ public class Health : NetworkBehaviour
     }
 
     [Command]
-    void TakeHealing(int healing) {
+    public void TakeHealing(int healing) {
         if (currentHealth + healing > maxHealth) {
             currentHealth = maxHealth;
         } else {
