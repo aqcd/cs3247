@@ -3307,7 +3307,7 @@ GameObject:
   - component: {fileID: 1539863667}
   - component: {fileID: 1539863668}
   m_Layer: 0
-  m_Name: Managers
+  m_Name: LoadoutScreenManagers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3378,7 +3378,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: 2
   button: {fileID: 503801061}
-  displayString: {fileID: 1931308524}
+  displayString: {fileID: 0}
 --- !u!114 &1539863666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3393,7 +3393,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: 1
   button: {fileID: 1990317057}
-  displayString: {fileID: 1276620749}
+  displayString: {fileID: 0}
 --- !u!114 &1539863667
 MonoBehaviour:
   m_ObjectHideFlags: 0
