@@ -214,7 +214,7 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
             float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, RotationSmoothTime);
 
             // rotate to face input direction relative to camera position
-            transform.GetChild(1).rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+            transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
         }
 
 
