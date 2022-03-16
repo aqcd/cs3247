@@ -15,9 +15,10 @@ public class GameManager : NetworkBehaviour {
         }        
         networkManager = transform.GetComponent<NetworkManager>();
         DontDestroyOnLoad(gameObject.transform);
-
         // Register handler for when server asks client to start a game
         NetworkClient.RegisterHandler<StartGameNetworkMessage>(StartGame);
+
+        // Load EditLoadoutPage additively to prevent 
     }
 
     public void HostGame() {
@@ -58,7 +59,11 @@ public class GameManager : NetworkBehaviour {
     void StartGame(StartGameNetworkMessage msg) {
         if (msg.started) {
             StartCoroutine(LoadMultiplayerMapSceneCoroutine());
-            // this.loadout = LoadoutManager.instance.GetLoadout();
+            loadout = LoadoutManager.instance.GetLoadout();
+            Debug.Log("Skills for this player:");
+            foreach (var skill in loadout.skills) {
+                Debug.Log(skill.GetDescription());
+            }
         }
     }
 }
