@@ -3307,7 +3307,7 @@ GameObject:
   - component: {fileID: 1539863667}
   - component: {fileID: 1539863668}
   m_Layer: 0
-  m_Name: Managers
+  m_Name: LoadoutScreenManagers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
