@@ -29,7 +29,6 @@ public class GameManager : NetworkBehaviour {
             if (!NetworkClient.active) {
                 networkManager.StartHost(); // Call superclass StartHost function
                 NetworkClient.Ready();
-                NetworkClient.AddPlayer();
             }
         }
     }
@@ -41,7 +40,6 @@ public class GameManager : NetworkBehaviour {
             if (!NetworkClient.active) {
                 networkManager.StartClient(); // Call superclass StartClient function
                 NetworkClient.Ready();
-                NetworkClient.AddPlayer();
             }
         }
     }
@@ -53,6 +51,9 @@ public class GameManager : NetworkBehaviour {
             Debug.Log("Progress: " + asyncLoad.progress);
             yield return null;
         }
+
+        // Once loading is complete, only then do we spawn the player
+        NetworkClient.AddPlayer();
     }
 
     // To call at the start of each round. Called on a client individually
