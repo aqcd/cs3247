@@ -5,16 +5,9 @@ using Mirror;
 
 public class CustomNetworkManager : NetworkManager {
 
-    private GameManager gameManager;
-
     public override void Awake() {
         base.Awake();
-        gameManager = transform.GetComponent<GameManager>();
     }
-
-    // public override void OnServerAddPlayer(NetworkConnectionToClient conn) {
-    //     NetworkServer.AddPlayerForConnection(conn, null);
-    // }
 
     public override void OnStartHost() {
         base.OnStartHost();
@@ -27,23 +20,21 @@ public class CustomNetworkManager : NetworkManager {
 
         if (NetworkServer.connections.Count == 2) {
             Debug.Log("All players connected, loading new scene");
-            gameManager.LoadMultiplayerMapScene();
+            StartGameNetworkMessage msg = new StartGameNetworkMessage();
+            msg.started = true;
+            NetworkServer.SendToAll(msg);
         }
     }
 
+    // Ran on a client when it first boots up
     public override void OnStartClient() {
         base.OnStartClient();
         Debug.Log("Client started!");
     }
 
+    // Ran on client when it established connection to a server
     public override void OnClientConnect() {
         base.OnClientConnect();
-        Debug.Log("This client connected to server");
-    }
-
-    // Handle changing of scene on a client
-    public override void OnClientSceneChanged() {
-        base.OnClientSceneChanged();
-        Debug.Log("I have finished changing scene!");
+        Debug.Log("This client connected to server. Connections: " + NetworkServer.connections.Count);
     }
 }

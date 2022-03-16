@@ -15,16 +15,9 @@ public class GameManager : NetworkBehaviour {
         }        
         networkManager = transform.GetComponent<NetworkManager>();
         DontDestroyOnLoad(gameObject.transform);
-    }
 
-    void Update() {
-        // If client is now ready
-        if (NetworkClient.isConnected && !NetworkClient.ready) {
-            NetworkClient.Ready();
-            if (NetworkClient.localPlayer == null) {
-                NetworkClient.AddPlayer();
-            }
-        }
+        // Register handler for when server asks client to start a game
+        NetworkClient.RegisterHandler<StartGameNetworkMessage>(StartGame);
     }
 
     public void HostGame() {
@@ -34,6 +27,8 @@ public class GameManager : NetworkBehaviour {
             
             if (!NetworkClient.active) {
                 networkManager.StartHost(); // Call superclass StartHost function
+                NetworkClient.Ready();
+                NetworkClient.AddPlayer();
             }
         }
     }
@@ -44,13 +39,10 @@ public class GameManager : NetworkBehaviour {
             
             if (!NetworkClient.active) {
                 networkManager.StartClient(); // Call superclass StartClient function
+                NetworkClient.Ready();
+                NetworkClient.AddPlayer();
             }
         }
-    }
-
-    [ClientRpc]
-    public void LoadMultiplayerMapScene() {
-        StartCoroutine(LoadMultiplayerMapSceneCoroutine());
     }
 
     IEnumerator LoadMultiplayerMapSceneCoroutine() {
@@ -62,8 +54,11 @@ public class GameManager : NetworkBehaviour {
         }
     }
 
-    // To call at the start of each round.
-    void StartGame() {
-        this.loadout = LoadoutManager.instance.GetLoadout();
+    // To call at the start of each round. Called on a client individually
+    void StartGame(StartGameNetworkMessage msg) {
+        if (msg.started) {
+            StartCoroutine(LoadMultiplayerMapSceneCoroutine());
+            // this.loadout = LoadoutManager.instance.GetLoadout();
+        }
     }
 }
