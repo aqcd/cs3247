@@ -22,7 +22,7 @@ public class AbilityButton : MonoBehaviour
     void Start()
     {
         // placeholder
-        ability = new Ability("test", 5);
+        ability = new Ability("test", 5, 1);
         abilityImageOverlay.fillAmount = 0;
     }
 
