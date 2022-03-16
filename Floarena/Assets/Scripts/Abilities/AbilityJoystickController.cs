@@ -23,10 +23,6 @@ public class AbilityJoystickController : MonoBehaviour
     private Canvas targetCircleCanvas;
     private Canvas rangeIndicatorCanvas;
 
-    private Image skillshot;
-    private Image targetCircle;
-    private Image rangeIndicator;
-
     private GameObject mainCamera;
     
 
