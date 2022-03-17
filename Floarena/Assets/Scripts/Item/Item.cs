@@ -1,6 +1,6 @@
 public class Item
 {
-    string name;
+    public string name;
 
     public Effect[] effects;
 
@@ -16,7 +16,7 @@ public class Item
     public string GetDescription() {
         string des = "";
         for (int i = 0; i < effects.Length; i++) {
-            des = des + effects[i].modifier + " " + effects[i].attribute + ".";
+            des = des + effects[i].modifier + " " + effects[i].attribute + ". ";
         }
         return des;
     }
