@@ -166,7 +166,7 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         // update animator if using character
         if (_hasAnimator)
         {
-            _animator.SetBool(_animIDGrounded, Grounded);
+            //_animator.SetBool(_animIDGrounded, Grounded);
         }
     }
 
@@ -227,7 +227,7 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         if (_hasAnimator)
         {
             _animator.SetFloat(_animIDSpeed, _animationBlend);
-            _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+            //_animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
         }
     }
 
@@ -241,8 +241,8 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
             // update animator if using character
             if (_hasAnimator)
             {
-                _animator.SetBool(_animIDJump, false);
-                _animator.SetBool(_animIDFreeFall, false);
+                //_animator.SetBool(_animIDJump, false);
+                //_animator.SetBool(_animIDFreeFall, false);
             }
 
             // stop our velocity dropping infinitely when grounded
@@ -260,7 +260,7 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
                 // update animator if using character
                 if (_hasAnimator)
                 {
-                    _animator.SetBool(_animIDJump, true);
+                    //_animator.SetBool(_animIDJump, true);
                 }
             }
 
@@ -285,7 +285,7 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
                 // update animator if using character
                 if (_hasAnimator)
                 {
-                    _animator.SetBool(_animIDFreeFall, true);
+                    //_animator.SetBool(_animIDFreeFall, true);
                 }
             }
 
