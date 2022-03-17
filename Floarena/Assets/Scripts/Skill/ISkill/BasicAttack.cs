@@ -15,7 +15,7 @@ public class BasicAttack : MonoBehaviour, ISkill
 
     public void Execute(Vector3 skillPosition) 
     {   
-        Collider[] hitColliders = Physics.OverlapSphere(player.transform.position, radius);
+        Collider[] hitColliders = Physics.OverlapSphere(player.transform.position, range);
         foreach (Collider collider in hitColldiers) {
             collider.gameObject.SendMessage("TakeDamage", damageMagnitude);
         }
