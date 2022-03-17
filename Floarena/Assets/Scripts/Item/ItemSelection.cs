@@ -10,7 +10,7 @@ public class ItemSelection : MonoBehaviour
     Button button;
     
     [SerializeField]
-    Text displayString;
+    Image displayImage;
 
     public Item item;
 
@@ -20,11 +20,11 @@ public class ItemSelection : MonoBehaviour
 
     public bool SetItem(Item item) {
         this.item = item;
-        SetText();
+        SetImage();
         return true;
     }
 
-    void SetText() {
-        displayString.text = this.item.ToString();
+    void SetImage() {
+        displayImage.sprite = SelectionManager.instance.itemSprites[item.name];
     }
 }

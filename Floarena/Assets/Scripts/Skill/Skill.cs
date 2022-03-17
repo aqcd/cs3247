@@ -1,6 +1,6 @@
 public class Skill
 {
-    string name;
+    public string name;
     string description;
     public enum AimType {
         SKILLSHOT,
