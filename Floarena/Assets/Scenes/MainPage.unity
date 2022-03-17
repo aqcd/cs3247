@@ -3199,19 +3199,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 764234154, guid: e01249d95b24f7e47bf1e81c3ff52dc7, type: 3}
-      propertyPath: Port
-      value: 7778
-      objectReference: {fileID: 0}
-    - target: {fileID: 764234155, guid: e01249d95b24f7e47bf1e81c3ff52dc7, type: 3}
-      propertyPath: playerPrefab
-      value: 
-      objectReference: {fileID: 289330726155884093, guid: a5e997a9aa36c8e459693c4ec2a2587f,
-        type: 3}
-    - target: {fileID: 1830469189426881758, guid: e01249d95b24f7e47bf1e81c3ff52dc7,
+    - target: {fileID: 3241040559355087311, guid: e01249d95b24f7e47bf1e81c3ff52dc7,
         type: 3}
       propertyPath: sceneId
-      value: 2379165778
+      value: 2098835796
       objectReference: {fileID: 0}
     - target: {fileID: 3241040559355087311, guid: e01249d95b24f7e47bf1e81c3ff52dc7,
         type: 3}
