@@ -435,6 +435,7 @@ GameObject:
   - component: {fileID: 7114670675503723284}
   - component: {fileID: 4513022358295767032}
   - component: {fileID: 5985483385842840710}
+  - component: {fileID: -3652197483554594025}
   m_Layer: 0
   m_Name: SnakeyMultiplayerPrefab
   m_TagString: Untagged
@@ -593,6 +594,7 @@ MonoBehaviour:
   BottomClamp: -30
   CameraAngleOverride: 0
   LockCameraPosition: 0
+  disablePlayerMove: 0
 --- !u!54 &8557802535423138506
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -731,6 +733,20 @@ MonoBehaviour:
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
   target: {fileID: 2540547247355833481}
+--- !u!114 &-3652197483554594025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5876094339573755624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75a5ff954628b364da1c77f33ae42c92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _controller: {fileID: 4502294968432018072}
+  _mcontroller: {fileID: 6534484922367856933}
 --- !u!1 &6153995278754884651
 GameObject:
   m_ObjectHideFlags: 0

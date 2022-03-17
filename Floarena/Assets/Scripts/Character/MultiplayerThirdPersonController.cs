@@ -90,6 +90,8 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
 
     private bool _hasAnimator;
 
+    public bool disablePlayerMove = false;
+
     private void Awake()
     {
         // get a reference to our main camera
@@ -172,6 +174,9 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
 
     private void Move()
     {
+        if (disablePlayerMove) {
+            return;
+        }
         // set target speed based on move speed, sprint speed and if sprint is pressed
         float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
