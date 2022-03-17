@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MapGenerator : MonoBehaviour {
+    public static MapGenerator instance;
     public GridVisualizer gridVisualizer;
     public MapVisualizer mapVisualizer;
 
@@ -16,10 +17,15 @@ public class MapGenerator : MonoBehaviour {
     public int width, length = 20;
     private MapGrid grid;
 
-    void Start() {
-        // TODO: use room code id as seed 
-        const int initialSeed = 12; 
-        Random.InitState(initialSeed);
+    void Awake() {
+        if (instance == null) {
+            instance = this;
+        }
+    }
+
+    public void GenerateMap(int seed) {
+        Debug.Log("Generating map with seed: " + seed);
+        Random.InitState(seed);
         grid = new MapGrid(width, length);
         gridVisualizer.VisualizeGrid(width, length);
         CandidateMap map = new CandidateMap(grid, numOfPickupItems, numOfBrush);

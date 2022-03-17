@@ -22,6 +22,7 @@ public class CustomNetworkManager : NetworkManager {
             Debug.Log("All players connected, loading new scene");
             StartGameNetworkMessage msg = new StartGameNetworkMessage();
             msg.started = true;
+            msg.mapSeed = Random.Range(int.MinValue, int.MaxValue);
             NetworkServer.SendToAll(msg);
         }
     }
