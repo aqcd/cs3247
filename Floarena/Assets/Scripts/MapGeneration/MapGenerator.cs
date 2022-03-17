@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MapGenerator : MonoBehaviour {
     public static MapGenerator instance;
@@ -20,6 +21,13 @@ public class MapGenerator : MonoBehaviour {
     void Awake() {
         if (instance == null) {
             instance = this;
+        }
+    }
+
+    void Start() {
+        // Generate map for debugging if we are not in the actual game scene
+        if (SceneManager.GetActiveScene().name != "MapWithPlayer") {
+            GenerateMap(10);
         }
     }
 
