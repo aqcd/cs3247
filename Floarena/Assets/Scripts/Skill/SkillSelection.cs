@@ -10,7 +10,7 @@ public class SkillSelection : MonoBehaviour
     Button button;
     
     [SerializeField]
-    Text displayString;
+    Image displayImage;
 
     public Skill skill;
 
@@ -24,11 +24,11 @@ public class SkillSelection : MonoBehaviour
 
     public bool SetSkill(Skill skill) {
         this.skill = skill;
-        SetText();
+        SetImage();
         return true;
     }
 
-    void SetText() {
-        displayString.text = this.skill.ToString();
+    void SetImage() {
+        displayImage.sprite = SelectionManager.instance.skillSprites[skill.name];
     }
 }

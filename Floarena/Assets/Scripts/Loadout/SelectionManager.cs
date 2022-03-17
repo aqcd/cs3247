@@ -1,4 +1,9 @@
 using UnityEngine;
+using UnityEngine.UI;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
 public class SelectionManager : MonoBehaviour
 {
     public static SelectionManager instance;
@@ -11,9 +16,14 @@ public class SelectionManager : MonoBehaviour
     [SerializeField]
     public ItemSelection[] itemSelections;
 
-
     [SerializeField]
     public SkillSelection[] skillSelections;
+
+    [SerializeField]
+    public ItemSpriteDictionary itemSprites;
+
+    [SerializeField]
+    public SkillSpriteDictionary skillSprites;
 
     void Awake() {
         if (instance == null) {
@@ -49,7 +59,6 @@ public class SelectionManager : MonoBehaviour
     }
 
     public void SetSkill(Skill skill) {
-        Debug.Log("hello");
         int skillPosition = editingPosition - 2;
         if ((this.isBSkillSelected || this.isUSkillSelected) && LoadoutManager.instance.SetSkill(skill, skillPosition)) {
             this.skillSelections[skillPosition - 1].SetSkill(skill);
