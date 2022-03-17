@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public struct StartGameNetworkMessage : NetworkMessage {
+public struct LoadGameNetworkMessage : NetworkMessage {
     public bool started;
     public int mapSeed;
 }

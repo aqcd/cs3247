@@ -4,8 +4,10 @@ using UnityEngine;
 using Mirror;
 
 public class CustomNetworkManager : NetworkManager {
+    private int joinConfirmations = 0;
 
     public override void Awake() {
+        joinConfirmations = 0;
         base.Awake();
     }
 
@@ -20,10 +22,10 @@ public class CustomNetworkManager : NetworkManager {
 
         if (NetworkServer.connections.Count == 2) {
             Debug.Log("All players connected, loading new scene");
-            StartGameNetworkMessage msg = new StartGameNetworkMessage();
+            LoadGameNetworkMessage msg = new LoadGameNetworkMessage();
             msg.started = true;
             msg.mapSeed = Random.Range(int.MinValue, int.MaxValue);
-            NetworkServer.SendToAll(msg);
+            NetworkServer.SendToAll<LoadGameNetworkMessage>(msg);
         }
     }
 
@@ -37,5 +39,17 @@ public class CustomNetworkManager : NetworkManager {
     public override void OnClientConnect() {
         base.OnClientConnect();
         Debug.Log("This client connected to server. Connections: " + NetworkServer.connections.Count);
+    }
+
+    public override void OnServerAddPlayer(NetworkConnectionToClient conn) {
+        base.OnServerAddPlayer(conn);
+        joinConfirmations++;
+        
+        if (joinConfirmations == 2) {
+            Debug.Log("Both players are ready, instructing clients to perform further setup");
+            ReadyGameNetworkMessage msg = new ReadyGameNetworkMessage();
+            msg.ready = true;
+            NetworkServer.SendToAll<ReadyGameNetworkMessage>(msg);
+        }
     }
 }
