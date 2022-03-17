@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -198,8 +198,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   liGoSpawn:
-  - {fileID: 6036714706004075, guid: 637e6b97bc6eb974fac3640a6ea81aa3, type: 3}
-  - {fileID: 471655705233793389, guid: 0d5b3b07e06cc614b8df5ca94c007ada, type: 3}
+  - {fileID: 3628741095879785448, guid: a7be7db179bc75c43bb018d4b0005758, type: 3}
+  - {fileID: 3628741095879785448, guid: a232551061eff204988ad9ba3c29dd74, type: 3}
   wallPrefab: {fileID: 1507879402583065680, guid: f5afe6ece1be7aa4f80b85d6a40fcc2a,
     type: 3}
   brushPrefab: {fileID: 8689998506251213869, guid: 5866e83bd853b59439b4555bee7fd699,
@@ -808,7 +808,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 431dd852202aa7a41858c59b517719ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInput: {fileID: 0}
 --- !u!114 &1467650734
 MonoBehaviour:
   m_ObjectHideFlags: 0

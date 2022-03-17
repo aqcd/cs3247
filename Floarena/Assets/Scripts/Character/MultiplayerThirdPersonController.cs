@@ -322,12 +322,38 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
     }
 
+    private void RpcSetPlayerInvisible() {
+        if (this.isLocalPlayer) {
+            Color color = this.GetComponentInChildren<SkinnedMeshRenderer>().material.color;
+            color.a = 0.5f;
+            this.GetComponentInChildren<SkinnedMeshRenderer>().material.color = color;
+            Color barColor = _slider.GetComponent<Image>().color;
+            barColor.a = 0.2f;
+            _slider.GetComponent<Image>().color = barColor;
+        } else {
+            _controller.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
+            _slider.SetActive(false);
+        }
+    }
+
+    private void RpcSetPlayerVisible() {
+        Color color = _controller.GetComponentInChildren<SkinnedMeshRenderer>().material.color;
+        color.a = 1.0f;
+        _controller.GetComponentInChildren<SkinnedMeshRenderer>().material.color = color;
+
+        Color barColor = _slider.GetComponent<Image>().color;
+        barColor.a = 1.0f;
+        _slider.GetComponent<Image>().color = barColor;
+
+        _controller.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
+        _slider.SetActive(true);
+    }
+
     private void OnTriggerEnter(Collider collider) {
         if (collider.tag == "Brush") {
-            _controller.GetComponentInChildren<MeshRenderer>().enabled = false; // Turn mesh invisible
-            _slider.SetActive(false); 
+            RpcSetPlayerInvisible();
         } else if (collider.tag == "HealthConsumable") {
-            _controller.GetComponent<Health>().TakeHealing(20); // Increase health
+            _controller.GetComponent<Health>().TakeHealing(20);
             Vector3 positionOnGrid = collider.transform.position;
             GameObject mapVisualizer = GameObject.Find("MapVisualizer");
             mapVisualizer.GetComponent<MapVisualizer>().SpawnPickupItem(positionOnGrid); // Respawn after delay
@@ -337,15 +363,13 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
 
     private void OnTriggerStay(Collider collider) {
         if (collider.tag == "Brush") {
-            _controller.GetComponentInChildren<MeshRenderer>().enabled = false; // Turn invisible
-            _slider.SetActive(false);
+            RpcSetPlayerInvisible();
         }
     }
 
     private void OnTriggerExit(Collider collider) {
         if (collider.tag == "Brush") {
-            _controller.GetComponentInChildren<MeshRenderer>().enabled = true; // Turn visible
-            _slider.SetActive(true); 
+            RpcSetPlayerVisible();
         } 
     }
 }
