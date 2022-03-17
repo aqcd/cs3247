@@ -30,7 +30,7 @@ public class Health : NetworkBehaviour
     }
 
     [Command]
-    void TakeDamage(int damage) {
+    public void TakeDamage(int damage) {
         currentHealth -= damage;
         if (currentHealth <= 0) {
             DestroyRoutine();
@@ -38,7 +38,7 @@ public class Health : NetworkBehaviour
     }
 
     [Command]
-    void TakeHealing(int healing) {
+    public void TakeHealing(int healing) {
         if (currentHealth + healing > maxHealth) {
             currentHealth = maxHealth;
         } else {
