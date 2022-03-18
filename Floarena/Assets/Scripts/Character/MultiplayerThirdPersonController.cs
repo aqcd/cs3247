@@ -322,6 +322,7 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
     }
 
+
     private void RpcSetPlayerInvisible() {
         if (this.isLocalPlayer) {
             Color color = this.GetComponentInChildren<SkinnedMeshRenderer>().material.color;
@@ -371,5 +372,11 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         if (collider.tag == "Brush") {
             RpcSetPlayerVisible();
         } 
+    }
+
+    private void OnCollisionEnter(Collision other) {
+        if (other.gameObject.tag == "Player") {
+            other.gameObject.GetComponent<Health>().TakeDamage(10);
+        }
     }
 }
