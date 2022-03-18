@@ -10,13 +10,13 @@ public class BasicAttack : MonoBehaviour, ISkill
 
     void Start()
     {
-        player = GameManager.instance.GetPlayer();
+        player = MatchManager.instance.GetPlayer();
     }
 
     public void Execute(Vector3 skillPosition) 
     {   
         Collider[] hitColliders = Physics.OverlapSphere(player.transform.position, range);
-        foreach (Collider collider in hitColldiers) {
+        foreach (Collider collider in hitColliders) {
             collider.gameObject.SendMessage("TakeDamage", damageMagnitude);
         }
     }

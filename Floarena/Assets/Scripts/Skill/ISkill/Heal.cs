@@ -10,7 +10,7 @@ public class Heal : MonoBehaviour, ISkill
 
     void Start()
     {
-        player = GameManager.instance.GetPlayer();
+        player = MatchManager.instance.GetPlayer();
         playerHealth = player.GetComponent<Health>();
     }
 
