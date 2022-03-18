@@ -10,9 +10,13 @@ public class CustomNetworkManager : NetworkManager {
     private Vector3 player1SpawnPos = new Vector3(5, 0, 5);
     private Vector3 player2SpawnPos = new Vector3(55, 0, 55);
 
+    [Header("Initialization Prefabs")]
+    public GameObject MultiplayerManagersPrefab;
+
     public override void Awake() {
-        joinConfirmations = 0;
         base.Awake();
+        joinConfirmations = 0;
+        spawnPrefabs.Add(MultiplayerManagersPrefab);
     }
 
     public override void OnStartHost() {
@@ -53,10 +57,16 @@ public class CustomNetworkManager : NetworkManager {
         
         if (joinConfirmations == 1) {
             player1Conn = conn;
+            Debug.Log("Player 1 Added");
         } else if (joinConfirmations == 2) {
             player2Conn = conn;
-            
+            Debug.Log("Player 2 Added");
+
             Debug.Log("Both players are ready, instructing clients to perform further setup");
+            // Spawn MultiplayerManagers on both clients
+            GameObject multiplayerManagers = Instantiate(MultiplayerManagersPrefab);
+            NetworkServer.Spawn(multiplayerManagers);
+
             // Send initial spawn positions to MatchManager via a TargetRpc
             MatchManager.instance.SetLocalPlayerSpawnPosition(player1Conn, player1SpawnPos);
             MatchManager.instance.SetLocalPlayerSpawnPosition(player2Conn, player2SpawnPos);
