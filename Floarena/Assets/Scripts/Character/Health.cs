@@ -17,20 +17,22 @@ public class Health : NetworkBehaviour
         currentHealth = maxHealth;
     }
 
-    void Update()
-    {
+    void Update() {
         if (hasBar) {
             healthBar.SetHealth(currentHealth);
         }
 
-        // Testing
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            this.TakeDamage(10);
+        // Simulate round ending event (player has died)
+        if (isLocalPlayer) {
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                Debug.Log("Pressed");
+                MatchManager.instance.NewRound();
+            }
         }
     }
 
     [Command]
-    void TakeDamage(int damage) {
+    public void TakeDamage(int damage) {
         currentHealth -= damage;
         if (currentHealth <= 0) {
             DestroyRoutine();
@@ -38,7 +40,7 @@ public class Health : NetworkBehaviour
     }
 
     [Command]
-    void TakeHealing(int healing) {
+    public void TakeHealing(int healing) {
         if (currentHealth + healing > maxHealth) {
             currentHealth = maxHealth;
         } else {
@@ -47,7 +49,7 @@ public class Health : NetworkBehaviour
     }
 
     [ClientRpc]
-    void DestroyRoutine() {
+    public void DestroyRoutine() {
         if (hasBar) {
             GameObject.Destroy(healthBar.gameObject);
         }
