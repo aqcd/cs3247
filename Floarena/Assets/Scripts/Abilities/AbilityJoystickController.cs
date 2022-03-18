@@ -18,19 +18,22 @@ public class AbilityJoystickController : MonoBehaviour
 
     public Canvas abilityCanvas;
 
+    public Image cancelZone;
+
     private Canvas skillshotCanvas;
     private Canvas skillshotHeadCanvas;
     private Canvas targetCircleCanvas;
     private Canvas rangeIndicatorCanvas;
 
     private GameObject mainCamera;
-    
+
+    bool isCancel = false;
 
     // Start is called before the first frame update
     void Start()
     {
         // placeholder
-        ability = new Ability("test", 5, 1);
+        ability = new Ability("test", 5, 2);
         abilityImageOverlay.fillAmount = 0;
 
         skillshotCanvas = (abilityCanvas.transform.GetChild(2).gameObject.GetComponent<Canvas>());
@@ -42,6 +45,7 @@ public class AbilityJoystickController : MonoBehaviour
         skillshotHeadCanvas.enabled = false;
         targetCircleCanvas.enabled = false;
         rangeIndicatorCanvas.enabled = false;
+        cancelZone.enabled = false;
 
         if (mainCamera == null)
         {
@@ -66,12 +70,20 @@ public class AbilityJoystickController : MonoBehaviour
             {
                 abilityImageOverlay.fillAmount = 0;
                 isCooldown = false;
+                joystick.enabled = true;
             }
         }
     }
 
     public void UpdateAbility(Vector2 pointerPosition) {
         Vector3 position = new Vector3(pointerPosition.x, 0.0f, pointerPosition.y);
+        Vector3 localPosition = new Vector3(pointerPosition.x, pointerPosition.y, 0.0f);
+        Vector3 worldPosition = transform.TransformPoint(localPosition);
+        
+        print(cancelZone.transform.position);
+
+        //Check if ability gets cancelled
+
         
         if (ability.isSkillshot() && !isCooldown)
         {
@@ -81,12 +93,13 @@ public class AbilityJoystickController : MonoBehaviour
 
             Vector3 newPosition = abilityCanvas.transform.position + position;
             float distance = Vector3.Distance(newPosition, abilityCanvas.transform.position);
-            distance = Mathf.Min(distance, ability.range);
+            distance = Mathf.Min(distance, 5);
             Vector3 offset = new Vector3(0.0f, 0.5f, 0.0f);
             skillshotCanvas.transform.localScale = new Vector3(1.0f, 0.5f, (distance / 5));
             skillshotHeadCanvas.transform.position = abilityCanvas.transform.position + offset - (position.normalized * distance);
             skillshotCanvas.enabled = true;
             skillshotHeadCanvas.enabled = true;
+            cancelZone.enabled = true;
 
         }
 
@@ -94,11 +107,12 @@ public class AbilityJoystickController : MonoBehaviour
         {
             Vector3 newPosition = abilityCanvas.transform.position + position;
             float distance = Vector3.Distance(newPosition, abilityCanvas.transform.position);
-            distance = Mathf.Min(distance, ability.range);
+            distance = Mathf.Min(distance, 5);
             Vector3 offset = new Vector3(0.0f, 0.5f, 0.0f);
             targetCircleCanvas.transform.position = abilityCanvas.transform.position + offset - (position.normalized * distance);
             targetCircleCanvas.enabled = true;
             rangeIndicatorCanvas.enabled = true;
+            cancelZone.enabled = true;
             
 
         }
@@ -107,6 +121,18 @@ public class AbilityJoystickController : MonoBehaviour
         // if canvas is not enabled, enable it
 
     }
+
+    // public void ResolveOrCancelAbility(Vector2 pointerPosition)
+    // {
+    //     if (isCancel)
+    //     {
+    //         CancelAbility(pointerPosition);
+    //     }
+
+    //     else {
+    //         ResolveAbility(pointerPosition);
+    //     }
+    // }
 
 
     public void ResolveAbility(Vector2 pointerPosition) {
@@ -118,6 +144,8 @@ public class AbilityJoystickController : MonoBehaviour
         skillshotHeadCanvas.enabled = false;
         targetCircleCanvas.enabled = false;
         rangeIndicatorCanvas.enabled = false;
+        joystick.enabled = false;
+        cancelZone.enabled = false;
     }
 
     public void CancelAbility() {
@@ -125,5 +153,21 @@ public class AbilityJoystickController : MonoBehaviour
         skillshotHeadCanvas.enabled = false;
         targetCircleCanvas.enabled = false;
         rangeIndicatorCanvas.enabled = false;
+        cancelZone.enabled = false;
+    }
+
+    public void AttachAbilityCanvas(Canvas canvas)
+    {
+        abilityCanvas = canvas;
+        skillshotCanvas = (abilityCanvas.transform.GetChild(2).gameObject.GetComponent<Canvas>());
+        skillshotHeadCanvas = (abilityCanvas.transform.GetChild(3).gameObject.GetComponent<Canvas>());
+        rangeIndicatorCanvas = (abilityCanvas.transform.GetChild(0).gameObject.GetComponent<Canvas>());
+        targetCircleCanvas = (abilityCanvas.transform.GetChild(1).gameObject.GetComponent<Canvas>());
+
+        skillshotCanvas.enabled = false;
+        skillshotHeadCanvas.enabled = false;
+        targetCircleCanvas.enabled = false;
+        rangeIndicatorCanvas.enabled = false;
+        cancelZone.enabled = false;
     }
 }
