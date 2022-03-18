@@ -34,9 +34,9 @@ public class ButtonManager : MonoBehaviour
             ItemButton itemButton = go.GetComponent<ItemButton>();
             itemButton.SetItem(item);
 
-            GameObject textGo = button.transform.Find("Text").gameObject;
-            Text text = textGo.GetComponent<Text>();
-            text.text = item.ToString();
+            GameObject imageGo = button.transform.Find("Image").gameObject;
+            Image image = imageGo.GetComponent<Image>();
+            image.sprite = SelectionManager.instance.itemSprites[item.name];
 
             this.itemButtons.Add(button);
         }
@@ -49,9 +49,9 @@ public class ButtonManager : MonoBehaviour
             SkillButton skillButton = go.GetComponent<SkillButton>();
             skillButton.SetSkill(skill);
 
-            GameObject textGo = button.transform.Find("Text").gameObject;
-            Text text = textGo.GetComponent<Text>();
-            text.text = skill.ToString();
+            GameObject imageGo = button.transform.Find("Image").gameObject;
+            Image image = imageGo.GetComponent<Image>();
+            image.sprite = SelectionManager.instance.skillSprites[skill.name];
 
             this.basicSkillbuttons.Add(button);
         }
@@ -64,9 +64,9 @@ public class ButtonManager : MonoBehaviour
             SkillButton skillButton = go.GetComponent<SkillButton>();
             skillButton.SetSkill(skill);
 
-            GameObject textGo = button.transform.Find("Text").gameObject;
-            Text text = textGo.GetComponent<Text>();
-            text.text = skill.ToString();
+            GameObject imageGo = button.transform.Find("Image").gameObject;
+            Image image = imageGo.GetComponent<Image>();
+            image.sprite = SelectionManager.instance.skillSprites[skill.name];
 
             this.ultimateSkillbuttons.Add(button);
         }

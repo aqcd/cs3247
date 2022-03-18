@@ -17,6 +17,9 @@ public class MapGenerator : MonoBehaviour {
     private MapGrid grid;
 
     void Start() {
+        // TODO: use room code id as seed 
+        const int initialSeed = 12; 
+        Random.InitState(initialSeed);
         grid = new MapGrid(width, length);
         gridVisualizer.VisualizeGrid(width, length);
         CandidateMap map = new CandidateMap(grid, numOfPickupItems, numOfBrush);

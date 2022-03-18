@@ -7,7 +7,7 @@ public class ItemButton : MonoBehaviour
     Button button;
     
     [SerializeField]
-    Text displayString;
+    Image displayImage;
 
     public Item item;
 
@@ -17,7 +17,7 @@ public class ItemButton : MonoBehaviour
 
     public bool SetItem(Item item) {
         this.item = item;
-        displayString.text = item.ToString();
+        displayImage.sprite = SelectionManager.instance.itemSprites[item.name];
         return true;
     }
 

@@ -166,7 +166,7 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         // update animator if using character
         if (_hasAnimator)
         {
-            _animator.SetBool(_animIDGrounded, Grounded);
+            //_animator.SetBool(_animIDGrounded, Grounded);
         }
     }
 
@@ -211,10 +211,10 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         if (_input.move != Vector2.zero)
         {
             _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + _mainCamera.transform.eulerAngles.y;
-            float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, RotationSmoothTime);
+            float rotation = Mathf.SmoothDampAngle(transform.GetChild(2).eulerAngles.y, _targetRotation, ref _rotationVelocity, RotationSmoothTime);
 
             // rotate to face input direction relative to camera position
-            transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+            transform.GetChild(2).rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
         }
 
 
@@ -227,7 +227,7 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         if (_hasAnimator)
         {
             _animator.SetFloat(_animIDSpeed, _animationBlend);
-            _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+            //_animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
         }
     }
 
@@ -241,8 +241,8 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
             // update animator if using character
             if (_hasAnimator)
             {
-                _animator.SetBool(_animIDJump, false);
-                _animator.SetBool(_animIDFreeFall, false);
+                //_animator.SetBool(_animIDJump, false);
+                //_animator.SetBool(_animIDFreeFall, false);
             }
 
             // stop our velocity dropping infinitely when grounded
@@ -260,7 +260,7 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
                 // update animator if using character
                 if (_hasAnimator)
                 {
-                    _animator.SetBool(_animIDJump, true);
+                    //_animator.SetBool(_animIDJump, true);
                 }
             }
 
@@ -285,7 +285,7 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
                 // update animator if using character
                 if (_hasAnimator)
                 {
-                    _animator.SetBool(_animIDFreeFall, true);
+                    //_animator.SetBool(_animIDFreeFall, true);
                 }
             }
 
