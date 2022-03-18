@@ -12,9 +12,9 @@ public class MatchManager : NetworkBehaviour {
     private GameObject opponentRef;
     private Vector3 localPlayerSpawnPos;
     
-    [SyncVar]
+    [SyncVar(hook = nameof(UpdateScoreboardPlayer1))]
     private int player1Score = 0;
-    [SyncVar]
+    [SyncVar(hook = nameof(UpdateScoreboardPlayer2))]
     private int player2Score = 0;
 
     private Text player1ScoreText;
@@ -29,12 +29,7 @@ public class MatchManager : NetworkBehaviour {
         player2ScoreText = transform.GetChild(0).GetChild(2).GetComponent<Text>();
         player1ScoreText.text = player1Score.ToString();
         player2ScoreText.text = player2Score.ToString();
-    }
 
-    void Update() {
-        // Need to keep updated with latest value of score since there is some delay with syncing the SyncVars
-        player1ScoreText.text = player1Score.ToString();
-        player2ScoreText.text = player2Score.ToString();
     }
 
     [Command(requiresAuthority=false)]
@@ -48,6 +43,14 @@ public class MatchManager : NetworkBehaviour {
             player1Score = 0;
             player2Score = 0;
         }
+    }
+
+    private void UpdateScoreboardPlayer1(int oldScore, int newScore) {
+        player1ScoreText.text = newScore.ToString();
+    }
+
+    private void UpdateScoreboardPlayer2(int oldScore, int newScore) {
+        player2ScoreText.text = newScore.ToString();
     }
 
     // Runs on server
