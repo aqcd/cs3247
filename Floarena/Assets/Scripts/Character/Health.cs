@@ -17,16 +17,18 @@ public class Health : NetworkBehaviour
         currentHealth = maxHealth;
     }
 
-    void Update()
-    {
+    void Update() {
         if (hasBar) {
             healthBar.SetHealth(currentHealth);
         }
 
-        // Testing
-        // if (Input.GetKeyDown(KeyCode.Space)) {
-        //     this.TakeDamage(10);
-        // }
+        // Simulate round ending event (player has died)
+        if (isLocalPlayer) {
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                Debug.Log("Pressed");
+                MatchManager.instance.NewRound();
+            }
+        }
     }
 
     [Command]

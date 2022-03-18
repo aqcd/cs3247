@@ -5,5 +5,4 @@ using Mirror;
 
 public struct LoadGameNetworkMessage : NetworkMessage {
     public bool started;
-    public int mapSeed;
 }

@@ -8,7 +8,7 @@ public class CustomNetworkManager : NetworkManager {
     private NetworkConnectionToClient player1Conn;
     private NetworkConnectionToClient player2Conn;
     private Vector3 player1SpawnPos = new Vector3(5, 0, 5);
-    private Vector3 player2SpawnPos = new Vector3(55, 0, 55);
+    private Vector3 player2SpawnPos = new Vector3(10, 0, 10); // 55, 0, 55
 
     [Header("Initialization Prefabs")]
     public GameObject MultiplayerManagersPrefab;
@@ -33,7 +33,6 @@ public class CustomNetworkManager : NetworkManager {
             Debug.Log("All players connected, loading new scene");
             LoadGameNetworkMessage msg = new LoadGameNetworkMessage();
             msg.started = true;
-            msg.mapSeed = Random.Range(int.MinValue, int.MaxValue);
             NetworkServer.SendToAll<LoadGameNetworkMessage>(msg);
         }
     }
@@ -67,9 +66,10 @@ public class CustomNetworkManager : NetworkManager {
             GameObject multiplayerManagers = Instantiate(MultiplayerManagersPrefab);
             NetworkServer.Spawn(multiplayerManagers);
 
-            // Send initial spawn positions to MatchManager via a TargetRpc
-            MatchManager.instance.SetLocalPlayerSpawnPosition(player1Conn, player1SpawnPos);
-            MatchManager.instance.SetLocalPlayerSpawnPosition(player2Conn, player2SpawnPos);
+            // Send initial spawn positions and map seed to MatchManager via a TargetRpc
+            int mapSeed = Random.Range(int.MinValue, int.MaxValue);
+            MatchManager.instance.InitMatch(player1Conn, player1SpawnPos, mapSeed);
+            MatchManager.instance.InitMatch(player2Conn, player2SpawnPos, mapSeed);
         }
     }
 }

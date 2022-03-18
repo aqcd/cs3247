@@ -19,13 +19,6 @@ public class GameManager : NetworkBehaviour {
         NetworkClient.RegisterHandler<LoadGameNetworkMessage>(LoadGame);
     }
 
-    private void Update() {
-        // Simulate round ending event (player has died)
-        if (Input.GetKeyDown(KeyCode.Space)) {
-
-        }
-    }
-
     public void HostGame() {
         // Only attempt to host game when no connection is established yet
         if (!NetworkClient.isConnected && !NetworkServer.active) {
@@ -52,19 +45,18 @@ public class GameManager : NetworkBehaviour {
     // To call at the start of a game. Called on a client individually
     void LoadGame(LoadGameNetworkMessage msg) {
         if (msg.started) {
+            // Store player loadout here to later so MatchManager can later request for it
             loadout = LoadoutManager.instance.GetLoadout();
             // Load multiplayer scene and then continue loading other objects
-            StartCoroutine(LoadMultiplayerMapSceneCoroutine(msg));
+            StartCoroutine(LoadMultiplayerMapSceneCoroutine());
         }
     }
 
-    IEnumerator LoadMultiplayerMapSceneCoroutine(LoadGameNetworkMessage msg) {
+    IEnumerator LoadMultiplayerMapSceneCoroutine() {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("MapWithPlayer");
         while (!asyncLoad.isDone) {
             yield return null;
         }
         NetworkClient.AddPlayer(); // Once loading is complete, only then do we spawn the player
-        // SkillManager.instance.LoadSkills(loadout.skills); // Load skill prefabs
-        MapGenerator.instance.GenerateMap(msg.mapSeed); // Generate map based on random seed         
     }
 }

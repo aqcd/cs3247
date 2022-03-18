@@ -15,17 +15,17 @@ public class MatchManager : NetworkBehaviour {
         }
     }
 
-    void Start() {
-        
-    }
-
-    void Update() {
-        
-    }
-
-    [Command]
+    // Runs on server
+    [Command(requiresAuthority=false)]
     public void NewRound() {
+        Debug.Log("Server asking clients to restart round");
+        RpcNewRound();
+    }   
 
+    // Runs on client to restart the round
+    [ClientRpc]
+    private void RpcNewRound() {
+        ResetPlayerPosition();
     }
 
     public GameObject GetPlayer() {
@@ -36,8 +36,9 @@ public class MatchManager : NetworkBehaviour {
         return opponentRef;
     }
 
+    // Runs independently on each client to spawn the map and place the player in the approriate location
     [TargetRpc]
-    public void SetLocalPlayerSpawnPosition(NetworkConnection target, Vector3 position) {
+    public void InitMatch(NetworkConnection target, Vector3 position, int mapSeed) {
         Debug.Log("This player's spawn position has been set!");
         localPlayerSpawnPos = position;
 
@@ -53,12 +54,31 @@ public class MatchManager : NetworkBehaviour {
             }
         }
 
+        Debug.Log("Player name: " + playerRef.name);
+        Debug.Log("Opponent name: " + opponentRef.name);
+
         if (playerRef == null || opponentRef == null) {
             throw new System.Exception("Player or opponent gameobject not found during match initialization");
         }
 
+        // Spawn player in the appropriate position
+        ResetPlayerPosition();
+        // Load skill prefabs
+        SkillManager.instance.LoadSkills(GameManager.instance.loadout.skills);
+        // Generate map based on random seed         
+        MapGenerator.instance.GenerateMap(mapSeed); 
+        Debug.Log("Game ready to start!");
+    }
+
+    private void ResetPlayerPosition() {
+        // Need to disable character controller before teleporting player
+        // see https://forum.unity.com/threads/unity-multiplayer-through-mirror-teleporting-player-inconsistent.867079/
+        playerRef.GetComponent<CharacterController>().enabled = false;
+
         // Set own player's position
         playerRef.transform.position = localPlayerSpawnPos;
-        Debug.Log("Player spawned and ready!");
+        Debug.Log("New round started!");
+
+        playerRef.GetComponent<CharacterController>().enabled = true;
     }
 }
