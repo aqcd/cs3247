@@ -3,6 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public struct StartGameNetworkMessage : NetworkMessage {
-    public bool started;
+public struct ReadyGameNetworkMessage : NetworkMessage {
+    public bool ready;
 }

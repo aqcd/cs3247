@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MapGenerator : MonoBehaviour {
+    public static MapGenerator instance;
     public GridVisualizer gridVisualizer;
     public MapVisualizer mapVisualizer;
 
@@ -16,10 +18,22 @@ public class MapGenerator : MonoBehaviour {
     public int width, length = 20;
     private MapGrid grid;
 
+    void Awake() {
+        if (instance == null) {
+            instance = this;
+        }
+    }
+
     void Start() {
-        // TODO: use room code id as seed 
-        const int initialSeed = 12; 
-        Random.InitState(initialSeed);
+        // Generate map for debugging if we are not in the actual game scene
+        if (SceneManager.GetActiveScene().name != "MapWithPlayer") {
+            GenerateMap(10);
+        }
+    }
+
+    public void GenerateMap(int seed) {
+        Debug.Log("Generating map with seed: " + seed);
+        Random.InitState(seed);
         grid = new MapGrid(width, length);
         gridVisualizer.VisualizeGrid(width, length);
         CandidateMap map = new CandidateMap(grid, numOfPickupItems, numOfBrush);
