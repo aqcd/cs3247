@@ -89,14 +89,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1201221472473526550}
-  m_LocalRotation: {x: 0, y: 0.6339885, z: 0.7733425, w: 0}
+  m_LocalRotation: {x: 0, y: 0.258819, z: 0.9659259, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: -0.3}
   m_LocalScale: {x: 0.33333334, y: 0.3333333, z: 0.3333333}
   m_Children:
   - {fileID: 1564583062956738138}
   m_Father: {fileID: 6541412521785062482}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: -78.69, y: 0, z: 180}
+  m_LocalEulerAnglesHint: {x: -30, y: 0, z: 180}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 1}
@@ -437,7 +437,7 @@ GameObject:
   - component: {fileID: 5985483385842840710}
   m_Layer: 0
   m_Name: SnakeyMultiplayerPrefab
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -523,13 +523,13 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 0.8
-  m_Radius: 0.5
-  m_SlopeLimit: 45
+  m_Height: 0.67
+  m_Radius: 0.18
+  m_SlopeLimit: 30
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Center: {x: 0, y: 0.335, z: 0}
 --- !u!114 &1207457033282631119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -710,7 +710,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  clientAuthority: 0
+  clientAuthority: 1
   sendInterval: 0.05
   syncPosition: 0
   syncRotation: 1
