@@ -6,17 +6,23 @@ public class BasicAttack : MonoBehaviour, ISkill
 {
     private GameObject player;
     private GameObject opponent;
-    private float damageMagnitude = (float) SkillConstants.BASIC_ATTACK_DAMAGE;
-    private float range = (float) SkillConstants.BASIC_ATTACK_RANGE;
+    private float attackDamage;
+    private float attackRange;
+    private float attackCooldown;
 
     void Start()
     {
         player = MatchManager.instance.GetPlayer();
+        // get attributes from loadout and calculate attack stats
+        PlayerStats stats = GameManager.instance.loadout.GetItemNetEffects();
+        attackDamage = stats.GetAttributeValue(Attribute.AD);
+        attackRange = stats.GetAttributeValue(Attribute.AR);
+        attackCooldown = 1/stats.GetAttributeValue(Attribute.AS);
     }
 
     public void Execute(Vector3 skillPosition) 
     {   
-        Collider[] hitColliders = Physics.OverlapSphere(player.transform.position, range);
+        Collider[] hitColliders = Physics.OverlapSphere(player.transform.position, attackRange);
         GameObject bestHit = null;
         float bestDistance = Mathf.Infinity;
         foreach (Collider collider in hitColliders) {
@@ -37,6 +43,6 @@ public class BasicAttack : MonoBehaviour, ISkill
                 }
             }
         }
-        bestHit.SendMessage("TakeDamage", damageMagnitude);
+        bestHit.SendMessage("TakeDamage", attackDamage);
     }
 }
