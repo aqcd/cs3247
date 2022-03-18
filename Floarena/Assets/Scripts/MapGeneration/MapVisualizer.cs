@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 public class MapVisualizer : MonoBehaviour {
     private Transform parent;
@@ -51,7 +52,7 @@ public class MapVisualizer : MonoBehaviour {
         Instantiate(goToSpawn, positionOnGrid, Quaternion.identity);
     }
 
-    public void SpawnPickupItem(Vector3 positionOnGrid) {
+    public void RpcSpawnPickupItem(Vector3 positionOnGrid) {
         coroutine = PlacePickupItemWithDelay(5.0f, positionOnGrid);
         StartCoroutine(coroutine);
     }

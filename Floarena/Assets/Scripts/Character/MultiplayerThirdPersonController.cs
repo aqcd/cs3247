@@ -88,6 +88,9 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
     private GameObject _mainCamera;
     private GameObject _slider;
 
+    public Material transparentMaterial;
+    public Material opaqueMaterial;
+
     private const float _threshold = 0.01f;
 
     private bool _hasAnimator;
@@ -322,10 +325,11 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
     }
 
-    private void RpcSetPlayerInvisible() {
+    private void SetPlayerInvisible() {
         if (this.isLocalPlayer) {
-            Color color = this.GetComponentInChildren<SkinnedMeshRenderer>().material.color;
-            color.a = 0.5f;
+            this.GetComponentInChildren<SkinnedMeshRenderer>().material = transparentMaterial;
+            Color color = transparentMaterial.color;
+            color.a = 0.8f;
             this.GetComponentInChildren<SkinnedMeshRenderer>().material.color = color;
             Color barColor = _slider.GetComponent<Image>().color;
             barColor.a = 0.2f;
@@ -336,10 +340,8 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         }
     }
 
-    private void RpcSetPlayerVisible() {
-        Color color = _controller.GetComponentInChildren<SkinnedMeshRenderer>().material.color;
-        color.a = 1.0f;
-        _controller.GetComponentInChildren<SkinnedMeshRenderer>().material.color = color;
+    private void SetPlayerVisible() {
+        this.GetComponentInChildren<SkinnedMeshRenderer>().material = opaqueMaterial;
 
         Color barColor = _slider.GetComponent<Image>().color;
         barColor.a = 1.0f;
@@ -349,27 +351,32 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         _slider.SetActive(true);
     }
 
+    private void Heal() {
+        _controller.GetComponent<Health>().TakeHealing(20);
+    }
+
     private void OnTriggerEnter(Collider collider) {
         if (collider.tag == "Brush") {
-            RpcSetPlayerInvisible();
+            SetPlayerInvisible();
         } else if (collider.tag == "HealthConsumable") {
             _controller.GetComponent<Health>().TakeHealing(20);
+            //Heal();
             Vector3 positionOnGrid = collider.transform.position;
             GameObject mapVisualizer = GameObject.Find("MapVisualizer");
-            mapVisualizer.GetComponent<MapVisualizer>().SpawnPickupItem(positionOnGrid); // Respawn after delay
+            mapVisualizer.GetComponent<MapVisualizer>().RpcSpawnPickupItem(positionOnGrid); // Respawn after delay
             Destroy(collider.gameObject); // Destroy HealthConsumable
         }
     }
 
     private void OnTriggerStay(Collider collider) {
         if (collider.tag == "Brush") {
-            RpcSetPlayerInvisible();
+            SetPlayerInvisible();
         }
     }
 
     private void OnTriggerExit(Collider collider) {
         if (collider.tag == "Brush") {
-            RpcSetPlayerVisible();
+            SetPlayerVisible();
         } 
     }
 
