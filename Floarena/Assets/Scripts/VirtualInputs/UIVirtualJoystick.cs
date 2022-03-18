@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
 
@@ -11,6 +12,8 @@ public class UIVirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragHandle
     [Header("Rect References")]
     public RectTransform containerRect;
     public RectTransform handleRect;
+
+    public Image uiCircle;
 
     [Header("Settings")]
     public float joystickRange = 50f;
@@ -38,6 +41,7 @@ public class UIVirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragHandle
     public void OnPointerDown(PointerEventData eventData)
     {
         OnDrag(eventData);
+        uiCircle.enabled = true;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -63,6 +67,7 @@ public class UIVirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragHandle
     public void OnPointerUp(PointerEventData eventData)
     {
         OutputPointerEventValue(Vector2.zero);
+        uiCircle.enabled = false;
 
         if(handleRect)
         {
