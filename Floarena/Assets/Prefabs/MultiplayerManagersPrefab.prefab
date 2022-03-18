@@ -45,7 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89650f996c8e8ff428c4d12d84dfa02f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillObjs: []
+  skillObjs:
+  - {fileID: 7089059915774411105, guid: 4072885fe0e948e45ba86158119cb477, type: 3}
+  - {fileID: 456402227672069023, guid: b540c0d01b4b0bb499f7fc467b904f68, type: 3}
 --- !u!114 &-136463162739984009
 MonoBehaviour:
   m_ObjectHideFlags: 0

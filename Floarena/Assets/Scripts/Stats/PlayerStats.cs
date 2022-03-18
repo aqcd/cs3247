@@ -2,13 +2,13 @@ using System.Collections.Generic;
 
 public class PlayerStats
 {
-    Dictionary<Attribute, double> stats;
+    Dictionary<Attribute, float> stats;
 
-    public PlayerStats(Dictionary<Attribute, double> stats) {
+    public PlayerStats(Dictionary<Attribute, float> stats) {
         this.stats = stats;
     }
 
-    public double GetAttributeValue(Attribute attribute) {
+    public float GetAttributeValue(Attribute attribute) {
         return this.stats[attribute];
     }
 
@@ -26,14 +26,14 @@ public class PlayerStats
     }
 
     void ApplyEffect(Effect effect) {
-        double current = stats[effect.attribute];
-        double modified = current + effect.modifier;
+        float current = stats[effect.attribute];
+        float modified = current + effect.modifier;
         stats[effect.attribute] = modified;
     }
 
     public PlayerStats DeepCopy() {
-        Dictionary<Attribute, double> deepCopyStats = new Dictionary<Attribute, double>();
-        foreach (KeyValuePair<Attribute, double> kv in stats) {
+        Dictionary<Attribute, float> deepCopyStats = new Dictionary<Attribute, float>();
+        foreach (KeyValuePair<Attribute, float> kv in stats) {
             deepCopyStats[kv.Key] = kv.Value;
         }
         return new PlayerStats(deepCopyStats);
