@@ -26,8 +26,7 @@ public class Health : NetworkBehaviour
         // Simulate round ending event (player has died)
         if (isLocalPlayer) {
             if (Input.GetKeyDown(KeyCode.Space)) {
-                Debug.Log("Pressed");
-                MatchManager.instance.NewRound();
+                MatchManager.instance.NewRound(MatchManager.instance.GetOpponentNum());
             }
         }
     }

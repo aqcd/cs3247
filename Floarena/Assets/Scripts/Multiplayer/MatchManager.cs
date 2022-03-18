@@ -2,23 +2,58 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using UnityEngine.UI;
 
 public class MatchManager : NetworkBehaviour {
     public static MatchManager instance;
+    private int playerNum;
+    private int opponentNum;
     private GameObject playerRef;
     private GameObject opponentRef;
     private Vector3 localPlayerSpawnPos;
+    
+    [SyncVar]
+    private int player1Score = 0;
+    [SyncVar]
+    private int player2Score = 0;
+
+    private Text player1ScoreText;
+    private Text player2ScoreText;
 
     void Awake() {
         if (instance == null) {
             instance = this;
         }
+
+        player1ScoreText = transform.GetChild(0).GetChild(0).GetComponent<Text>();
+        player2ScoreText = transform.GetChild(0).GetChild(2).GetComponent<Text>();
+        player1ScoreText.text = player1Score.ToString();
+        player2ScoreText.text = player2Score.ToString();
+    }
+
+    void Update() {
+        // Need to keep updated with latest value of score since there is some delay with syncing the SyncVars
+        player1ScoreText.text = player1Score.ToString();
+        player2ScoreText.text = player2Score.ToString();
+    }
+
+    [Command(requiresAuthority=false)]
+    private void CommandAddScore(int playerNum) {
+        Debug.Log("Server updating score");
+        if (playerNum == 1) {
+            player1Score++;
+        } else if (playerNum == 2) {
+            player2Score++;
+        } else {
+            player1Score = 0;
+            player2Score = 0;
+        }
     }
 
     // Runs on server
     [Command(requiresAuthority=false)]
-    public void NewRound() {
-        Debug.Log("Server asking clients to restart round");
+    public void NewRound(int winningPlayer) {
+        CommandAddScore(winningPlayer);
         RpcNewRound();
     }   
 
@@ -36,11 +71,21 @@ public class MatchManager : NetworkBehaviour {
         return opponentRef;
     }
 
+    public int GetPlayerNum() {
+        return playerNum;
+    }
+
+    public int GetOpponentNum() {
+        return opponentNum;
+    }
+
     // Runs independently on each client to spawn the map and place the player in the approriate location
     [TargetRpc]
-    public void InitMatch(NetworkConnection target, Vector3 position, int mapSeed) {
-        Debug.Log("This player's spawn position has been set!");
+    public void InitMatch(NetworkConnection target, Vector3 position, int mapSeed, int localPlayerNum, int opponentPlayerNum) {
+        playerNum = localPlayerNum;
+        opponentNum = opponentPlayerNum;
         localPlayerSpawnPos = position;
+        Debug.Log("Player num: " + playerNum + " | Opponent num: " + opponentNum);
 
         // Get player and opponent references now that we know both players have 
         // successfully joined and are ready to start the game
