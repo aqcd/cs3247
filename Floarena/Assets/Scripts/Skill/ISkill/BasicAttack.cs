@@ -10,6 +10,8 @@ public class BasicAttack : MonoBehaviour, ISkill
     private float attackRange;
     private float attackCooldown;
 
+    private float timeToAttack = 0.0f;
+
     void Start()
     {
         player = MatchManager.instance.GetPlayer();
@@ -22,27 +24,31 @@ public class BasicAttack : MonoBehaviour, ISkill
 
     public void Execute(Vector3 skillPosition) 
     {   
-        Collider[] hitColliders = Physics.OverlapSphere(player.transform.position, attackRange);
-        GameObject bestHit = null;
-        float bestDistance = Mathf.Infinity;
-        foreach (Collider collider in hitColliders) {
-            GameObject hitObject = collider.gameObject;
-            if (hitObject != player) 
-            {
-                if (hitObject == opponent) {
-                    bestHit = hitObject;
-                    break;
-                } else {
-                    float sqrDistance = (player.transform.position - collider.transform.position).sqrMagnitude;
- 
-                    if (sqrDistance < bestDistance)
-                    {
-                        bestDistance = sqrDistance;
+        if (Time.time > timeToAttack) 
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(player.transform.position, attackRange);
+            GameObject bestHit = null;
+            float bestDistance = Mathf.Infinity;
+            foreach (Collider collider in hitColliders) {
+                GameObject hitObject = collider.gameObject;
+                if (hitObject != player) 
+                {
+                    if (hitObject == opponent) {
                         bestHit = hitObject;
+                        break;
+                    } else {
+                        float sqrDistance = (player.transform.position - collider.transform.position).sqrMagnitude;
+    
+                        if (sqrDistance < bestDistance)
+                        {
+                            bestDistance = sqrDistance;
+                            bestHit = hitObject;
+                        }
                     }
                 }
             }
+            bestHit.SendMessage("TakeDamage", attackDamage);
+            timeToAttack = Time.time + attackCooldown;
         }
-        bestHit.SendMessage("TakeDamage", attackDamage);
     }
 }
