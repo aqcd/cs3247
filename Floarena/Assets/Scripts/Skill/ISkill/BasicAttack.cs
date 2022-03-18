@@ -5,8 +5,8 @@ using UnityEngine;
 public class BasicAttack : MonoBehaviour, ISkill
 {
     private GameObject player;
-    private float damageMagnitude = SkillConstants.BASIC_ATTACK_DAMAGE;
-    private float range = SkillConstants.BASIC_ATTACK_RANGE;
+    private float damageMagnitude = (float) SkillConstants.BASIC_ATTACK_DAMAGE;
+    private float range = (float) SkillConstants.BASIC_ATTACK_RANGE;
 
     void Start()
     {
