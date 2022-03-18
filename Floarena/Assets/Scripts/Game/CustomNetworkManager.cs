@@ -5,6 +5,10 @@ using Mirror;
 
 public class CustomNetworkManager : NetworkManager {
     private int joinConfirmations = 0;
+    private NetworkConnectionToClient player1Conn;
+    private NetworkConnectionToClient player2Conn;
+    private Vector3 player1SpawnPos = new Vector3(5, 0, 5);
+    private Vector3 player2SpawnPos = new Vector3(55, 0, 55);
 
     public override void Awake() {
         joinConfirmations = 0;
@@ -16,6 +20,7 @@ public class CustomNetworkManager : NetworkManager {
         Debug.Log("Host started!");
     }
 
+    // Runs on server when a server receives a connection from the client
     public override void OnServerConnect(NetworkConnectionToClient conn) {
         base.OnServerConnect(conn);
         Debug.Log("Server got client connection: " + conn.address + ". Total connections: " + NetworkServer.connections.Count);
@@ -41,15 +46,20 @@ public class CustomNetworkManager : NetworkManager {
         Debug.Log("This client connected to server. Connections: " + NetworkServer.connections.Count);
     }
 
+    // Runs on a server when a client requests to be added as a player
     public override void OnServerAddPlayer(NetworkConnectionToClient conn) {
         base.OnServerAddPlayer(conn);
         joinConfirmations++;
         
-        if (joinConfirmations == 2) {
+        if (joinConfirmations == 1) {
+            player1Conn = conn;
+        } else if (joinConfirmations == 2) {
+            player2Conn = conn;
+            
             Debug.Log("Both players are ready, instructing clients to perform further setup");
-            ReadyGameNetworkMessage msg = new ReadyGameNetworkMessage();
-            msg.ready = true;
-            NetworkServer.SendToAll<ReadyGameNetworkMessage>(msg);
+            // Send initial spawn positions to MatchManager via a TargetRpc
+            MatchManager.instance.SetLocalPlayerSpawnPosition(player1Conn, player1SpawnPos);
+            MatchManager.instance.SetLocalPlayerSpawnPosition(player2Conn, player2SpawnPos);
         }
     }
 }

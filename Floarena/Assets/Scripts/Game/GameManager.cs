@@ -8,8 +8,6 @@ public class GameManager : NetworkBehaviour {
     public static GameManager instance;
     public Loadout loadout;
     private NetworkManager networkManager;
-    private GameObject playerRef;
-    private GameObject opponentRef;
 
     private void Awake() {
         if (instance == null) {
@@ -19,7 +17,13 @@ public class GameManager : NetworkBehaviour {
         DontDestroyOnLoad(gameObject.transform);
         // Register handler for when server asks client to start a game
         NetworkClient.RegisterHandler<LoadGameNetworkMessage>(LoadGame);
-        NetworkClient.RegisterHandler<ReadyGameNetworkMessage>(ReadyGame);
+    }
+
+    private void Update() {
+        // Simulate round ending event (player has died)
+        if (Input.GetKeyDown(KeyCode.Space)) {
+
+        }
     }
 
     public void HostGame() {
@@ -60,29 +64,7 @@ public class GameManager : NetworkBehaviour {
             yield return null;
         }
         NetworkClient.AddPlayer(); // Once loading is complete, only then do we spawn the player
-        SkillManager.instance.LoadSkills(loadout.skills); // Load skill prefabs
+        // SkillManager.instance.LoadSkills(loadout.skills); // Load skill prefabs
         MapGenerator.instance.GenerateMap(msg.mapSeed); // Generate map based on random seed         
-    }
-
-    void ReadyGame(ReadyGameNetworkMessage msg) {
-        // Get player and opponent references now that we know both players have 
-        // successfully joined and are ready to start the game
-        GameObject[] playerObjs = GameObject.FindGameObjectsWithTag("Player");
-        for (int i = 0; i < playerObjs.Length; i++) {
-            GameObject curPlayer = playerObjs[i];
-            if (curPlayer.GetComponent<MultiplayerThirdPersonController>().isLocalPlayer) {
-                playerRef = curPlayer;
-            } else {
-                opponentRef = curPlayer;
-            }
-        }
-    }
-
-    public GameObject GetPlayer() {
-        return playerRef;
-    }
-
-    public GameObject GetOpponent() {
-        return opponentRef;
     }
 }
