@@ -84,6 +84,11 @@ public class AbilityJoystickController : MonoBehaviour
         
         print(cancelZone.transform.position);
 
+        if (!isCooldown)
+        {
+            cancelZone.enabled = true;
+        }
+
         //Check if ability gets cancelled
 
         
@@ -96,8 +101,8 @@ public class AbilityJoystickController : MonoBehaviour
             Vector3 newPosition = abilityCanvas.transform.position + position;
             float distance = Vector3.Distance(newPosition, abilityCanvas.transform.position);
             distance = Mathf.Min(distance, 5);
-            Vector3 offset = new Vector3(0.0f, 0.5f, 0.0f);
-            skillshotCanvas.transform.localScale = new Vector3(1.0f, 0.5f, (distance / 5));
+            Vector3 offset = new Vector3(0.0f, 0.01f, 0.0f);
+            skillshotCanvas.transform.localScale = new Vector3(1.0f, 0.01f, (distance / 5));
             skillshotHeadCanvas.transform.position = abilityCanvas.transform.position + offset - (position.normalized * distance);
             skillshotCanvas.enabled = true;
             skillshotHeadCanvas.enabled = true;
@@ -110,7 +115,7 @@ public class AbilityJoystickController : MonoBehaviour
             Vector3 newPosition = abilityCanvas.transform.position + position;
             float distance = Vector3.Distance(newPosition, abilityCanvas.transform.position);
             distance = Mathf.Min(distance, 5);
-            Vector3 offset = new Vector3(0.0f, 0.5f, 0.0f);
+            Vector3 offset = new Vector3(0.0f, 0.01f, 0.0f);
             targetCircleCanvas.transform.position = abilityCanvas.transform.position + offset - (position.normalized * distance);
             targetCircleCanvas.enabled = true;
             rangeIndicatorCanvas.enabled = true;
