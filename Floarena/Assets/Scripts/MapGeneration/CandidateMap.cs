@@ -59,13 +59,12 @@ public class CandidateMap {
         var itemPlacementTryLimit = 100;
         while (count > 0 && itemPlacementTryLimit > 0) {
             var randomIndex = Random.Range(0, mapItemsArray.Length);
-            var randomHeight = Random.Range(-0.2f, 0.2f);
             if (mapItemsArray[randomIndex] == false) {
                 // Free space
                 var coordinates = grid.CalculateCoordinatesFromIndex(randomIndex);
                 mapItemsArray[randomIndex] = true;
                 brushList.Add(new RandomBrush(coordinates)); // Placed item
-                PlaceNeighboringBrush(coordinates + new Vector3(0, 0, randomHeight), randomIndex);
+                PlaceNeighboringBrush(coordinates, randomIndex);
                 count--;
             }
             itemPlacementTryLimit--;

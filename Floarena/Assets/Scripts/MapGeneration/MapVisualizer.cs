@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
+using Random = UnityEngine.Random;
 
 public class MapVisualizer : MonoBehaviour {
     private Transform parent;
@@ -60,6 +60,9 @@ public class MapVisualizer : MonoBehaviour {
     private bool PlaceBrush(MapData data, Vector3 positionOnGrid) {
         foreach (var brushItem in data.brushList) {
             if (brushItem.Position == positionOnGrid) {
+                brushPrefab.transform.localScale = Vector3.one;
+                float randomHeight = Random.Range(0.0f, 0.8f);
+                brushPrefab.transform.localScale += new Vector3(0.0f, randomHeight, 0.0f); 
                 Vector3 offset = new Vector3(0f, -1.0f, 0f);
                 Instantiate(brushPrefab, positionOnGrid + offset, Quaternion.identity);
                 return true;
