@@ -5,6 +5,7 @@ using Mirror;
 
 public class Health : NetworkBehaviour
 {
+    [SyncVar(hook = nameof(UpdateMaxHealth))]
     public float maxHealth;
     [SyncVar(hook = nameof(UpdateHealth))]
     public float currentHealth = 0;
@@ -12,10 +13,11 @@ public class Health : NetworkBehaviour
     public bool hasBar = true;
     public HealthBar healthBar;
 
-    void Awake()
-    {
-        maxHealth = GameManager.instance.loadout.GetItemNetEffects().GetAttributeValue(Attribute.HP);
-        currentHealth = maxHealth;
+    void Start() {
+        if (isLocalPlayer) {
+            float temp  = GameManager.instance.loadout.GetLoadoutStats().GetAttributeValue(Attribute.HP);
+            SetMaxHealth(temp);
+        }
     }
 
     void Update() {
@@ -28,12 +30,22 @@ public class Health : NetworkBehaviour
         }
     }
 
-    [Command(requiresAuthority = false)]
+    void UpdateMaxHealth(float oldMaxHealth, float newMaxHealth) {
+        if (hasBar) {
+            healthBar.Init(newMaxHealth);
+        }
+    }
+
     public void TakeDamage(float damage) {
+        CmdTakeDamage(damage, MatchManager.instance.GetOpponentNum());
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdTakeDamage(float damage, int sourcePlayer) {
         currentHealth -= damage;
         if (currentHealth <= 0) {
             // Play dying animation here
-            MatchManager.instance.NewRound(MatchManager.instance.GetOpponentNum());
+            MatchManager.instance.NewRound(sourcePlayer);
         }
     }
 
@@ -57,5 +69,11 @@ public class Health : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void ResetHealth() {
         currentHealth = maxHealth;
+    }
+
+    [Command(requiresAuthority = false)]
+    public void SetMaxHealth(float maxHealth) {
+        this.maxHealth = maxHealth;
+        currentHealth = this.maxHealth;
     }
 }

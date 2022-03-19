@@ -9,9 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/MainPage.unity
     guid: 35eea479561b9a743a6ff92b54031a40
   - enabled: 1
-    path: Assets/Scenes/EditLoadoutPage.unity
-    guid: 8bdbfda62dd54a546839341f4a387259
-  - enabled: 1
     path: Assets/Scenes/MapWithPlayer.unity
     guid: 2c2c689c8a27f9d41bed9d1c03d44bce
   m_configObjects:

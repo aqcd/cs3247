@@ -15,17 +15,17 @@ public class HealthBar : MonoBehaviour
     [SerializeField]
     private float division = 100;
 
-    private void Start()
+    public void Init(float maxHealth)
     {
         //healthString = gameObject.transform.GetChild(1).transform.GetComponent<Text>();
-        healthBarSlider.maxValue = objectHealth.maxHealth;
-        healthBarSlider.value = objectHealth.maxHealth;
+        healthBarSlider.maxValue = maxHealth;
+        healthBarSlider.value = maxHealth;
         RectTransform rt = gameObject.GetComponent<RectTransform>();
         barWidth = rt.rect.width;
 
-        float pixelsPerHP = (float)barWidth / objectHealth.maxHealth;
+        float pixelsPerHP = (float)barWidth / maxHealth;
         float lineOffset = pixelsPerHP * division;
-        int numberOfLines = Mathf.FloorToInt(objectHealth.maxHealth / division);
+        int numberOfLines = Mathf.FloorToInt(maxHealth / division);
         RectTransform dividerRt = (RectTransform)dividerPrefab.transform;
         float dividerWidth = dividerRt.rect.width;
         for (int i = 1; i < numberOfLines + 1; i++) {
