@@ -49,7 +49,7 @@ public class BuildScript {
         buildPlayerOptions.scenes = new[] { "Assets/Scenes/MainPage.unity", "Assets/Scenes/MapWithPlayer.unity" };
         buildPlayerOptions.locationPathName = "Builds/Windows/Client/Client.exe";
         buildPlayerOptions.target = BuildTarget.StandaloneWindows64;
-        buildPlayerOptions.options = BuildOptions.CompressWithLz4HC;
+        buildPlayerOptions.options = BuildOptions.CompressWithLz4HC | BuildOptions.Development;
 
         Console.WriteLine("Building Client (Windows)...");
         BuildPipeline.BuildPlayer(buildPlayerOptions);
@@ -63,7 +63,7 @@ public class BuildScript {
         buildPlayerOptions.scenes = new[] { "Assets/Scenes/MainPage.unity", "Assets/Scenes/MapWithPlayer.unity" };
         buildPlayerOptions.locationPathName = "Builds/Windows/Client/Client.exe";
         buildPlayerOptions.target = BuildTarget.Android;
-        buildPlayerOptions.options = BuildOptions.CompressWithLz4HC;
+        buildPlayerOptions.options = BuildOptions.CompressWithLz4HC | BuildOptions.Development;
 
         Console.WriteLine("Building Client (Android)...");
         BuildPipeline.BuildPlayer(buildPlayerOptions);
