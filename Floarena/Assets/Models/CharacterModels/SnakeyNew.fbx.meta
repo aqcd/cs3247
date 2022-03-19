@@ -19,8 +19,14 @@ ModelImporter:
       74: -7078228917306714331
     second: FallingAnim
   - first:
-      74: -425899772093792019
-    second: JumpAnim
+      74: 4689140231233048061
+    second: DeathAnim
+  - first:
+      74: 4448416099467422586
+    second: PunchAnim
+  - first:
+      74: -8701680038050489907
+    second: SpellcastAnim
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -51,7 +57,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 3
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -205,11 +211,69 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: JumpAnim
-      takeName: JumpAnim
+      name: DeathAnim
+      takeName: DeathAnim
       internalID: 0
       firstFrame: 0
-      lastFrame: 75
+      lastFrame: 89
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: PunchAnim
+      takeName: PunchAnim
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 100
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: SpellcastAnim
+      takeName: SpellcastAnim
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 200
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -279,87 +343,7 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton:
-    - name: Snakey(Clone)
-      parentName: 
-      position: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: HopArmature
-      parentName: Snakey(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0.000000081460335, y: -0, z: -0, w: 1}
-      scale: {x: 0.01, y: 0.01, z: 0.01}
-    - name: CATRig_Pelvis
-      parentName: HopArmature
-      position: {x: 0.000000044497934, y: 10.091211, z: -0.9999999}
-      rotation: {x: 0.5000001, y: -0.5, z: -0.5, w: 0.5}
-      scale: {x: 1.0000002, y: 1.0000001, z: 1.0000002}
-    - name: CATRigL_Leg1
-      parentName: CATRig_Pelvis
-      position: {x: 0.082674585, y: 0.0000068157315, z: 5.409671}
-      rotation: {x: -0.0000018030405, y: 0.99999523, z: -0.0030224472, w: -0.0007042289}
-      scale: {x: 0.99879074, y: 0.9999695, z: 1.0000006}
-    - name: CATRigL_Leg1_end
-      parentName: CATRigL_Leg1
-      position: {x: -0, y: 6.9327507, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: CATRigSpine
-      parentName: CATRig_Pelvis
-      position: {x: 0.0000006109476, y: -0.0000008940697, z: 1.030287e-13}
-      rotation: {x: -0, y: -0, z: 0.000000029802322, w: 1}
-      scale: {x: 1.0000005, y: 1.0000007, z: 1.0000005}
-    - name: CATRigHead
-      parentName: CATRigSpine
-      position: {x: -10.67963, y: 0.00000071525574, z: 0.0000005941749}
-      rotation: {x: -0, y: -0, z: -0, w: 1}
-      scale: {x: 1.0000002, y: 1.0000004, z: 1}
-    - name: CATRigHead_end
-      parentName: CATRigHead
-      position: {x: -0, y: 10.679628, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: CATRigR_Leg1
-      parentName: CATRig_Pelvis
-      position: {x: 0.08267314, y: 0.0000065953136, z: -5.40967}
-      rotation: {x: -0.0000025033949, y: 0.9999951, z: 0.0030143554, w: 0.0008652507}
-      scale: {x: 0.9987912, y: 0.9999695, z: 1.0000004}
-    - name: CATRigR_Leg1_end
-      parentName: CATRigR_Leg1
-      position: {x: -0, y: 6.9327507, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: CATRigR_Arm
-      parentName: CATRig_Pelvis
-      position: {x: -4.635669, y: -0.0000010410553, z: -10.983372}
-      rotation: {x: 0.4280074, y: 0.56285864, z: -0.42800757, w: -0.5628583}
-      scale: {x: 1.0000014, y: 1.0000005, z: 1.0000006}
-    - name: CATRigR_Arm_end
-      parentName: CATRigR_Arm
-      position: {x: -0, y: 6.9327497, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: CATRigL_Arm
-      parentName: CATRig_Pelvis
-      position: {x: -4.6356683, y: -0.0000015219445, z: 10.983372}
-      rotation: {x: 0.42800733, y: 0.5628584, z: 0.4280075, w: 0.5628585}
-      scale: {x: 1, y: 1.0000008, z: 1.0000004}
-    - name: CATRigL_Arm_end
-      parentName: CATRigL_Arm
-      position: {x: -0, y: 6.9327497, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: Body
-      parentName: Snakey(Clone)
-      position: {x: -1.8225422e-14, y: 6.6258115e-15, z: -2.2737356e-15}
-      rotation: {x: -0.7071067, y: 8.665488e-22, z: -8.665487e-22, w: 0.7071068}
-      scale: {x: 0.01, y: 0.01, z: 0.01}
-    - name: Face
-      parentName: Snakey(Clone)
-      position: {x: -0.000000002960835, y: -0.0000000054947074, z: 0.012865494}
-      rotation: {x: -0.7071067, y: 8.665488e-22, z: -8.665487e-22, w: 0.7071068}
-      scale: {x: 0.01, y: 0.01, z: 0.01}
+    skeleton: []
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -370,7 +354,7 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 1
+    hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
