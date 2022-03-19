@@ -87,8 +87,7 @@ MonoBehaviour:
     type: 3}
   autoCreatePlayer: 0
   playerSpawnMethod: 0
-  spawnPrefabs: []
-  GameManagerPrefab: {fileID: 5810586301353646713, guid: e01249d95b24f7e47bf1e81c3ff52dc7,
-    type: 3}
+  spawnPrefabs:
+  - {fileID: 5810586301353646713, guid: e01249d95b24f7e47bf1e81c3ff52dc7, type: 3}
   MultiplayerManagersPrefab: {fileID: 8670354906546744981, guid: 804c7d5b34c034e4fa07861e6f2969d7,
     type: 3}

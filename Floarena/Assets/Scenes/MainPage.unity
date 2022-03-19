@@ -925,6 +925,7 @@ GameObject:
   - component: {fileID: 200271691}
   - component: {fileID: 200271690}
   - component: {fileID: 200271689}
+  - component: {fileID: 200271692}
   m_Layer: 5
   m_Name: HostGame
   m_TagString: Untagged
@@ -996,9 +997,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 797574311}
-        m_TargetAssemblyTypeName: CustomNetworkManager, Assembly-CSharp
-        m_MethodName: HostGame
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1046,6 +1047,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 200271687}
   m_CullTransparentMesh: 1
+--- !u!114 &200271692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200271687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb744a48cae57f54e8f5e6ea8ff24bde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &207519877
 GameObject:
   m_ObjectHideFlags: 0
@@ -2027,18 +2040,6 @@ RectTransform:
   m_AnchoredPosition: {x: 128, y: 128}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &797574311 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 71633633133276519, guid: e714e4cbbc247c349b807a5bb7c25099,
-    type: 3}
-  m_PrefabInstance: {fileID: 4656002670234482470}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b8fda6d89fb1f44893dcbdcc7abf9aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &846440149
 GameObject:
   m_ObjectHideFlags: 0
@@ -2886,6 +2887,7 @@ GameObject:
   - component: {fileID: 1048460864}
   - component: {fileID: 1048460863}
   - component: {fileID: 1048460862}
+  - component: {fileID: 1048460865}
   m_Layer: 5
   m_Name: JoinButton
   m_TagString: Untagged
@@ -2957,9 +2959,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 797574311}
-        m_TargetAssemblyTypeName: CustomNetworkManager, Assembly-CSharp
-        m_MethodName: JoinGame
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3007,6 +3009,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1048460860}
   m_CullTransparentMesh: 1
+--- !u!114 &1048460865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1048460860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abdece34e5002f54e876bfca73c4dd75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1087339570
 GameObject:
   m_ObjectHideFlags: 0
