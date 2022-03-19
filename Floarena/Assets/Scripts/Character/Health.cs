@@ -5,32 +5,37 @@ using Mirror;
 
 public class Health : NetworkBehaviour
 {
-    public int maxHealth = 200;
-    [SyncVar]
-    public int currentHealth = 0;
+    public float maxHealth;
+    [SyncVar(hook = nameof(UpdateHealth))]
+    public float currentHealth = 0;
 
     public bool hasBar = true;
     public HealthBar healthBar;
 
     void Awake()
     {
+        maxHealth = GameManager.instance.loadout.GetItemNetEffects().GetAttributeValue(Attribute.HP);
         currentHealth = maxHealth;
     }
 
-    void Update()
-    {
-        if (hasBar) {
-            healthBar.SetHealth(currentHealth);
+    void Update() {
+        // Simulate round ending event (player has died)
+        if (isLocalPlayer) {
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                MatchManager.instance.NewRound(MatchManager.instance.GetOpponentNum());
+            }
         }
+    }
 
-        // Testing
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            this.TakeDamage(10);
+    // Hook to currentHealth SyncVar
+    void UpdateHealth(float oldHealth, float newHealth) {
+        if (hasBar) {
+            healthBar.SetHealth(newHealth);    
         }
     }
 
     [Command]
-    void TakeDamage(int damage) {
+    public void TakeDamage(float damage) {
         currentHealth -= damage;
         if (currentHealth <= 0) {
             DestroyRoutine();
@@ -38,7 +43,7 @@ public class Health : NetworkBehaviour
     }
 
     [Command]
-    void TakeHealing(int healing) {
+    public void TakeHealing(float healing) {
         if (currentHealth + healing > maxHealth) {
             currentHealth = maxHealth;
         } else {
@@ -47,7 +52,7 @@ public class Health : NetworkBehaviour
     }
 
     [ClientRpc]
-    void DestroyRoutine() {
+    public void DestroyRoutine() {
         if (hasBar) {
             GameObject.Destroy(healthBar.gameObject);
         }

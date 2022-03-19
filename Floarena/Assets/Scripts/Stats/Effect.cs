@@ -1,9 +1,9 @@
 public class Effect
 {
     public Attribute attribute;
-    public double modifier;
+    public float modifier;
 
-    public Effect(Attribute attribute, double modifier) {
+    public Effect(Attribute attribute, float modifier) {
         this.attribute = attribute;
         this.modifier = modifier;
     }
