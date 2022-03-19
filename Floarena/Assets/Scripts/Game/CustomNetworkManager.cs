@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using UnityEngine.SceneManagement;
 
 public class CustomNetworkManager : NetworkManager {
     public static CustomNetworkManager instance;
@@ -13,18 +14,41 @@ public class CustomNetworkManager : NetworkManager {
     private Vector3 player2SpawnPos = new Vector3(10, 0, 10); // 55, 0, 55
 
     [Header("Initialization Prefabs")]
+    public GameObject GameManagerPrefab;
     public GameObject MultiplayerManagersPrefab;
 
     public override void Awake() {
-        base.Awake();
-
         if (instance == null) {
             instance = this;
         }
-
+        base.Awake();
         joinConfirmations = 0;
+        spawnPrefabs.Add(GameManagerPrefab);
         spawnPrefabs.Add(MultiplayerManagersPrefab);
-        DontDestroyOnLoad(gameObject.transform);
+        Instantiate(GameManagerPrefab);
+    }
+
+    public void HostGame() {
+        // Only attempt to host game when no connection is established yet
+        if (!NetworkClient.isConnected && !NetworkServer.active) {
+            networkAddress = "127.0.0.1";
+            
+            if (!NetworkClient.active) {
+                StartHost(); // Call superclass StartHost function
+                NetworkClient.Ready();
+            }
+        }
+    }
+
+    public void JoinGame() {
+        if (!NetworkClient.isConnected && !NetworkServer.active) {
+            networkAddress = "127.0.0.1";
+            
+            if (!NetworkClient.active) {
+                StartClient(); // Call superclass StartClient function
+                NetworkClient.Ready();
+            }
+        }
     }
 
     public override void OnStartHost() {
@@ -38,6 +62,7 @@ public class CustomNetworkManager : NetworkManager {
         Debug.Log("Server got client connection: " + conn.address + ". Total connections: " + NetworkServer.connections.Count);
 
         if (NetworkServer.connections.Count == 2) {
+            SceneManager.LoadScene("MapWithPlayer");
             Debug.Log("All players connected, loading new scene");
             LoadGameNetworkMessage msg = new LoadGameNetworkMessage();
             msg.started = true;
