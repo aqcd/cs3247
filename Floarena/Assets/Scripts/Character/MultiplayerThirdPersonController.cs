@@ -339,11 +339,15 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
             Color color = transparentMaterial.color;
             color.a = 0.8f;
             this.GetComponentInChildren<SkinnedMeshRenderer>().material.color = color;
+
             Color barColor = _slider.GetComponent<Image>().color;
             barColor.a = 0.2f;
             _slider.GetComponent<Image>().color = barColor;
         } else {
-            _controller.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
+            foreach (SkinnedMeshRenderer s in _controller.GetComponentsInChildren<SkinnedMeshRenderer>()) {
+                s.enabled = false;
+            }
+
             _slider.SetActive(false);
         }
     }
@@ -355,7 +359,9 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         barColor.a = 1.0f;
         _slider.GetComponent<Image>().color = barColor;
 
-        _controller.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
+        foreach (SkinnedMeshRenderer s in _controller.GetComponentsInChildren<SkinnedMeshRenderer>()) {
+            s.enabled = true;
+        }
         _slider.SetActive(true);
     }
 
@@ -371,7 +377,6 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         } else if (collider.tag == "HealthConsumable") {
             Heal();
             Vector3 positionOnGrid = collider.transform.position;
-            //collider.GetComponent<HealthItem>().SpawnPickupItem(positionOnGrid);
             GameObject mapVisualizer = GameObject.Find("MapVisualizer");
             mapVisualizer.GetComponent<MapVisualizer>().SpawnPickupItem(positionOnGrid); // Respawn after delay
             Destroy(collider.gameObject); // Destroy HealthConsumable
