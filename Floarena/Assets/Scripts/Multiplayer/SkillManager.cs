@@ -51,4 +51,12 @@ public class SkillManager : MonoBehaviour {
         skillObjs.Add(req.asset as GameObject);
         Debug.Log("Done loading " + skillName);
     }
+
+    public Skill GetSkill(int index) {
+        return skillList[index];
+    }
+
+    public GameObject GetSkillObject(int index) {
+        return skillObjs[index];
+    }
 }
