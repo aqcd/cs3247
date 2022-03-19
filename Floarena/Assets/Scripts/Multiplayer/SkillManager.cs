@@ -8,6 +8,8 @@ public class SkillManager : MonoBehaviour {
     public List<Skill> skillList;
     public List<GameObject> skillObjs;
 
+    public List<SkillJoystickController> skillJoysticks;
+
     private void Awake() {
         if (instance == null) {
             instance = this;
@@ -28,7 +30,13 @@ public class SkillManager : MonoBehaviour {
 
         for (int i = 0; i < loadoutSkills.Length; i++) {
             skillList.Add(loadoutSkills[i]);
-            StartCoroutine(LoadSkillsCoroutine(loadoutSkills[i].ToString()));
+            // StartCoroutine(LoadSkillsCoroutine(loadoutSkills[i].ToString()));
+            skillObjs.Add(Resources.Load("Skills/" + loadoutSkills[i].ToString()) as GameObject);
+        }
+
+        for (int i = 0; i < skillJoysticks.Count; i++) {
+            skillJoysticks[i].SetSkill(skillList[i]);
+            skillJoysticks[i].SetSkillObject(skillObjs[i]);
         }
     }
 
@@ -39,7 +47,7 @@ public class SkillManager : MonoBehaviour {
         }
         Debug.Log("Old resources unloaded");
     }
-
+    /*
     IEnumerator LoadSkillsCoroutine(string skillName) {
         Debug.Log("Loading " + skillName);
         ResourceRequest req = Resources.LoadAsync("Skills/" + skillName);
@@ -51,6 +59,7 @@ public class SkillManager : MonoBehaviour {
         skillObjs.Add(req.asset as GameObject);
         Debug.Log("Done loading " + skillName);
     }
+    */
 
     public Skill GetSkill(int index) {
         return skillList[index];

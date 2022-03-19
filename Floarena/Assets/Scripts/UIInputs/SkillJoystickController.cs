@@ -35,9 +35,6 @@ public class SkillJoystickController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        skill = SkillManager.instance.GetSkill(skillIndex);
-        skillObj = SkillManager.instance.GetSkillObject(skillIndex);
-
         if (mainCamera == null)
         {
             mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
@@ -167,5 +164,15 @@ public class SkillJoystickController : MonoBehaviour
         targetCircleCanvas.enabled = false;
         rangeIndicatorCanvas.enabled = false;
         cancelZone.enabled = false;
+    }
+
+    public void SetSkill(Skill skill)
+    {
+        this.skill = skill;
+    }
+
+    public void SetSkillObject(GameObject skillObj)
+    {
+        this.skillObj = skillObj;
     }
 }
