@@ -47,6 +47,7 @@ public class GameManager : NetworkManager {
             Debug.Log("Not connected");
 
             if (!NetworkClient.active) {
+                UISwitchHandler.instance.DisplayWaitScreen();
                 StartClient(); // Call superclass StartClient function
             }
         }
