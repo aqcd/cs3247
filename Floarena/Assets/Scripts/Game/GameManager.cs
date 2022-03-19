@@ -43,7 +43,7 @@ public class GameManager : NetworkManager {
     public void JoinGame() {
         Debug.Log("Clicked");
         if (!NetworkClient.isConnected && !NetworkServer.active) {
-            networkAddress = "127.0.0.1";
+            networkAddress = "13.215.67.49";
             Debug.Log("Not connected");
 
             if (!NetworkClient.active) {

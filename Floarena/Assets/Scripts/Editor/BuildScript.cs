@@ -7,7 +7,7 @@ public class BuildScript {
     [MenuItem("Build/Build All")]
     public static void BuildAll()
     {
-        // BuildWindowsServer();
+        BuildWindowsServer();
         BuildLinuxServer();
         BuildWindowsClient();
         BuildAndroidClient();
@@ -18,7 +18,7 @@ public class BuildScript {
     {
         BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
         buildPlayerOptions.scenes = new[] { "Assets/Scenes/MainPage.unity", "Assets/Scenes/MapWithPlayer.unity" };
-        buildPlayerOptions.locationPathName = "Builds/Windows/Server/Server.exe";
+        buildPlayerOptions.locationPathName = "Builds/Windows/Server/FloarenaServer.exe";
         buildPlayerOptions.target = BuildTarget.StandaloneWindows64;
         buildPlayerOptions.options = BuildOptions.CompressWithLz4HC | BuildOptions.EnableHeadlessMode;
 
@@ -32,7 +32,7 @@ public class BuildScript {
     {
         BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
         buildPlayerOptions.scenes = new[] { "Assets/Scenes/MainPage.unity", "Assets/Scenes/MapWithPlayer.unity" };
-        buildPlayerOptions.locationPathName = "Builds/Linux/Server/Server.x86_64";
+        buildPlayerOptions.locationPathName = "Builds/Linux/Server/FloarenaServer.x86_64";
         buildPlayerOptions.target = BuildTarget.StandaloneLinux64;
         buildPlayerOptions.options = BuildOptions.CompressWithLz4HC | BuildOptions.EnableHeadlessMode;
 
@@ -47,7 +47,7 @@ public class BuildScript {
     {
         BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
         buildPlayerOptions.scenes = new[] { "Assets/Scenes/MainPage.unity", "Assets/Scenes/MapWithPlayer.unity" };
-        buildPlayerOptions.locationPathName = "Builds/Windows/Client/Client.exe";
+        buildPlayerOptions.locationPathName = "Builds/Windows/Client/Floarena.exe";
         buildPlayerOptions.target = BuildTarget.StandaloneWindows64;
         buildPlayerOptions.options = BuildOptions.CompressWithLz4HC | BuildOptions.Development;
 
@@ -61,7 +61,7 @@ public class BuildScript {
     {
         BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
         buildPlayerOptions.scenes = new[] { "Assets/Scenes/MainPage.unity", "Assets/Scenes/MapWithPlayer.unity" };
-        buildPlayerOptions.locationPathName = "Builds/Windows/Client/Client.exe";
+        buildPlayerOptions.locationPathName = "Builds/Android/Client/Floarena.apk";
         buildPlayerOptions.target = BuildTarget.Android;
         buildPlayerOptions.options = BuildOptions.CompressWithLz4HC | BuildOptions.Development;
 
