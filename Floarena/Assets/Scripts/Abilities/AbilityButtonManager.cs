@@ -8,14 +8,13 @@ public class AbilityButtonManager : MonoBehaviour
     public static AbilityButtonManager instance;
 
     [SerializeField]
-    AbilityButton ability1;
+    AbilityJoystickController ability1;
 
     [SerializeField]
-    AbilityButton ability2;
+    AbilityJoystickController ability2;
 
     [SerializeField]
-    AbilityButton ability3;
-
+    AbilityJoystickController ability3;
 
     void Awake() {
         if (instance == null) {

@@ -12,6 +12,14 @@ namespace StarterAssets
 		public Vector2 look;
 		public bool jump;
 		public bool sprint;
+		public bool dash;
+
+
+		[Header("Ability Input Values")]
+		public Vector2 skillshot;
+		public Vector2 targetCircle;
+		public bool skillshotPressed;
+		public bool targetCirclePressed;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -45,6 +53,23 @@ namespace StarterAssets
 		{
 			SprintInput(value.isPressed);
 		}
+
+		public void OnDash(InputValue value)
+		{
+			DashInput(value.isPressed);
+		}
+
+		public void OnSkillshot(InputValue value)
+		{
+			SkillshotInput(value.Get<Vector2>());
+			SkillShotStateInput(value.isPressed);
+		}
+
+		public void OnTargetCircle(InputValue value)
+		{
+			TargetCircleInput(value.Get<Vector2>());
+			TargetCircleStateInput(value.isPressed);
+		}
 #else
 	// old input sys if we do decide to have it (most likely wont)...
 #endif
@@ -68,6 +93,31 @@ namespace StarterAssets
 		public void SprintInput(bool newSprintState)
 		{
 			sprint = newSprintState;
+		}
+
+		public void DashInput(bool newDashState)
+		{
+			dash = newDashState;
+		}
+
+		public void SkillshotInput(Vector2 newSkillshotDirection)
+		{
+			skillshot = newSkillshotDirection;
+		}
+
+		public void SkillShotStateInput(bool newSkillShotState)
+		{
+			skillshotPressed = newSkillShotState;
+		}
+
+		public void TargetCircleInput(Vector2 newTargetCircleDirection)
+		{
+			targetCircle = newTargetCircleDirection;
+		}
+
+		public void TargetCircleStateInput(bool newTargetCircleState)
+		{
+			targetCirclePressed = newTargetCircleState;
 		}
 
 #if !UNITY_IOS || !UNITY_ANDROID

@@ -227,7 +227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 7411385557201373851}
-  abilityImage: {fileID: 7411385557486498702}
+  abilityImageOverlay: {fileID: 0}
   cooldownDisplay: {fileID: 7411385556907623731}
   abilityPosition: 1
 --- !u!1 &7411385557486498700
