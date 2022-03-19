@@ -140,6 +140,7 @@ public class MatchManager : NetworkBehaviour {
     }
 
     public GameObject GetPlayer() {
+        Debug.Log("wwwwwwwwwwwwwwwwwww: " + playerRef);
         return playerRef;
     }
 
