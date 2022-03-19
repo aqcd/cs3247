@@ -10,9 +10,9 @@ public class Skill
 
     public AimType aimType;
 
-    public double cooldown;
+    public float cooldown;
 
-    public Skill(string name, string description, AimType aimType, double cooldown) {
+    public Skill(string name, string description, AimType aimType, float cooldown) {
         this.name = name;
         this.description = description;
         this.aimType = aimType;
