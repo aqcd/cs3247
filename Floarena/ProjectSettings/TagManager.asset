@@ -7,6 +7,8 @@ TagManager:
   - CinemachineTarget
   - bullet
   - PlayerCamera
+  - Brush
+  - HealthConsumable
   layers:
   - Default
   - TransparentFX

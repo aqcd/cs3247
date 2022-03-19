@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using Cinemachine;
+using UnityEngine.UI;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
@@ -85,6 +86,10 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
     private CharacterController _controller;
     private MultiplayerInputs _input;
     private GameObject _mainCamera;
+    private GameObject _slider;
+
+    public Material transparentMaterial;
+    public Material opaqueMaterial;
 
     private const float _threshold = 0.01f;
 
@@ -134,6 +139,7 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         _hasAnimator = TryGetComponent(out _animator);
         _controller = GetComponent<CharacterController>();
         _input = GetComponent<MultiplayerInputs>();
+        _slider = _controller.GetComponentInChildren<HealthBar>().healthBarSlider.gameObject;
 
         AssignAnimationIDs();
 
@@ -177,6 +183,9 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
 
     private void Move()
     {
+        if (!gameObject.GetComponent<PlayerManager>().GetCanMove()) {
+            return;
+        }
         // set target speed based on move speed, sprint speed and if sprint is pressed
         float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
@@ -322,6 +331,63 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         
         // when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
         Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
+    }
+
+    private void SetPlayerInvisible() {
+        if (this.isLocalPlayer) {
+            this.GetComponentInChildren<SkinnedMeshRenderer>().material = transparentMaterial;
+            Color color = transparentMaterial.color;
+            color.a = 0.8f;
+            this.GetComponentInChildren<SkinnedMeshRenderer>().material.color = color;
+            Color barColor = _slider.GetComponent<Image>().color;
+            barColor.a = 0.2f;
+            _slider.GetComponent<Image>().color = barColor;
+        } else {
+            _controller.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
+            _slider.SetActive(false);
+        }
+    }
+
+    private void SetPlayerVisible() {
+        this.GetComponentInChildren<SkinnedMeshRenderer>().material = opaqueMaterial;
+
+        Color barColor = _slider.GetComponent<Image>().color;
+        barColor.a = 1.0f;
+        _slider.GetComponent<Image>().color = barColor;
+
+        _controller.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
+        _slider.SetActive(true);
+    }
+
+    private void Heal() {
+        if (this.isLocalPlayer) {
+            _controller.GetComponent<Health>().TakeHealing(20);
+        }
+    }
+
+    private void OnTriggerEnter(Collider collider) {
+        if (collider.tag == "Brush") {
+            SetPlayerInvisible();
+        } else if (collider.tag == "HealthConsumable") {
+            Heal();
+            Vector3 positionOnGrid = collider.transform.position;
+            //collider.GetComponent<HealthItem>().SpawnPickupItem(positionOnGrid);
+            GameObject mapVisualizer = GameObject.Find("MapVisualizer");
+            mapVisualizer.GetComponent<MapVisualizer>().SpawnPickupItem(positionOnGrid); // Respawn after delay
+            Destroy(collider.gameObject); // Destroy HealthConsumable
+        }
+    }
+
+    private void OnTriggerStay(Collider collider) {
+        if (collider.tag == "Brush") {
+            SetPlayerInvisible();
+        }
+    }
+
+    private void OnTriggerExit(Collider collider) {
+        if (collider.tag == "Brush") {
+            SetPlayerVisible();
+        } 
     }
 
     private void OnCollisionEnter(Collision other) {

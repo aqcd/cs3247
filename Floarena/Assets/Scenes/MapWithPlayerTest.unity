@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -208,6 +208,7 @@ GameObject:
   m_Component:
   - component: {fileID: 505955337}
   - component: {fileID: 505955336}
+  - component: {fileID: 505955338}
   m_Layer: 0
   m_Name: MapVisualizer
   m_TagString: Untagged
@@ -227,9 +228,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0fa2a80927676f43b621e609166184d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   liGoSpawn:
-  - {fileID: 6036714706004075, guid: 637e6b97bc6eb974fac3640a6ea81aa3, type: 3}
-  - {fileID: 471655705233793389, guid: 0d5b3b07e06cc614b8df5ca94c007ada, type: 3}
+  - {fileID: 3628741095879785448, guid: a7be7db179bc75c43bb018d4b0005758, type: 3}
+  - {fileID: 3628741095879785448, guid: a232551061eff204988ad9ba3c29dd74, type: 3}
   wallPrefab: {fileID: 1507879402583065680, guid: f5afe6ece1be7aa4f80b85d6a40fcc2a,
     type: 3}
   brushPrefab: {fileID: 8689998506251213869, guid: 5866e83bd853b59439b4555bee7fd699,
@@ -248,6 +251,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &505955338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 505955335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 335665056
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &559997501
 GameObject:
   m_ObjectHideFlags: 0
@@ -931,6 +951,23 @@ PrefabInstance:
       propertyPath: m_Name
       value: NetworkManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8111299358558800130, guid: 1048b80d5f305b947ae46ef60520a05e,
+        type: 3}
+      propertyPath: spawnPrefabs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8111299358558800130, guid: 1048b80d5f305b947ae46ef60520a05e,
+        type: 3}
+      propertyPath: spawnPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 3628741095879785448, guid: a7be7db179bc75c43bb018d4b0005758,
+        type: 3}
+    - target: {fileID: 8111299358558800130, guid: 1048b80d5f305b947ae46ef60520a05e,
+        type: 3}
+      propertyPath: spawnPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 3628741095879785448, guid: a232551061eff204988ad9ba3c29dd74,
+        type: 3}
     - target: {fileID: 8111299358558800141, guid: 1048b80d5f305b947ae46ef60520a05e,
         type: 3}
       propertyPath: m_RootOrder

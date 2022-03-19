@@ -6,7 +6,7 @@ public class Heal : MonoBehaviour, ISkill
 {
     private GameObject player;
     private Health playerHealth;
-    private float healMagnitude = (float) SkillConstants.HEAL_HP_RATIO;
+    private float healMagnitude = SkillConstants.HEAL_HP_RATIO;
 
     void Start()
     {
