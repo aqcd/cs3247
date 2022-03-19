@@ -4,6 +4,8 @@ using UnityEngine;
 using Mirror;
 
 public class CustomNetworkManager : NetworkManager {
+    public static CustomNetworkManager instance;
+    
     private int joinConfirmations = 0;
     private NetworkConnectionToClient player1Conn;
     private NetworkConnectionToClient player2Conn;
@@ -15,8 +17,14 @@ public class CustomNetworkManager : NetworkManager {
 
     public override void Awake() {
         base.Awake();
+
+        if (instance == null) {
+            instance = this;
+        }
+
         joinConfirmations = 0;
         spawnPrefabs.Add(MultiplayerManagersPrefab);
+        DontDestroyOnLoad(gameObject.transform);
     }
 
     public override void OnStartHost() {

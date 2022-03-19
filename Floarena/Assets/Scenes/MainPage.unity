@@ -775,46 +775,6 @@ MonoBehaviour:
   - {fileID: 193681044}
   - {fileID: 193681043}
   - {fileID: 193681042}
-  itemSprites:
-    _Buckets: 020000000100000000000000
-    _HashCodes: a4222a716389f57810ef2760
-    _Next: ffffffffffffffffffffffff
-    _Count: 3
-    _Version: 84
-    _FreeList: -1
-    _FreeCount: 0
-    _Keys:
-    - Sturdy Soil
-    - Light Soil
-    - Prickly Thorns
-    _Values:
-    - {fileID: 21300000, guid: 273438e1556e2ec4f8f0bda6d4bda308, type: 3}
-    - {fileID: 21300000, guid: 65b8bf3aaca3a1947b1e3344228e4cbc, type: 3}
-    - {fileID: 21300000, guid: 93dec195b833bdf4b92aecfa52cccb4f, type: 3}
-  skillSprites:
-    _Buckets: 0200000003000000ffffffffffffffff010000000000000004000000
-    _HashCodes: c81c4e613c708b72becd10780d14845c4909744e0000000000000000
-    _Next: ffffffffffffffffffffffffffffffffffffffff0000000000000000
-    _Count: 5
-    _Version: 111
-    _FreeList: -1
-    _FreeCount: 0
-    _Keys:
-    - Heal
-    - Rush
-    - Vine Attack
-    - Vine Pull
-    - Test Placeholder
-    - 
-    - 
-    _Values:
-    - {fileID: 21300000, guid: 35fcdcb23e5af15419900621c5577744, type: 3}
-    - {fileID: 21300000, guid: 6a6cadbd2a787b348a75915432bdccde, type: 3}
-    - {fileID: 21300000, guid: 842ae6335c7501e48a5edcf97be6386a, type: 3}
-    - {fileID: 21300000, guid: 91bd608d79ff6834a9595594a601fa02, type: 3}
-    - {fileID: 21300000, guid: acc827e6ed9563d4c92338632ad64050, type: 3}
-    - {fileID: 0}
-    - {fileID: 0}
 --- !u!114 &193681042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3199,34 +3159,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 764234154, guid: e01249d95b24f7e47bf1e81c3ff52dc7, type: 3}
-      propertyPath: Port
-      value: 7777
-      objectReference: {fileID: 0}
-    - target: {fileID: 764234155, guid: e01249d95b24f7e47bf1e81c3ff52dc7, type: 3}
-      propertyPath: playerPrefab
-      value: 
-      objectReference: {fileID: 760820273794983962, guid: 5574a4d83afcafa4da442fdfde69bab7,
-        type: 3}
-    - target: {fileID: 764234155, guid: e01249d95b24f7e47bf1e81c3ff52dc7, type: 3}
-      propertyPath: spawnPrefabs.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 764234155, guid: e01249d95b24f7e47bf1e81c3ff52dc7, type: 3}
-      propertyPath: MultiplayerManagersPrefab
-      value: 
-      objectReference: {fileID: 8670354906546744981, guid: 804c7d5b34c034e4fa07861e6f2969d7,
-        type: 3}
-    - target: {fileID: 764234155, guid: e01249d95b24f7e47bf1e81c3ff52dc7, type: 3}
-      propertyPath: spawnPrefabs.Array.data[0]
-      value: 
-      objectReference: {fileID: 3628741095879785448, guid: a232551061eff204988ad9ba3c29dd74,
-        type: 3}
-    - target: {fileID: 764234155, guid: e01249d95b24f7e47bf1e81c3ff52dc7, type: 3}
-      propertyPath: spawnPrefabs.Array.data[1]
-      value: 
-      objectReference: {fileID: 3628741095879785448, guid: a232551061eff204988ad9ba3c29dd74,
-        type: 3}
     - target: {fileID: 3241040559355087311, guid: e01249d95b24f7e47bf1e81c3ff52dc7,
         type: 3}
       propertyPath: sceneId
@@ -6020,3 +5952,72 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2123067399}
   m_CullTransparentMesh: 1
+--- !u!1001 &4656002670234482470
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1664565133651870900, guid: e714e4cbbc247c349b807a5bb7c25099,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1664565133651870900, guid: e714e4cbbc247c349b807a5bb7c25099,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 312.23346
+      objectReference: {fileID: 0}
+    - target: {fileID: 1664565133651870900, guid: e714e4cbbc247c349b807a5bb7c25099,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 177.18652
+      objectReference: {fileID: 0}
+    - target: {fileID: 1664565133651870900, guid: e714e4cbbc247c349b807a5bb7c25099,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 152.30707
+      objectReference: {fileID: 0}
+    - target: {fileID: 1664565133651870900, guid: e714e4cbbc247c349b807a5bb7c25099,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1664565133651870900, guid: e714e4cbbc247c349b807a5bb7c25099,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1664565133651870900, guid: e714e4cbbc247c349b807a5bb7c25099,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1664565133651870900, guid: e714e4cbbc247c349b807a5bb7c25099,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1664565133651870900, guid: e714e4cbbc247c349b807a5bb7c25099,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1664565133651870900, guid: e714e4cbbc247c349b807a5bb7c25099,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1664565133651870900, guid: e714e4cbbc247c349b807a5bb7c25099,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383501846493082811, guid: e714e4cbbc247c349b807a5bb7c25099,
+        type: 3}
+      propertyPath: m_Name
+      value: NetworkManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e714e4cbbc247c349b807a5bb7c25099, type: 3}

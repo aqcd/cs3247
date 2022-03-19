@@ -13,10 +13,13 @@ public class GameManager : NetworkBehaviour {
         if (instance == null) {
             instance = this;
         }        
-        networkManager = transform.GetComponent<NetworkManager>();
         DontDestroyOnLoad(gameObject.transform);
         // Register handler for when server asks client to start a game
         NetworkClient.RegisterHandler<LoadGameNetworkMessage>(LoadGame);
+    }
+
+    private void Start() {
+        networkManager = CustomNetworkManager.instance;
     }
 
     public void HostGame() {
