@@ -215,6 +215,7 @@ MonoBehaviour:
   mapVisualizer: {fileID: 1566078621}
   numOfPickupItems: 10
   numOfBrush: 20
+  numOfRocks: 30
   width: 60
   length: 60
 --- !u!1001 &1123159516
@@ -404,6 +405,8 @@ MonoBehaviour:
   wallPrefab: {fileID: 1507879402583065680, guid: f5afe6ece1be7aa4f80b85d6a40fcc2a,
     type: 3}
   brushPrefab: {fileID: 8689998506251213869, guid: 5866e83bd853b59439b4555bee7fd699,
+    type: 3}
+  rockPrefab: {fileID: 5352347528250386450, guid: fc4bfe88c7adf4642862ed31bcc5ae0e,
     type: 3}
 --- !u!4 &1566078622
 Transform:

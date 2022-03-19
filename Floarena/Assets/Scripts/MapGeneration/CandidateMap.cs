@@ -8,17 +8,20 @@ public class CandidateMap {
     private MapGrid grid;
     private int numberOfPickupItems = 0;
     private int numberOfBrush = 0;
+    private int numberOfRocks = 0;
     private bool[] mapItemsArray = null;
     private List<PickupItem> pickupItemsList;
     private List<FixedStructure> fixedStructuresList;
     private List<RandomBrush> brushList;
+    private List<Rock> rocksList;
 
     public MapGrid Grid { get => grid; }
     public bool[] MapItemsArray { get => mapItemsArray; }
 
-    public CandidateMap(MapGrid grid, int numberOfPickupItems, int numberOfBrush) {
+    public CandidateMap(MapGrid grid, int numberOfPickupItems, int numberOfBrush, int numberOfRocks) {
         this.numberOfPickupItems = numberOfPickupItems;
         this.numberOfBrush = numberOfBrush;
+        this.numberOfRocks = numberOfRocks;
         this.grid = grid;
     }
 
@@ -27,9 +30,11 @@ public class CandidateMap {
         this.pickupItemsList = new List<PickupItem>();
         this.fixedStructuresList = new List<FixedStructure>();
         this.brushList = new List<RandomBrush>();
+        this.rocksList = new List<Rock>();
         InitializeFixedStructures();
         RandomlyPlacePickupItems(this.numberOfPickupItems);
         RandomlyPlaceBrush(this.numberOfBrush);
+        RandomlyPlaceRocks(this.numberOfRocks);
     }
 
     private bool CheckIfPositionCanBeObstacle(Vector3 position) {
@@ -48,6 +53,22 @@ public class CandidateMap {
                 var coordinates = grid.CalculateCoordinatesFromIndex(randomIndex);
                 mapItemsArray[randomIndex] = true;
                 pickupItemsList.Add(new PickupItem(coordinates)); // Placed item
+                count--;
+            }
+            itemPlacementTryLimit--;
+        }
+    }
+
+    private void RandomlyPlaceRocks(int numberOfRocks) {
+        var count = numberOfRocks;
+        var itemPlacementTryLimit = 100;
+        while (count > 0 && itemPlacementTryLimit > 0) {
+            var randomIndex = Random.Range(0, mapItemsArray.Length);
+            if (mapItemsArray[randomIndex] == false) {
+                // Free space
+                var coordinates = grid.CalculateCoordinatesFromIndex(randomIndex);
+                mapItemsArray[randomIndex] = true;
+                rocksList.Add(new Rock(coordinates)); // Placed item
                 count--;
             }
             itemPlacementTryLimit--;
@@ -188,7 +209,8 @@ public class CandidateMap {
             mapItemsArray = this.mapItemsArray,
             pickupItemsList = pickupItemsList,
             fixedStructuresList = fixedStructuresList,
-            brushList = brushList
+            brushList = brushList,
+            rocksList = rocksList
         };
     }
 }
