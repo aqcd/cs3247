@@ -12,6 +12,8 @@ public class AbilityJoystickController : MonoBehaviour
 
     public Ability ability;
 
+    public float abilityNumber;
+
     bool isCooldown = false;
 
     private UIVirtualJoystick joystick;
@@ -33,7 +35,7 @@ public class AbilityJoystickController : MonoBehaviour
     void Start()
     {
         // placeholder
-        ability = new Ability("test", 5, 2);
+        ability = new Ability("test", 5, abilityNumber);
         abilityImageOverlay.fillAmount = 0;
 
         skillshotCanvas = (abilityCanvas.transform.GetChild(2).gameObject.GetComponent<Canvas>());

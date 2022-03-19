@@ -775,6 +775,11 @@ PrefabInstance:
       propertyPath: cancelZone
       value: 
       objectReference: {fileID: 1928781445}
+    - target: {fileID: 117836744266156296, guid: 50ae273a8667a4bab8330fd30e564d52,
+        type: 3}
+      propertyPath: abilityNumber
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 117836744266156297, guid: 50ae273a8667a4bab8330fd30e564d52,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1131,6 +1136,11 @@ PrefabInstance:
       propertyPath: cancelZone
       value: 
       objectReference: {fileID: 1928781445}
+    - target: {fileID: 117836744266156296, guid: 50ae273a8667a4bab8330fd30e564d52,
+        type: 3}
+      propertyPath: abilityNumber
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 117836744266156297, guid: 50ae273a8667a4bab8330fd30e564d52,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1310,6 +1320,11 @@ PrefabInstance:
       propertyPath: cancelZone
       value: 
       objectReference: {fileID: 1928781445}
+    - target: {fileID: 117836744266156296, guid: 50ae273a8667a4bab8330fd30e564d52,
+        type: 3}
+      propertyPath: abilityNumber
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 117836744266156297, guid: 50ae273a8667a4bab8330fd30e564d52,
         type: 3}
       propertyPath: m_Pivot.x
