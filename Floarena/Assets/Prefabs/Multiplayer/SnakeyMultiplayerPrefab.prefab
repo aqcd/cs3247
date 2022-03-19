@@ -594,6 +594,8 @@ MonoBehaviour:
   BottomClamp: -30
   CameraAngleOverride: 0
   LockCameraPosition: 0
+  transparentMaterial: {fileID: 2100000, guid: 2d33bbcd8f01f234eaf29832634e7da4, type: 2}
+  opaqueMaterial: {fileID: 2100000, guid: 9797c45b61837f448877b4b4d0efc1fb, type: 2}
 --- !u!54 &8557802535423138506
 Rigidbody:
   m_ObjectHideFlags: 0

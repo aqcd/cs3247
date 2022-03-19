@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 public class MapVisualizer : MonoBehaviour {
     private Transform parent;
     public List<GameObject> liGoSpawn = new List<GameObject>(); // Prefabs for pickup items
     public GameObject wallPrefab; // Prefab for wall structure
     public GameObject brushPrefab; // Prefab for brush
+
+    private IEnumerator coroutine;
 
     private void Awake() {
         parent = this.transform;
@@ -34,13 +37,24 @@ public class MapVisualizer : MonoBehaviour {
     private bool PlacePickupItem(MapData data, Vector3 positionOnGrid) {
         foreach (var pickupItem in data.pickupItemsList) {
             if (pickupItem.Position == positionOnGrid) {
-                Vector3 offset = new Vector3(0f, -0.5f, 0f);
+                Vector3 offset = new Vector3(0f, -1.0f, 0f);
                 GameObject goToSpawn = liGoSpawn[Random.Range(0, liGoSpawn.Count)];
                 Instantiate(goToSpawn, positionOnGrid + offset, Quaternion.identity);
                 return true;
             }
         }
         return false;
+    }
+
+    private IEnumerator PlacePickupItemWithDelay(float waitTime, Vector3 positionOnGrid) {
+        yield return new WaitForSeconds(waitTime);
+        GameObject goToSpawn = liGoSpawn[Random.Range(0, liGoSpawn.Count)];
+        Instantiate(goToSpawn, positionOnGrid, Quaternion.identity);
+    }
+
+    public void SpawnPickupItem(Vector3 positionOnGrid) {
+        coroutine = PlacePickupItemWithDelay(5.0f, positionOnGrid);
+        StartCoroutine(coroutine);
     }
 
     private bool PlaceBrush(MapData data, Vector3 positionOnGrid) {
