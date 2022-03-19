@@ -66,7 +66,7 @@ public class SkillJoystickController : MonoBehaviour
         Vector3 localPosition = new Vector3(pointerPosition.x, pointerPosition.y, 0.0f);
         Vector3 worldPosition = transform.TransformPoint(localPosition);
         
-        print(cancelZone.transform.position);
+        // print(cancelZone.transform.position);
 
         if (!isCooldown)
         {
