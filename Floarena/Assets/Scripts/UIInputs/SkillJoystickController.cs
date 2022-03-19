@@ -66,7 +66,7 @@ public class SkillJoystickController : MonoBehaviour
         Vector3 localPosition = new Vector3(pointerPosition.x, pointerPosition.y, 0.0f);
         Vector3 worldPosition = transform.TransformPoint(localPosition);
         
-        print(cancelZone.transform.position);
+        // print(cancelZone.transform.position);
 
         if (!isCooldown)
         {
@@ -174,5 +174,12 @@ public class SkillJoystickController : MonoBehaviour
     public void SetSkillObject(GameObject skillObj)
     {
         this.skillObj = skillObj;
+    }
+
+    public void SetSkillImage(Sprite skillImage) {
+        // Setting SkillImage
+        transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Image>().sprite = skillImage;
+        // Setting SkillImageOverlay
+        transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<Image>().sprite = skillImage;
     }
 }
