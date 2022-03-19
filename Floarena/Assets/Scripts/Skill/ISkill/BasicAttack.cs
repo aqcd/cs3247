@@ -12,7 +12,7 @@ public class BasicAttack : MonoBehaviour, ISkill
 
     private float timeToAttack = 0.0f;
 
-    void Start()
+    void Awake()
     {
         player = MatchManager.instance.GetPlayer();
         // get attributes from loadout and calculate attack stats
