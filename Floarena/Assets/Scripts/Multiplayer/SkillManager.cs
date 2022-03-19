@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SkillManager : MonoBehaviour {
     
     public static SkillManager instance;
     public List<Skill> skillList;
     public List<GameObject> skillObjs;
+    public List<Image> skillImgs;
+
 
     public List<SkillJoystickController> skillJoysticks;
 
@@ -17,6 +20,7 @@ public class SkillManager : MonoBehaviour {
 
         skillList = new List<Skill>();
         skillObjs = new List<GameObject>();
+        skillImgs = new List<Image>();
     }
 
     void Start() {}
