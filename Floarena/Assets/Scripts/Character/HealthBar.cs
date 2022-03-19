@@ -13,7 +13,7 @@ public class HealthBar : MonoBehaviour
     public GameObject dividerPrefab;
 
     [SerializeField]
-    private int division = 100;
+    private float division = 100;
 
     private void Start()
     {
@@ -25,7 +25,7 @@ public class HealthBar : MonoBehaviour
 
         float pixelsPerHP = (float)barWidth / objectHealth.maxHealth;
         float lineOffset = pixelsPerHP * division;
-        int numberOfLines = Mathf.RoundToInt((float)objectHealth.maxHealth / division);
+        int numberOfLines = Mathf.FloorToInt(objectHealth.maxHealth / division);
         RectTransform dividerRt = (RectTransform)dividerPrefab.transform;
         float dividerWidth = dividerRt.rect.width;
         for (int i = 1; i < numberOfLines + 1; i++) {
@@ -36,7 +36,7 @@ public class HealthBar : MonoBehaviour
         
     }
 
-    public void SetHealth(int hp)
+    public void SetHealth(float hp)
     {
         healthBarSlider.value = hp;
         //healthString.text = hp.ToString();

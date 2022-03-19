@@ -5,15 +5,16 @@ using Mirror;
 
 public class Health : NetworkBehaviour
 {
-    public int maxHealth = 200;
+    public float maxHealth;
     [SyncVar]
-    public int currentHealth = 0;
+    public float currentHealth = 0;
 
     public bool hasBar = true;
     public HealthBar healthBar;
 
     void Awake()
     {
+        maxHealth = GameManager.instance.loadout.GetItemNetEffects().GetAttributeValue(Attribute.HP);
         currentHealth = maxHealth;
     }
 
@@ -32,7 +33,7 @@ public class Health : NetworkBehaviour
     }
 
     [Command]
-    public void TakeDamage(int damage) {
+    public void TakeDamage(float damage) {
         currentHealth -= damage;
         if (currentHealth <= 0) {
             DestroyRoutine();
@@ -40,7 +41,7 @@ public class Health : NetworkBehaviour
     }
 
     [Command]
-    public void TakeHealing(int healing) {
+    public void TakeHealing(float healing) {
         if (currentHealth + healing > maxHealth) {
             currentHealth = maxHealth;
         } else {
