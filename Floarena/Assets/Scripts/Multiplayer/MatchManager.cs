@@ -6,19 +6,27 @@ using UnityEngine.UI;
 
 public class MatchManager : NetworkBehaviour {
     public static MatchManager instance;
+    
+    // Player references and numbers
     private int playerNum;
     private int opponentNum;
     private GameObject playerRef;
     private GameObject opponentRef;
     private Vector3 localPlayerSpawnPos;
     
+    // Player score variables
     [SyncVar(hook = nameof(UpdateScoreboardPlayer1))]
     private int player1Score = 0;
     [SyncVar(hook = nameof(UpdateScoreboardPlayer2))]
     private int player2Score = 0;
-
     private Text player1ScoreText;
     private Text player2ScoreText;
+
+    // Countdown variables
+    [SyncVar(hook = nameof(UpdateCountdown))]
+    private int countdownVal = 0;
+    private Text countdownText;
+    private GameObject countdownOverlay;
 
     void Awake() {
         if (instance == null) {
@@ -30,6 +38,8 @@ public class MatchManager : NetworkBehaviour {
         player1ScoreText.text = player1Score.ToString();
         player2ScoreText.text = player2Score.ToString();
 
+        countdownText = transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<Text>();
+        countdownOverlay = transform.GetChild(0).GetChild(3).gameObject;
     }
 
     [Command(requiresAuthority=false)]
@@ -53,17 +63,80 @@ public class MatchManager : NetworkBehaviour {
         player2ScoreText.text = newScore.ToString();
     }
 
-    // Runs on server
+    private void UpdateCountdown(int oldCount, int newCount) {
+        if (newCount == 0) {
+            countdownText.text = "Start!";
+        } else {
+            countdownText.text = newCount.ToString();
+        }
+    }
+
+    [Command(requiresAuthority=false)]
+    private void StartCountdown() {
+        StartCoroutine(CountdownCoroutine(5));
+    }
+
+    IEnumerator CountdownCoroutine(int startVal) {
+        countdownVal = startVal;
+        while (countdownVal > 0) {
+            yield return new WaitForSeconds(1f);
+            countdownVal--;
+        }
+
+        // Once countdown has ended, tell clients to fade out the countdown
+        // text and panel
+        FadeoutCountdown();
+    }
+
+    [ClientRpc]
+    private void FadeoutCountdown() {
+        Debug.Log("Starting fade out");
+        StartCoroutine(FadeoutCountdownCoroutine());
+    }
+
+    // Takes 1 second to fade out
+    IEnumerator FadeoutCountdownCoroutine() {
+        var colorRef = countdownOverlay.GetComponent<Image>().color;
+
+        while (colorRef.a > 0) {
+            colorRef.a -= 0.01f;
+            SetCountdownOpacity(colorRef.a);
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        countdownOverlay.SetActive(false);
+        Debug.Log("Faded out!");
+    }
+
+    private void SetCountdownOpacity(float opacity) {
+        var panelColorRef = countdownOverlay.GetComponent<Image>().color;
+        var textColorRef = countdownOverlay.transform.GetChild(0).GetComponent<Text>().color;
+        panelColorRef.a = opacity;
+        textColorRef.a = opacity;
+        countdownOverlay.GetComponent<Image>().color = panelColorRef;
+        countdownOverlay.transform.GetChild(0).GetComponent<Text>().color = textColorRef;
+    }
+
+    [ClientRpc]
+    private void ResetCountdownOpacity() {
+        countdownOverlay.SetActive(true);
+        SetCountdownOpacity(1f);
+    }
+
+    // Runs on server to instruct all clients to restart the round
+    // Also updates score based on winning player
     [Command(requiresAuthority=false)]
     public void NewRound(int winningPlayer) {
         CommandAddScore(winningPlayer);
-        RpcNewRound();
+        NewRound();
     }   
 
-    // Runs on client to restart the round
-    [ClientRpc]
-    private void RpcNewRound() {
+    // Runs on server to instruct all clients to restart the round
+    [Command(requiresAuthority=false)]
+    public void NewRound() {
+        ResetCountdownOpacity();
         ResetPlayerPosition();
+        StartCountdown();
     }
 
     public GameObject GetPlayer() {
@@ -109,8 +182,6 @@ public class MatchManager : NetworkBehaviour {
             throw new System.Exception("Player or opponent gameobject not found during match initialization");
         }
 
-        // Spawn player in the appropriate position
-        ResetPlayerPosition();
         // Load skill prefabs
         SkillManager.instance.LoadSkills(GameManager.instance.loadout.skills);
         // Generate map based on random seed         
@@ -118,6 +189,7 @@ public class MatchManager : NetworkBehaviour {
         Debug.Log("Game ready to start!");
     }
 
+    [ClientRpc]
     private void ResetPlayerPosition() {
         // Need to disable character controller before teleporting player
         // see https://forum.unity.com/threads/unity-multiplayer-through-mirror-teleporting-player-inconsistent.867079/

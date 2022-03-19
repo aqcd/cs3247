@@ -70,6 +70,8 @@ public class CustomNetworkManager : NetworkManager {
             int mapSeed = Random.Range(int.MinValue, int.MaxValue);
             MatchManager.instance.InitMatch(player1Conn, player1SpawnPos, mapSeed, 1, 2);
             MatchManager.instance.InitMatch(player2Conn, player2SpawnPos, mapSeed, 2, 1);
+
+            MatchManager.instance.NewRound();
         }
     }
 }
