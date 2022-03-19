@@ -7,7 +7,6 @@ public class VineAttack : NetworkBehaviour, ISkill
 {
     private GameObject player;
     public GameObject projectilePrefab;
-    private float damageMagnitude = SkillConstants.VINE_ATTACK_DAMAGE;
 
     // Start is called before the first frame update
     void Awake()

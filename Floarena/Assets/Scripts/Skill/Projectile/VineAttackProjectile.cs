@@ -7,6 +7,7 @@ public class VineAttackProjectile : NetworkBehaviour
 {
     private float range = SkillConstants.VINE_ATTACK_RANGE;
     private float projectileSpeed = SkillConstants.VINE_ATTACK_PROJECTILE_SPEED;
+    private float damageMagnitude = SkillConstants.VINE_ATTACK_DAMAGE;
 
     private Rigidbody rb;
     // Start is called before the first frame update
