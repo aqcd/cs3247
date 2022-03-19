@@ -91,7 +91,7 @@ public class CandidateMap {
             }
         }
     }
-    /*
+    
     private void PlaceMapBounds(Vector3 position) {
         for (int i = 0; i < grid.Width; i++) {
             AddWall(position + new Vector3(i, 0, 0));
@@ -101,7 +101,7 @@ public class CandidateMap {
             AddWall(position + new Vector3(0, 0, j));
             AddWall(position + new Vector3(grid.Width - 1, 0, j));
         }
-    }*/
+    }
 
     private void PlaceWallsForStructure(FixedStructure fixedStructure, int typeOfWall) {
         Vector3 position;
@@ -146,7 +146,7 @@ public class CandidateMap {
         }
 
         position = grid.CalculateCoordinatesFromIndex(0);
-        //PlaceMapBounds(position);
+        PlaceMapBounds(position);
     }
 
     private void AddWall(Vector3 newPosition) {
