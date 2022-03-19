@@ -42,7 +42,7 @@ public class SkillManager : MonoBehaviour {
 
     IEnumerator LoadSkillsCoroutine(string skillName) {
         Debug.Log("Loading " + skillName);
-        ResourceRequest req = Resources.LoadAsync(skillName);
+        ResourceRequest req = Resources.LoadAsync("Skills/" + skillName);
 
         while (!req.isDone) {
             yield return null;
