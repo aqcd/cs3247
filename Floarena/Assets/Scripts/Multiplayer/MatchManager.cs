@@ -73,7 +73,7 @@ public class MatchManager : NetworkBehaviour {
 
     [Command(requiresAuthority=false)]
     private void StartCountdown() {
-        StartCoroutine(CountdownCoroutine(5));
+        StartCoroutine(CountdownCoroutine(3));
     }
 
     IEnumerator CountdownCoroutine(int startVal) {
@@ -120,7 +120,7 @@ public class MatchManager : NetworkBehaviour {
     [ClientRpc]
     private void ResetCountdownOpacity() {
         countdownOverlay.SetActive(true);
-        SetCountdownOpacity(1f);
+        SetCountdownOpacity(0.7f);
     }
 
     // Runs on server to instruct all clients to restart the round
@@ -140,7 +140,6 @@ public class MatchManager : NetworkBehaviour {
     }
 
     public GameObject GetPlayer() {
-        Debug.Log("wwwwwwwwwwwwwwwwwww: " + playerRef);
         return playerRef;
     }
 
@@ -201,5 +200,8 @@ public class MatchManager : NetworkBehaviour {
         Debug.Log("New round started!");
 
         playerRef.GetComponent<CharacterController>().enabled = true;
+
+        // Reset player health
+        playerRef.GetComponent<Health>().ResetHealth();
     }
 }

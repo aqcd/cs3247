@@ -19,12 +19,6 @@ public class Health : NetworkBehaviour
     }
 
     void Update() {
-        // Simulate round ending event (player has died)
-        if (isLocalPlayer) {
-            if (Input.GetKeyDown(KeyCode.Space)) {
-                MatchManager.instance.NewRound(MatchManager.instance.GetOpponentNum());
-            }
-        }
     }
 
     // Hook to currentHealth SyncVar
@@ -34,15 +28,16 @@ public class Health : NetworkBehaviour
         }
     }
 
-    [Command]
+    [Command(requiresAuthority = false)]
     public void TakeDamage(float damage) {
         currentHealth -= damage;
         if (currentHealth <= 0) {
-            DestroyRoutine();
+            // Play dying animation here
+            MatchManager.instance.NewRound(MatchManager.instance.GetOpponentNum());
         }
     }
 
-    [Command]
+    [Command(requiresAuthority=false)]
     public void TakeHealing(float healing) {
         if (currentHealth + healing > maxHealth) {
             currentHealth = maxHealth;
@@ -51,11 +46,16 @@ public class Health : NetworkBehaviour
         }
     }
 
-    [ClientRpc]
+    [Command(requiresAuthority=false)]
     public void DestroyRoutine() {
-        if (hasBar) {
-            GameObject.Destroy(healthBar.gameObject);
-        }
-        GameObject.Destroy(gameObject);
+        // if (hasBar) {
+            // GameObject.Destroy(healthBar.gameObject);
+        // }
+        // GameObject.Destroy(gameObject);
+    }
+
+    [Command(requiresAuthority = false)]
+    public void ResetHealth() {
+        currentHealth = maxHealth;
     }
 }

@@ -3199,6 +3199,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 764234154, guid: e01249d95b24f7e47bf1e81c3ff52dc7, type: 3}
+      propertyPath: Port
+      value: 7777
+      objectReference: {fileID: 0}
     - target: {fileID: 764234155, guid: e01249d95b24f7e47bf1e81c3ff52dc7, type: 3}
       propertyPath: playerPrefab
       value: 
