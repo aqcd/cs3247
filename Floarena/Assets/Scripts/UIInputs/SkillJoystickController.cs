@@ -175,4 +175,11 @@ public class SkillJoystickController : MonoBehaviour
     {
         this.skillObj = skillObj;
     }
+
+    public void SetSkillImage(Sprite skillImage) {
+        // Setting SkillImage
+        transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Image>().sprite = skillImage;
+        // Setting SkillImageOverlay
+        transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<Image>().sprite = skillImage;
+    }
 }
