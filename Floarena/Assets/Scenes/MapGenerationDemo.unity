@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3e825038a54e5646be899847d61d435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundPrefab: {fileID: 6616142317143122160, guid: f8aa396952c169d4c898e4d8204c6b60,
+  groundPrefab: {fileID: 8521781394343813498, guid: aab41fa5337936b4193115c849267105,
     type: 3}
 --- !u!4 &26431115
 Transform:
@@ -399,8 +399,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   liGoSpawn:
-  - {fileID: 6036714706004075, guid: 637e6b97bc6eb974fac3640a6ea81aa3, type: 3}
-  - {fileID: 471655705233793389, guid: 0d5b3b07e06cc614b8df5ca94c007ada, type: 3}
+  - {fileID: 3628741095879785448, guid: a7be7db179bc75c43bb018d4b0005758, type: 3}
+  - {fileID: 3628741095879785448, guid: a232551061eff204988ad9ba3c29dd74, type: 3}
   wallPrefab: {fileID: 1507879402583065680, guid: f5afe6ece1be7aa4f80b85d6a40fcc2a,
     type: 3}
   brushPrefab: {fileID: 8689998506251213869, guid: 5866e83bd853b59439b4555bee7fd699,
