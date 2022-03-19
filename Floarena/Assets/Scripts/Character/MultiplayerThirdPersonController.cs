@@ -117,7 +117,7 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         MultiplayerUICanvasControllerInput canvasController = canvas.GetComponent<MultiplayerUICanvasControllerInput>();
         canvasController.AttachMultiplayerInputs(gameObject.GetComponent<MultiplayerInputs>());
 
-        Canvas skillCanvas = gameObject.transform.GetChild(4).gameObject.GetComponent<Canvas>();
+        Canvas skillCanvas = gameObject.transform.GetChild(5).gameObject.GetComponent<Canvas>();
         canvas.transform.GetChild(1).gameObject.GetComponent<SkillJoystickController>().AttachSkillCanvas(skillCanvas);
         canvas.transform.GetChild(2).gameObject.GetComponent<SkillJoystickController>().AttachSkillCanvas(skillCanvas);
         canvas.transform.GetChild(3).gameObject.GetComponent<SkillJoystickController>().AttachSkillCanvas(skillCanvas);

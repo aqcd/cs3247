@@ -8,6 +8,15 @@ public static class Data
         new Item("Prickly Thorns", new Effect[]{new Effect(Attribute.HP, 20f), new Effect(Attribute.AD, 3f)}),
     };
 
+    public static Skill[] BASIC_ATTACK_SKILLS = new Skill[]{
+        new Skill(
+            "Basic Attack", 
+            "Basic Attack", 
+            Skill.AimType.SELF,
+            0.0f
+        )
+    };
+
     public static Skill[] BASIC_SKILLS = new Skill[]{
         new Skill(
             "Heal", 
