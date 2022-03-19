@@ -57,7 +57,7 @@ public class LoadoutManager : MonoBehaviour
         return loadout;
     }
 
-    public double GetAttributeValue(Attribute attribute) {
+    public float GetAttributeValue(Attribute attribute) {
         PlayerStats stats = loadout.GetLoadoutStats();
         return stats.GetAttributeValue(attribute);
     }
