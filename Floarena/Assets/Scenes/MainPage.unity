@@ -3201,7 +3201,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 764234155, guid: e01249d95b24f7e47bf1e81c3ff52dc7, type: 3}
       propertyPath: spawnPrefabs.Array.size
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 764234155, guid: e01249d95b24f7e47bf1e81c3ff52dc7, type: 3}
       propertyPath: MultiplayerManagersPrefab
@@ -3211,7 +3211,7 @@ PrefabInstance:
     - target: {fileID: 764234155, guid: e01249d95b24f7e47bf1e81c3ff52dc7, type: 3}
       propertyPath: spawnPrefabs.Array.data[0]
       value: 
-      objectReference: {fileID: 3628741095879785448, guid: a7be7db179bc75c43bb018d4b0005758,
+      objectReference: {fileID: 3628741095879785448, guid: a232551061eff204988ad9ba3c29dd74,
         type: 3}
     - target: {fileID: 764234155, guid: e01249d95b24f7e47bf1e81c3ff52dc7, type: 3}
       propertyPath: spawnPrefabs.Array.data[1]
