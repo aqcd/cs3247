@@ -6,7 +6,7 @@ using Mirror;
 public class Health : NetworkBehaviour
 {
     public float maxHealth;
-    [SyncVar]
+    [SyncVar(hook = nameof(UpdateHealth))]
     public float currentHealth = 0;
 
     public bool hasBar = true;
@@ -19,16 +19,18 @@ public class Health : NetworkBehaviour
     }
 
     void Update() {
-        if (hasBar) {
-            healthBar.SetHealth(currentHealth);
-        }
-
         // Simulate round ending event (player has died)
         if (isLocalPlayer) {
             if (Input.GetKeyDown(KeyCode.Space)) {
-                Debug.Log("Pressed");
-                MatchManager.instance.NewRound();
+                MatchManager.instance.NewRound(MatchManager.instance.GetOpponentNum());
             }
+        }
+    }
+
+    // Hook to currentHealth SyncVar
+    void UpdateHealth(float oldHealth, float newHealth) {
+        if (hasBar) {
+            healthBar.SetHealth(newHealth);    
         }
     }
 
