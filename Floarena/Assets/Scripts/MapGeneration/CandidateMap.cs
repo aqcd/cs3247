@@ -72,26 +72,42 @@ public class CandidateMap {
     }
 
     private void PlaceNeighboringBrush(Vector3 coordinates, int randomIndex) {
-        foreach (var position in RandomBrush.possiblePositions) { // Randomly place more trees nearby 
-            coordinates = grid.CalculateCoordinatesFromIndex(randomIndex);
-            var randomProb = Random.Range(0, 5);
-            if (randomProb < 3) {
-                coordinates = coordinates + position;
-                int newIndex = grid.CalculateIndexFromCoordinates(coordinates.x, coordinates.z);
-                if (newIndex >= mapItemsArray.Length || newIndex < 0) {
-                    continue;
-                } else {
-                    mapItemsArray[newIndex] = true;
-                    brushList.Add(new RandomBrush(coordinates)); // Placed item
-                }
+        int brushSize = 5; // 5x5 grid 
+        for (int i = 0; i < brushSize; i++) {
+            for (int j = 0; j < brushSize; j++) {
+                AddBrush(coordinates + new Vector3(i, 0, j));
             }
         }
     }
 
+    private void AddBrush(Vector3 newPosition) {
+        var randomProb = Random.Range(0, 5);
+        if (randomProb < 3) {
+            if (grid.IsCellValid(newPosition.x, newPosition.z) && CheckIfPositionCanBeObstacle(newPosition)) {
+                int index = grid.CalculateIndexFromCoordinates(newPosition.x, newPosition.z);
+                var coordinates = grid.CalculateCoordinatesFromIndex(index);
+                mapItemsArray[index] = true;
+                brushList.Add(new RandomBrush(coordinates));
+            }
+        }
+    }
+    /*
+    private void PlaceMapBounds(Vector3 position) {
+        for (int i = 0; i < grid.Width; i++) {
+            AddWall(position + new Vector3(i, 0, 0));
+            AddWall(position + new Vector3(i, 0, grid.Length - 1));
+        }
+        for (int j = 0; j < grid.Length; j++) {
+            AddWall(position + new Vector3(0, 0, j));
+            AddWall(position + new Vector3(grid.Width - 1, 0, j));
+        }
+    }*/
+
     private void PlaceWallsForStructure(FixedStructure fixedStructure, int typeOfWall) {
+        Vector3 position;
         if (typeOfWall == 0) { // diagonal
             int halfLength = (int)(0.5 * grid.Length);
-            Vector3 position = fixedStructure.Position;
+            position = fixedStructure.Position;
             for (int i = 0; i < halfLength; i++) {
                 AddWall(position + new Vector3(1, 0, 0)); // right
                 AddWall(position + new Vector3(2, 0, 0)); // right
@@ -101,7 +117,7 @@ public class CandidateMap {
             }
         } else if (typeOfWall == 1) { // L
             int thirdLength = (int)(0.3 * grid.Length);
-            Vector3 position = fixedStructure.Position;
+            position = fixedStructure.Position;
             for (int i = 0; i < thirdLength; i++) {
                 AddWall(position + new Vector3(1, 0, 0)); // right
                 AddWall(position + new Vector3(1, 0, 1)); // right & up
@@ -115,7 +131,7 @@ public class CandidateMap {
             }
         } else if (typeOfWall == 2) { // other L
             int thirdLength = (int)(0.3 * grid.Length);
-            Vector3 position = fixedStructure.Position;
+            position = fixedStructure.Position;
             for (int i = 0; i < thirdLength; i++) {
                 AddWall(position + new Vector3(-1, 0, 0)); // left
                 AddWall(position + new Vector3(-1, 0, 1)); // left & up
@@ -129,7 +145,8 @@ public class CandidateMap {
             }
         }
 
-
+        position = grid.CalculateCoordinatesFromIndex(0);
+        //PlaceMapBounds(position);
     }
 
     private void AddWall(Vector3 newPosition) {
