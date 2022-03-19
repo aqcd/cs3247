@@ -73,7 +73,7 @@ public class SelectionManager : MonoBehaviour
             this.itemSelections[i].SetItem(loadout.items[i]);
         }
         for (int i = 0; i < skillSelections.Length; i++) {
-            this.skillSelections[i].SetSkill(loadout.skills[i]);
+            this.skillSelections[i].SetSkill(loadout.skills[i+1]);
         }
         this.isItemSelected = false;
         this.isBSkillSelected = false;
