@@ -52,7 +52,7 @@ public class MapVisualizer : MonoBehaviour {
         Instantiate(goToSpawn, positionOnGrid, Quaternion.identity);
     }
 
-    public void RpcSpawnPickupItem(Vector3 positionOnGrid) {
+    public void SpawnPickupItem(Vector3 positionOnGrid) {
         coroutine = PlacePickupItemWithDelay(5.0f, positionOnGrid);
         StartCoroutine(coroutine);
     }

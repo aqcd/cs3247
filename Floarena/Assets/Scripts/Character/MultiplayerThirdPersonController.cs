@@ -352,18 +352,20 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
     }
 
     private void Heal() {
-        _controller.GetComponent<Health>().TakeHealing(20);
+        if (this.isLocalPlayer) {
+            _controller.GetComponent<Health>().TakeHealing(20);
+        }
     }
 
     private void OnTriggerEnter(Collider collider) {
         if (collider.tag == "Brush") {
             SetPlayerInvisible();
         } else if (collider.tag == "HealthConsumable") {
-            _controller.GetComponent<Health>().TakeHealing(20);
-            //Heal();
+            Heal();
             Vector3 positionOnGrid = collider.transform.position;
+            //collider.GetComponent<HealthItem>().SpawnPickupItem(positionOnGrid);
             GameObject mapVisualizer = GameObject.Find("MapVisualizer");
-            mapVisualizer.GetComponent<MapVisualizer>().RpcSpawnPickupItem(positionOnGrid); // Respawn after delay
+            mapVisualizer.GetComponent<MapVisualizer>().SpawnPickupItem(positionOnGrid); // Respawn after delay
             Destroy(collider.gameObject); // Destroy HealthConsumable
         }
     }
