@@ -3,8 +3,8 @@ using System.Collections.Generic;
 public static class Data
 {
     public static Item[] ITEMS = new Item[]{
-        new Item("Sturdy Soil", new Effect[]{new Effect(Attribute.HP, 100f), new Effect(Attribute.MS, -0.2f)}),
-        new Item("Light Soil", new Effect[]{new Effect(Attribute.HP, -20f), new Effect(Attribute.MS, 0.4f)}),
+        new Item("Sturdy Soil", new Effect[]{new Effect(Attribute.HP, 100f), new Effect(Attribute.MS, -0.6f)}),
+        new Item("Light Soil", new Effect[]{new Effect(Attribute.HP, -20f), new Effect(Attribute.MS, 1.2f)}),
         new Item("Prickly Thorns", new Effect[]{new Effect(Attribute.HP, 20f), new Effect(Attribute.AD, 3f)}),
     };
 
@@ -60,7 +60,7 @@ public static class Data
         { Attribute.AD, 5 },
         { Attribute.AS, 1 },
         { Attribute.AR, 1 },
-        { Attribute.MS, 2 },
+        { Attribute.MS, 6 },
     });
 
     public static PlayerStats ZEROED_ATTRIBUTES = new PlayerStats(new Dictionary<Attribute, float>{
