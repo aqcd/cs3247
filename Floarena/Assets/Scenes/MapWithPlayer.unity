@@ -1603,7 +1603,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 2066797182}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2066797185}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
@@ -1615,6 +1615,27 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 2066797182}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2066797185 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1612925918900766756, guid: 5acb5ab401c6d4ac2a6dbddae57d5c93,
+    type: 3}
+  m_PrefabInstance: {fileID: 2066797182}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2066797186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2066797185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 070fb9444c45f41d783af68e42e8ce16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillJoystickController1: {fileID: 638698594}
+  skillJoystickController2: {fileID: 1925776893}
+  skillJoystickController3: {fileID: 90121395}
 --- !u!224 &117836744522181545 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3882854107809581157, guid: 50d161084b28ac642aab324dedb3640e,

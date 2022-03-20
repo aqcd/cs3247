@@ -13,6 +13,7 @@ public static class Data
             "Basic Attack", 
             "Basic Attack", 
             Skill.AimType.SELF,
+            0.0f,
             0.0f
         )
     };
@@ -22,7 +23,7 @@ public static class Data
             "Heal", 
             "Restores " + SkillConstants.HEAL_HP_RATIO * 100 + "% of your maximum health. Cooldown: " + SkillConstants.HEAL_COOLDOWN + " seconds.", 
             Skill.AimType.SELF,
-            SkillConstants.HEAL_COOLDOWN
+            SkillConstants.HEAL_COOLDOWN, 0.0f
         ),
         new Skill(
             "Rush", 
@@ -30,14 +31,14 @@ public static class Data
                 + SkillConstants.RUSH_DAMAGE + " damage to all entities within " + SkillConstants.RUSH_AOE_RADIUS + " range. Rush cannot be interrupted." 
                 + "Cooldown: " + SkillConstants.RUSH_COOLDOWN + " seconds.",
             Skill.AimType.TARGETCIRCLE,
-            SkillConstants.RUSH_COOLDOWN
+            SkillConstants.RUSH_COOLDOWN, SkillConstants.RUSH_RANGE
         ),
         new Skill(
             "Vine Attack", 
             "Shoot vines " + SkillConstants.VINE_ATTACK_RANGE + " units to a targetted location. If the vines hit a target, deal " 
                 + SkillConstants.VINE_ATTACK_DAMAGE + " damage to the target. " + "Cooldown: " + SkillConstants.VINE_ATTACK_COOLDOWN + " seconds.",
                 Skill.AimType.SKILLSHOT,
-                SkillConstants.VINE_ATTACK_COOLDOWN
+                SkillConstants.VINE_ATTACK_COOLDOWN, SkillConstants.VINE_ATTACK_RANGE
         ),
     };
 
@@ -47,9 +48,9 @@ public static class Data
             "Shoot vines " + SkillConstants.VINE_PULL_RANGE + " units to a targetted location. If the vines hit a target, deal " 
                 + SkillConstants.VINE_PULL_DAMAGE + " damage to the target and pull yourself to the target. " + "Cooldown: " + SkillConstants.VINE_PULL_COOLDOWN + " seconds.",
             Skill.AimType.SKILLSHOT,    
-            SkillConstants.VINE_PULL_COOLDOWN
+            SkillConstants.VINE_PULL_COOLDOWN, SkillConstants.VINE_PULL_RANGE
         ),
-        new Skill("Test Placeholder", "Test Placeholder", Skill.AimType.SELF, 0),
+        new Skill("Test Placeholder", "Test Placeholder", Skill.AimType.SELF, 0, 0),
     };
 
     public static Item[] DEFAULT_ITEMS = new Item[]{ITEMS[0], ITEMS[1]};
