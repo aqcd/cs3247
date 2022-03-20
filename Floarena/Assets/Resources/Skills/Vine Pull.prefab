@@ -9,8 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 179580680173602034}
-  - component: {fileID: 2877949502130056276}
-  - component: {fileID: 6169779476401556114}
+  - component: {fileID: 1630060513917989118}
+  - component: {fileID: 3388090165725140205}
+  - component: {fileID: -480442411249304547}
   m_Layer: 0
   m_Name: Vine Pull
   m_TagString: Untagged
@@ -32,7 +33,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2877949502130056276
+--- !u!114 &1630060513917989118
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49,7 +50,21 @@ MonoBehaviour:
   visible: 0
   m_AssetId: a3e868787da3ffe4db4d76197acce098
   hasSpawned: 0
---- !u!114 &6169779476401556114
+--- !u!114 &3388090165725140205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3222504523882686081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cbcd57650afe02408a859c65854c1c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefabs:
+  - {fileID: 2301083902205358878, guid: 9a0bb1484bb9e1041aa3969495094d3e, type: 3}
+--- !u!114 &-480442411249304547
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -63,5 +78,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  projectilePrefab: {fileID: 2301083902205358878, guid: 9a0bb1484bb9e1041aa3969495094d3e,
-    type: 3}
+  projectilePrefab: {fileID: 0}

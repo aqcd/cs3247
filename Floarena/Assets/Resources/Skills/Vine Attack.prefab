@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8836461467841663207}
   - component: {fileID: 6520320747567756604}
   - component: {fileID: 8985256154337442989}
+  - component: {fileID: 5841298247223706832}
   m_Layer: 0
   m_Name: Vine Attack
   m_TagString: Untagged
@@ -63,5 +64,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  projectilePrefab: {fileID: 2301083902205358878, guid: cb67ffd2ae25f794eab3376332c74a85,
-    type: 3}
+--- !u!114 &5841298247223706832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6260038252222902923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cbcd57650afe02408a859c65854c1c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefabs:
+  - {fileID: 2301083902205358878, guid: cb67ffd2ae25f794eab3376332c74a85, type: 3}

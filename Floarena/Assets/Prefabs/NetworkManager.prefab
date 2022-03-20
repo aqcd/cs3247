@@ -88,5 +88,7 @@ MonoBehaviour:
   autoCreatePlayer: 0
   playerSpawnMethod: 0
   spawnPrefabs: []
-  MultiplayerManagersPrefab: {fileID: 8670354906546744981, guid: 804c7d5b34c034e4fa07861e6f2969d7,
+  MatchManagerPrefab: {fileID: 8670354906546744981, guid: 804c7d5b34c034e4fa07861e6f2969d7,
+    type: 3}
+  SkillManagerPrefab: {fileID: 6076235477984777718, guid: 1af5393004ee86e4f9a83d13be4b7006,
     type: 3}
