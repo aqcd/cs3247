@@ -32,6 +32,7 @@ public class BasicAttack : MonoBehaviour, ISkill
     {   
         if (Time.time > timeToAttack) 
         {
+            timeToAttack = Time.time + attackCooldown;
             yield return new WaitForSeconds(0.35f);
 
             Collider[] hitColliders = Physics.OverlapSphere(player.transform.position, attackRange);
@@ -63,7 +64,7 @@ public class BasicAttack : MonoBehaviour, ISkill
             if (bestHit != null) {
                 bestHit.SendMessage("TakeDamage", attackDamage);
             }
-            timeToAttack = Time.time + attackCooldown;
+            
         }
     }
 }
