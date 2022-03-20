@@ -15,7 +15,10 @@ public class Heal : MonoBehaviour, ISkill
     }
 
     public void Execute(Vector3 skillPosition) 
-    {   
+    {
+        // Set the boolean to play casting animation to true.
+        player.GetComponent<Animator>().SetBool("isHeal", true);
+
         int healing = Mathf.FloorToInt(healMagnitude * playerHealth.maxHealth);
         playerHealth.TakeHealing(healing);
     }

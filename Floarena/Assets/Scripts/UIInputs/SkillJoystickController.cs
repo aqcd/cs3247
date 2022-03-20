@@ -19,7 +19,7 @@ public class SkillJoystickController : MonoBehaviour
     bool isCooldown = false;
     float remainingCooldown = 0.0f;
 
-    private UIVirtualJoystick joystick;
+    private UISkillVirtualJoystick joystick;
 
     private Canvas skillCanvas;
 
@@ -32,8 +32,6 @@ public class SkillJoystickController : MonoBehaviour
 
     private GameObject mainCamera;
 
-    bool isCancel = false;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -42,7 +40,7 @@ public class SkillJoystickController : MonoBehaviour
             mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         }
 
-        joystick = transform.GetChild(0).gameObject.GetComponent<UIVirtualJoystick>();
+        joystick = transform.GetChild(0).gameObject.GetComponent<UISkillVirtualJoystick>();
         joystick.joystickOutputEvent.AddListener(UpdateSkill);
         joystick.joystickUpEvent.AddListener(ResolveSkill);
     }
@@ -91,17 +89,6 @@ public class SkillJoystickController : MonoBehaviour
 
     public void UpdateSkill(Vector2 pointerPosition) {
         Vector3 position = new Vector3(pointerPosition.x, 0.0f, pointerPosition.y);
-        Vector3 localPosition = new Vector3(pointerPosition.x, pointerPosition.y, 0.0f);
-        Vector3 worldPosition = transform.TransformPoint(localPosition);
-        
-        // print(cancelZone.transform.position);
-
-        if (!isCooldown)
-        {
-            cancelZone.enabled = true;
-        }
-
-        //Check if Skill gets cancelled
 
         
         if (skill.aimType == Skill.AimType.SKILLSHOT && !isCooldown)
@@ -132,8 +119,12 @@ public class SkillJoystickController : MonoBehaviour
             targetCircleCanvas.enabled = true;
             rangeIndicatorCanvas.enabled = true;
             cancelZone.enabled = true;
-            
 
+        }
+
+        if (skill.aimType == Skill.AimType.SELF && !isCooldown)
+        {
+            joystick.isButton = true;
         }
         
         // apply relevant logic to the canvas
@@ -162,10 +153,36 @@ public class SkillJoystickController : MonoBehaviour
         skillshotHeadCanvas.enabled = false;
         targetCircleCanvas.enabled = false;
         rangeIndicatorCanvas.enabled = false;
-        joystick.enabled = false;
         cancelZone.enabled = false;
 
         Vector3 skillPosition = new Vector3(pointerPosition.x, 0.0f, pointerPosition.y);
+        Vector3 localPosition = new Vector3(pointerPosition.x, pointerPosition.y, 0.0f);
+        Vector3 worldPosition = transform.TransformPoint(transform.localPosition + localPosition);
+
+        Vector3 parentPosition = transform.parent.position;
+        
+        RectTransform cancelArea = cancelZone.rectTransform;
+        Vector3[] cancelSpace = new Vector3[4];
+        cancelArea.GetLocalCorners(cancelSpace);
+
+        for (var i = 0; i < 4; i++)
+        {
+            print(cancelSpace[i]);
+        }
+
+        print(localPosition);
+        
+        
+        if (worldPosition.x >  cancelSpace[0].x && worldPosition.y > cancelSpace[0].y &&
+        worldPosition.x < cancelSpace[2].x && worldPosition.y < cancelSpace[2].y)
+        {
+            print("cancel");
+            return;
+        }
+
+        skillImageOverlay.fillAmount = 1;
+        isCooldown = true;
+        joystick.enabled = false;
 
         skillObj.SendMessage("Execute", skillPosition);
     }
@@ -196,6 +213,10 @@ public class SkillJoystickController : MonoBehaviour
     public void SetSkill(Skill skill)
     {
         this.skill = skill;
+        if (skill.aimType == Skill.AimType.SELF)
+        {
+            joystick.isButton = true;
+        }
     }
 
     public void SetSkillObject(GameObject skillObj)

@@ -2,16 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Mirror;
 
-public class SkillManager : MonoBehaviour {
+public class SkillManager : NetworkBehaviour {
     
     public static SkillManager instance;
     public List<Skill> skillList;
     public List<GameObject> skillObjs;
     public List<Sprite> skillImgs;
-
-
-    public List<SkillJoystickController> skillJoysticks;
 
     private void Awake() {
         if (instance == null) {
@@ -23,31 +21,32 @@ public class SkillManager : MonoBehaviour {
         skillImgs = new List<Sprite>();
     }
 
-    void Start() {}
-
     void Update() {
-        // if (Input.GetKeyDown(KeyCode.W)) {
-        //     Debug.Log(skillObjs[1]);
-        //     GameObject go = Instantiate(skillObjs[1]);
-        //     go.SendMessage("Execute", new Vector3(1.0f, 0.0f, 0.0f));
-        // }
+        
     }
 
-    public void LoadSkills(Skill[] loadoutSkills) {
-        if (skillObjs.Count > 0) {
-            UnLoadSkills();
-        }
+    [ClientRpc]
+    public void LoadSkills() {
+        // if (skillObjs.Count > 0) {
+        //     UnLoadSkills();
+        // }
+
+        Skill[] loadoutSkills = GameManager.instance.loadout.skills;
+        string[] skillNames = new string[loadoutSkills.Length];
 
         for (int i = 0; i < loadoutSkills.Length; i++) {
             skillList.Add(loadoutSkills[i]);
-            // StartCoroutine(LoadSkillsCoroutine(loadoutSkills[i].ToString()));
+            skillNames[i] = loadoutSkills[i].name;
 
-            // Load skills
-            GameObject skillObjPrefab = Resources.Load("Skills/" + loadoutSkills[i].ToString()) as GameObject;
-            GameObject skillObj = Instantiate(skillObjPrefab);
-            skillObj.transform.parent = transform;
-            skillObjs.Add(skillObj);
+            // Load skill object prefab and register it on the server
+            GameObject skillObjPrefab = Resources.Load("Skills/" + skillNames[i]) as GameObject;
+            NetworkClient.RegisterPrefab(skillObjPrefab);
 
+            // Load projectile prefabs for each skill
+            foreach (var projectile in skillObjPrefab.GetComponent<ProjectileManager>().projectilePrefabs) {
+                NetworkClient.RegisterPrefab(projectile);
+            }
+            
             // Load skill images
             Texture2D skillImg = Resources.Load("SkillIcons/" + loadoutSkills[i].ToString()) as Texture2D;
             Sprite skillSprite = Sprite.Create(
@@ -59,11 +58,34 @@ public class SkillManager : MonoBehaviour {
             skillImgs.Add(skillSprite);
         }
 
+        // Load the requested skills on the server
+        Debug.Log("Player " + MatchManager.instance.GetPlayerNum() + " asking server to load skills");
+        ServerLoadSkills(NetworkClient.connection.connectionId, skillNames);
+
+        // Set skills 
+        List<SkillJoystickController> skillJoysticks = JoystickReferences.instance.skillJoysticks;
         for (int i = 0; i < skillJoysticks.Count; i++) {
             skillJoysticks[i].SetSkill(skillList[i]);
-            skillJoysticks[i].SetSkillObject(skillObjs[i]);
             skillJoysticks[i].SetSkillImage(skillImgs[i]);
         }
+    }
+
+    [Command(requiresAuthority=false)]
+    private void ServerLoadSkills(int clientId, string[] skillNames) {
+        // Load skills
+        for (int i = 0; i < skillNames.Length; i++) {
+            GameObject skillObjPrefab = Resources.Load("Skills/" + skillNames[i]) as GameObject;
+            GameObject skillObj = Instantiate(skillObjPrefab);
+            skillObj.transform.parent = transform;
+            NetworkServer.Spawn(skillObj);
+            SetSkillObject(NetworkServer.connections[clientId], skillObj, i);
+        }
+    }
+
+    [TargetRpc]
+    private void SetSkillObject(NetworkConnection target, GameObject skillObj, int index) {
+        List<SkillJoystickController> skillJoysticks = JoystickReferences.instance.skillJoysticks;
+        skillJoysticks[index].SetSkillObject(skillObj);
     }
 
     public void UnLoadSkills() {
@@ -77,19 +99,7 @@ public class SkillManager : MonoBehaviour {
         Debug.Log("Old resources unloaded");
     }
 
-    /*
-    IEnumerator LoadSkillsCoroutine(string skillName) {
-        Debug.Log("Loading " + skillName);
-        ResourceRequest req = Resources.LoadAsync("Skills/" + skillName);
-
-        while (!req.isDone) {
-            yield return null;
-        }
-
-        skillObjs.Add(req.asset as GameObject);
-        Debug.Log("Done loading " + skillName);
-    }
-    */
+    
 
     public Skill GetSkill(int index) {
         return skillList[index];

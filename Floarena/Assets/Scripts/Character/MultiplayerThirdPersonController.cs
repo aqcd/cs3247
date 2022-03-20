@@ -124,6 +124,9 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         
         MultiplayerMobileDisableAutoSwitchControls disableSwitch = canvas.GetComponent<MultiplayerMobileDisableAutoSwitchControls>();
         // disableSwitch.AttachPlayerInput(gameObject.GetComponent<PlayerInput>());
+
+        Loadout loadout = GameManager.instance.loadout;
+        this.MoveSpeed = loadout.GetLoadoutStats().GetAttributeValue(Attribute.MS);
     }
 
     public override void OnStartAuthority()
@@ -146,6 +149,9 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         // reset our timeouts on start
         _jumpTimeoutDelta = JumpTimeout;
         _fallTimeoutDelta = FallTimeout;
+
+        _animator.SetBool("BasicAttack", false);
+        _animator.SetBool("isHeal", false);
     }
 
     private void Update()
@@ -166,6 +172,16 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         _animIDJump = Animator.StringToHash("Jump");
         _animIDFreeFall = Animator.StringToHash("FreeFall");
         _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
+    }
+
+    // Event called by punch animation clop to set boolean back to false.
+    public void SetAttackFalse() {
+        _animator.SetBool("BasicAttack", false);
+    }
+
+    // Event called by casting animation clop to set boolean back to false.
+    public void SetHealingFalse() {
+        _animator.SetBool("isHeal", false);
     }
 
     private void GroundedCheck()

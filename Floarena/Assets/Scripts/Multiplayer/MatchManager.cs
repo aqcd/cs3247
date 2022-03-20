@@ -178,8 +178,6 @@ public class MatchManager : NetworkBehaviour {
             throw new System.Exception("Player or opponent gameobject not found during match initialization");
         }
 
-        // Load skill prefabs
-        SkillManager.instance.LoadSkills(GameManager.instance.loadout.skills);
         // Generate map based on random seed         
         MapGenerator.instance.GenerateMap(mapSeed); 
         Debug.Log("Game ready to start!");
