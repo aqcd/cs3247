@@ -26,11 +26,7 @@ public class SkillManager : MonoBehaviour {
     void Start() {}
 
     void Update() {
-        // if (Input.GetKeyDown(KeyCode.W)) {
-        //     Debug.Log(skillObjs[1]);
-        //     GameObject go = Instantiate(skillObjs[1]);
-        //     go.SendMessage("Execute", new Vector3(1.0f, 0.0f, 0.0f));
-        // }
+        
     }
 
     public void LoadSkills(Skill[] loadoutSkills) {

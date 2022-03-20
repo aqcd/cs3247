@@ -12,9 +12,13 @@ public class Rush : NetworkBehaviour, ISkill
     private float speed = SkillConstants.RUSH_SPEED;
     private float damageMagnitude = SkillConstants.RUSH_DAMAGE;
 
+    private float damageRadius = SkillConstants.RUSH_AOE_RADIUS;
+
     private Vector3 direction = new Vector3();
 
     private float remainingDuration = 0.0f;
+
+    private bool isActive = false;
 
     void Awake()
     {
@@ -27,13 +31,36 @@ public class Rush : NetworkBehaviour, ISkill
         if (remainingDuration > 0.0f) {
             characterController.Move(direction * (speed * Time.deltaTime));
             remainingDuration -= Time.deltaTime;
+
+            if (characterController.velocity.magnitude < 0.99 * speed) {
+                remainingDuration = 0.0f;
+            }
+        } else if (isActive) {
+            Damage();
+            playerManager.EnableMove();
+            isActive = false;
         }
     }
 
     public void Execute(Vector3 skillPosition)
     {
+        isActive = true;
         remainingDuration = range / speed;
         direction = skillPosition.normalized;
         playerManager.DisableMoveForDuration(remainingDuration);
+    }
+
+    private void Damage() {
+        Collider[] hitColliders = Physics.OverlapSphere(player.transform.position, damageRadius);
+        foreach (Collider collider in hitColliders) {
+            GameObject hitObject = collider.gameObject;
+            if (hitObject.tag != "Player" && hitObject.tag != "Damageable") {
+                continue;
+            }
+
+            if (hitObject != player) {
+                hitObject.SendMessage("TakeDamage", damageMagnitude);
+            }
+        }
     }
 }

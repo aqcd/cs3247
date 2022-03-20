@@ -27,7 +27,8 @@ public static class Data
         new Skill(
             "Rush", 
             "Move up to " + SkillConstants.RUSH_RANGE + " units to a targetted location. When you reach the target location, deal " 
-                + SkillConstants.RUSH_DAMAGE + " damage to all entities within " + SkillConstants.RUSH_AOE_RADIUS + " range. Cooldown: " + SkillConstants.RUSH_COOLDOWN + " seconds.",
+                + SkillConstants.RUSH_DAMAGE + " damage to all entities within " + SkillConstants.RUSH_AOE_RADIUS + " range. Rush cannot be interrupted." 
+                + "Cooldown: " + SkillConstants.RUSH_COOLDOWN + " seconds.",
             Skill.AimType.TARGETCIRCLE,
             SkillConstants.RUSH_COOLDOWN
         ),

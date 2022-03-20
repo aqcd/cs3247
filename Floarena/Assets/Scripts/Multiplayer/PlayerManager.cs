@@ -37,6 +37,11 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public void EnableMove() {
+        canMove = true;
+        disableMoveTimer = 0.0f;
+    }
+
     public void DisableMoveForDuration(float duration)
     {
         canMove = false;
