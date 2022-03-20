@@ -22,12 +22,17 @@ public class BasicAttack : MonoBehaviour, ISkill
         attackCooldown = 1/stats.GetAttributeValue(Attribute.AS);
     }
 
-    public void Execute(Vector3 skillPosition) 
+    public void Execute(Vector3 skillPosition) {
+        // Set the boolean to play attack animation to true.
+        player.GetComponent<Animator>().SetBool("BasicAttack", true);
+        StartCoroutine(ExecuteHit(skillPosition));
+    }
+
+    IEnumerator ExecuteHit(Vector3 skillPosition) 
     {   
         if (Time.time > timeToAttack) 
         {
-            // Set the boolean to play attack animation to true.
-            player.GetComponent<Animator>().SetBool("BasicAttack", true);
+            yield return new WaitForSeconds(0.35f);
 
             Collider[] hitColliders = Physics.OverlapSphere(player.transform.position, attackRange);
             GameObject bestHit = null;
