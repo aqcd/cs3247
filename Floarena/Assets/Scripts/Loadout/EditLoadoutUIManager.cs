@@ -28,8 +28,8 @@ public class EditLoadoutUIManager : MonoBehaviour
     }
 
     void Set(Attribute attribute, Text component) {
-        double val = LoadoutManager.instance.GetAttributeValue(attribute);
-        double increase = val - Data.BASE_ATTRIBUTES.GetAttributeValue(attribute);
+        float val = LoadoutManager.instance.GetAttributeValue(attribute);
+        float increase = val - Data.BASE_ATTRIBUTES.GetAttributeValue(attribute);
         component.text = val.ToString();
         if (increase > 0.0) {
             component.text = component.text + " (+" + increase.ToString() + ")";

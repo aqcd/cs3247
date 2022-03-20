@@ -12,11 +12,11 @@ public class BasicAttack : MonoBehaviour, ISkill
 
     private float timeToAttack = 0.0f;
 
-    void Start()
+    void Awake()
     {
         player = MatchManager.instance.GetPlayer();
         // get attributes from loadout and calculate attack stats
-        PlayerStats stats = GameManager.instance.loadout.GetItemNetEffects();
+        PlayerStats stats = GameManager.instance.loadout.GetLoadoutStats();
         attackDamage = stats.GetAttributeValue(Attribute.AD);
         attackRange = stats.GetAttributeValue(Attribute.AR);
         attackCooldown = 1/stats.GetAttributeValue(Attribute.AS);
@@ -31,6 +31,10 @@ public class BasicAttack : MonoBehaviour, ISkill
             float bestDistance = Mathf.Infinity;
             foreach (Collider collider in hitColliders) {
                 GameObject hitObject = collider.gameObject;
+                if (hitObject.tag != "Player" && hitObject.tag != "Damageable") {
+                    continue;
+                }
+
                 if (hitObject != player) 
                 {
                     if (hitObject == opponent) {
@@ -47,7 +51,10 @@ public class BasicAttack : MonoBehaviour, ISkill
                     }
                 }
             }
-            bestHit.SendMessage("TakeDamage", attackDamage);
+
+            if (bestHit != null) {
+                bestHit.SendMessage("TakeDamage", attackDamage);
+            }
             timeToAttack = Time.time + attackCooldown;
         }
     }

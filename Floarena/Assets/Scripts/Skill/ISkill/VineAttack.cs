@@ -10,7 +10,7 @@ public class VineAttack : NetworkBehaviour, ISkill
     private float damageMagnitude = SkillConstants.VINE_ATTACK_DAMAGE;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         player = MatchManager.instance.GetPlayer();
     }

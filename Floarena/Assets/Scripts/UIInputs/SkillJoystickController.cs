@@ -3,22 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AbilityJoystickController : MonoBehaviour
+public class SkillJoystickController : MonoBehaviour
 {
-    public Image abilityImageOverlay;
+    public Image skillImageOverlay;
 
     [SerializeField]
     Text cooldownDisplay;
 
-    public Ability ability;
+    private Skill skill;
+    private GameObject skillObj;
 
-    public float abilityNumber;
+    public int skillIndex;
 
     bool isCooldown = false;
 
     private UIVirtualJoystick joystick;
 
-    public Canvas abilityCanvas;
+    private Canvas skillCanvas;
 
     public Image cancelZone;
 
@@ -34,31 +35,14 @@ public class AbilityJoystickController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // placeholder
-        ability = new Ability("test", 5, abilityNumber);
-        abilityImageOverlay.fillAmount = 0;
-
-        skillshotCanvas = (abilityCanvas.transform.GetChild(2).gameObject.GetComponent<Canvas>());
-        skillshotHeadCanvas = (abilityCanvas.transform.GetChild(3).gameObject.GetComponent<Canvas>());
-        rangeIndicatorCanvas = (abilityCanvas.transform.GetChild(0).gameObject.GetComponent<Canvas>());
-        targetCircleCanvas = (abilityCanvas.transform.GetChild(1).gameObject.GetComponent<Canvas>());
-
-        skillshotCanvas.enabled = false;
-        skillshotHeadCanvas.enabled = false;
-        targetCircleCanvas.enabled = false;
-        rangeIndicatorCanvas.enabled = false;
-        cancelZone.enabled = false;
-
         if (mainCamera == null)
         {
             mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         }
 
         joystick = transform.GetChild(0).gameObject.GetComponent<UIVirtualJoystick>();
-        joystick.joystickOutputEvent.AddListener(UpdateAbility);
-        joystick.joystickUpEvent.AddListener(ResolveAbility);
-
-
+        joystick.joystickOutputEvent.AddListener(UpdateSkill);
+        joystick.joystickUpEvent.AddListener(ResolveSkill);
     }
 
     // Update is called once per frame
@@ -66,57 +50,57 @@ public class AbilityJoystickController : MonoBehaviour
     {
         if (isCooldown)
         {
-            abilityImageOverlay.fillAmount -= 1 / ability.cooldown * Time.deltaTime;
+            skillImageOverlay.fillAmount -= 1 / skill.cooldown * Time.deltaTime;
 
-            if (abilityImageOverlay.fillAmount <= 0)
+            if (skillImageOverlay.fillAmount <= 0)
             {
-                abilityImageOverlay.fillAmount = 0;
+                skillImageOverlay.fillAmount = 0;
                 isCooldown = false;
                 joystick.enabled = true;
             }
         }
     }
 
-    public void UpdateAbility(Vector2 pointerPosition) {
+    public void UpdateSkill(Vector2 pointerPosition) {
         Vector3 position = new Vector3(pointerPosition.x, 0.0f, pointerPosition.y);
         Vector3 localPosition = new Vector3(pointerPosition.x, pointerPosition.y, 0.0f);
         Vector3 worldPosition = transform.TransformPoint(localPosition);
         
-        print(cancelZone.transform.position);
+        // print(cancelZone.transform.position);
 
         if (!isCooldown)
         {
             cancelZone.enabled = true;
         }
 
-        //Check if ability gets cancelled
+        //Check if Skill gets cancelled
 
         
-        if (ability.isSkillshot() && !isCooldown)
+        if (skill.aimType == Skill.AimType.SKILLSHOT && !isCooldown)
         {
             float targetRotation = Mathf.Atan2(position.x, position.z) * Mathf.Rad2Deg + mainCamera.transform.eulerAngles.y;
             skillshotCanvas.transform.rotation = Quaternion.Euler(0.0f, targetRotation, 0.0f);
             skillshotHeadCanvas.transform.rotation = Quaternion.Euler(0.0f, targetRotation, 0.0f);
 
-            Vector3 newPosition = abilityCanvas.transform.position + position;
-            float distance = Vector3.Distance(newPosition, abilityCanvas.transform.position);
+            Vector3 newPosition = skillCanvas.transform.position + position;
+            float distance = Vector3.Distance(newPosition, skillCanvas.transform.position);
             distance = Mathf.Min(distance, 5);
             Vector3 offset = new Vector3(0.0f, 0.01f, 0.0f);
             skillshotCanvas.transform.localScale = new Vector3(1.0f, 0.01f, (distance / 5));
-            skillshotHeadCanvas.transform.position = abilityCanvas.transform.position + offset - (position.normalized * distance);
+            skillshotHeadCanvas.transform.position = skillCanvas.transform.position + offset - (position.normalized * distance);
             skillshotCanvas.enabled = true;
             skillshotHeadCanvas.enabled = true;
             cancelZone.enabled = true;
 
         }
 
-        if (ability.isTargetCircle() && !isCooldown)
+        if (skill.aimType == Skill.AimType.TARGETCIRCLE && !isCooldown)
         {
-            Vector3 newPosition = abilityCanvas.transform.position + position;
-            float distance = Vector3.Distance(newPosition, abilityCanvas.transform.position);
+            Vector3 newPosition = skillCanvas.transform.position + position;
+            float distance = Vector3.Distance(newPosition, skillCanvas.transform.position);
             distance = Mathf.Min(distance, 5);
             Vector3 offset = new Vector3(0.0f, 0.01f, 0.0f);
-            targetCircleCanvas.transform.position = abilityCanvas.transform.position + offset - (position.normalized * distance);
+            targetCircleCanvas.transform.position = skillCanvas.transform.position + offset - (position.normalized * distance);
             targetCircleCanvas.enabled = true;
             rangeIndicatorCanvas.enabled = true;
             cancelZone.enabled = true;
@@ -129,23 +113,23 @@ public class AbilityJoystickController : MonoBehaviour
 
     }
 
-    // public void ResolveOrCancelAbility(Vector2 pointerPosition)
+    // public void ResolveOrCancelSkill(Vector2 pointerPosition)
     // {
     //     if (isCancel)
     //     {
-    //         CancelAbility(pointerPosition);
+    //         CancelSkill(pointerPosition);
     //     }
 
     //     else {
-    //         ResolveAbility(pointerPosition);
+    //         ResolveSkill(pointerPosition);
     //     }
     // }
 
 
-    public void ResolveAbility(Vector2 pointerPosition) {
+    public void ResolveSkill(Vector2 pointerPosition) {
         // disable canvas
-        // activate ability based on joystick output
-        abilityImageOverlay.fillAmount = 1;
+        // activate Skill based on joystick output
+        skillImageOverlay.fillAmount = 1;
         isCooldown = true;
         skillshotCanvas.enabled = false;
         skillshotHeadCanvas.enabled = false;
@@ -153,9 +137,13 @@ public class AbilityJoystickController : MonoBehaviour
         rangeIndicatorCanvas.enabled = false;
         joystick.enabled = false;
         cancelZone.enabled = false;
+
+        Vector3 skillPosition = new Vector3(pointerPosition.x, 0.0f, pointerPosition.y);
+
+        skillObj.SendMessage("Execute", skillPosition);
     }
 
-    public void CancelAbility() {
+    public void CancelSkill() {
         skillshotCanvas.enabled = false;
         skillshotHeadCanvas.enabled = false;
         targetCircleCanvas.enabled = false;
@@ -163,18 +151,35 @@ public class AbilityJoystickController : MonoBehaviour
         cancelZone.enabled = false;
     }
 
-    public void AttachAbilityCanvas(Canvas canvas)
+    public void AttachSkillCanvas(Canvas canvas)
     {
-        abilityCanvas = canvas;
-        skillshotCanvas = (abilityCanvas.transform.GetChild(2).gameObject.GetComponent<Canvas>());
-        skillshotHeadCanvas = (abilityCanvas.transform.GetChild(3).gameObject.GetComponent<Canvas>());
-        rangeIndicatorCanvas = (abilityCanvas.transform.GetChild(0).gameObject.GetComponent<Canvas>());
-        targetCircleCanvas = (abilityCanvas.transform.GetChild(1).gameObject.GetComponent<Canvas>());
+        skillCanvas = canvas;
+        skillshotCanvas = (skillCanvas.transform.GetChild(2).gameObject.GetComponent<Canvas>());
+        skillshotHeadCanvas = (skillCanvas.transform.GetChild(3).gameObject.GetComponent<Canvas>());
+        rangeIndicatorCanvas = (skillCanvas.transform.GetChild(0).gameObject.GetComponent<Canvas>());
+        targetCircleCanvas = (skillCanvas.transform.GetChild(1).gameObject.GetComponent<Canvas>());
 
         skillshotCanvas.enabled = false;
         skillshotHeadCanvas.enabled = false;
         targetCircleCanvas.enabled = false;
         rangeIndicatorCanvas.enabled = false;
         cancelZone.enabled = false;
+    }
+
+    public void SetSkill(Skill skill)
+    {
+        this.skill = skill;
+    }
+
+    public void SetSkillObject(GameObject skillObj)
+    {
+        this.skillObj = skillObj;
+    }
+
+    public void SetSkillImage(Sprite skillImage) {
+        // Setting SkillImage
+        transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Image>().sprite = skillImage;
+        // Setting SkillImageOverlay
+        transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<Image>().sprite = skillImage;
     }
 }

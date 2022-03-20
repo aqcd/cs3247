@@ -8,7 +8,7 @@ public class Heal : MonoBehaviour, ISkill
     private Health playerHealth;
     private float healMagnitude = SkillConstants.HEAL_HP_RATIO;
 
-    void Start()
+    void Awake()
     {
         player = MatchManager.instance.GetPlayer();
         playerHealth = player.GetComponent<Health>();
