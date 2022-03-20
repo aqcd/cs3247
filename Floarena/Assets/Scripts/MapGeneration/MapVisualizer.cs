@@ -42,13 +42,13 @@ public class MapVisualizer : MonoBehaviour {
     private bool PlaceRock(MapData data, Vector3 positionOnGrid) {
         foreach (var rock in data.rocksList) {
             if (rock.Position == positionOnGrid) {
-                rockPrefab.transform.localScale = Vector3.one;
                 float randomScale = Random.Range(0.0f, 2.0f);
                 rockPrefab.transform.localScale += new Vector3(randomScale, randomScale, randomScale);
                 Vector3 offset = new Vector3(0f, -1.0f, 0f);
                 int randomRotation = Random.Range(0, 180);
                 Quaternion rotation = Quaternion.Euler(0, randomRotation, 0);
                 Instantiate(rockPrefab, positionOnGrid + offset, rotation);
+                rockPrefab.transform.localScale = Vector3.one;
                 return true;
             }
         }
@@ -81,11 +81,11 @@ public class MapVisualizer : MonoBehaviour {
     private bool PlaceBrush(MapData data, Vector3 positionOnGrid) {
         foreach (var brushItem in data.brushList) {
             if (brushItem.Position == positionOnGrid) {
-                brushPrefab.transform.localScale = Vector3.one;
                 float randomHeight = Random.Range(0.0f, 0.8f);
                 brushPrefab.transform.localScale += new Vector3(0.0f, randomHeight, 0.0f); 
                 Vector3 offset = new Vector3(0f, -1.0f, 0f);
                 Instantiate(brushPrefab, positionOnGrid + offset, Quaternion.identity);
+                brushPrefab.transform.localScale = Vector3.one;
                 return true;
             }
         }
