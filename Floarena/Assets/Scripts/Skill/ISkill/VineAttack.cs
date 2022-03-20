@@ -19,7 +19,7 @@ public class VineAttack : NetworkBehaviour, ISkill
         SpawnProjectile(skillPosition.normalized);
     }
 
-    [Command]
+    [Command(requiresAuthority = false)]
     void SpawnProjectile(Vector3 spawnDir) 
     {
         Vector3 pos = player.transform.position;
