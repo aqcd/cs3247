@@ -95,6 +95,8 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
 
     private bool _hasAnimator;
 
+    private Health health;
+
     private void Awake()
     {
         // get a reference to our main camera
@@ -144,6 +146,8 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         _input = GetComponent<MultiplayerInputs>();
         _slider = _controller.GetComponentInChildren<HealthBar>().healthBarSlider.gameObject;
 
+        health = GetComponent<Health>();
+
         AssignAnimationIDs();
 
         // reset our timeouts on start
@@ -152,6 +156,7 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
 
         _animator.SetBool("BasicAttack", false);
         _animator.SetBool("isHeal", false);
+        _animator.SetBool("isDead", false);
     }
 
     private void Update()
@@ -163,6 +168,10 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         JumpAndGravity();
         GroundedCheck();
         Move();
+
+        if (health.currentHealth <= 0) {
+            _animator.SetBool("isDead", true);
+        }
     }
 
     private void AssignAnimationIDs()
@@ -182,6 +191,14 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
     // Event called by casting animation clop to set boolean back to false.
     public void SetHealingFalse() {
         _animator.SetBool("isHeal", false);
+    }
+
+    public void SetDeathFalse() {
+        _animator.SetBool("isDead", false);
+    }
+
+    public void PlayDeathAnimation() {
+        _animator.SetBool("isDead", true);
     }
 
     private void GroundedCheck()

@@ -8,7 +8,7 @@ public class Health : NetworkBehaviour
     [SyncVar(hook = nameof(UpdateMaxHealth))]
     public float maxHealth;
     [SyncVar(hook = nameof(UpdateHealth))]
-    public float currentHealth = 0;
+    public float currentHealth = 1;
 
     public bool hasBar = true;
     public HealthBar healthBar;
@@ -44,9 +44,13 @@ public class Health : NetworkBehaviour
     public void CmdTakeDamage(float damage, int sourcePlayer) {
         currentHealth -= damage;
         if (currentHealth <= 0) {
-            // Play dying animation here
-            MatchManager.instance.NewRound(sourcePlayer);
+            StartCoroutine(StartNewRound(sourcePlayer));
         }
+    }
+
+    IEnumerator StartNewRound(int sourcePlayer) {
+        yield return new WaitForSeconds(1f);
+        MatchManager.instance.NewRound(sourcePlayer);
     }
 
     [Command(requiresAuthority=false)]

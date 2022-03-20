@@ -250,7 +250,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   maxHealth: 200
-  currentHealth: 0
+  currentHealth: 1
   hasBar: 1
   healthBar: {fileID: 5350780418209049455}
 --- !u!114 &5771204218330618543
