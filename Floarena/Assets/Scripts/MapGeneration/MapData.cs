@@ -7,4 +7,5 @@ public struct MapData {
     public List<PickupItem> pickupItemsList;
     public List<FixedStructure> fixedStructuresList;
     public List<RandomBrush> brushList;
+    public List<Rock> rocksList;
 }

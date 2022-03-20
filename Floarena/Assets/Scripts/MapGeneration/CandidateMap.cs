@@ -8,17 +8,20 @@ public class CandidateMap {
     private MapGrid grid;
     private int numberOfPickupItems = 0;
     private int numberOfBrush = 0;
+    private int numberOfRocks = 0;
     private bool[] mapItemsArray = null;
     private List<PickupItem> pickupItemsList;
     private List<FixedStructure> fixedStructuresList;
     private List<RandomBrush> brushList;
+    private List<Rock> rocksList;
 
     public MapGrid Grid { get => grid; }
     public bool[] MapItemsArray { get => mapItemsArray; }
 
-    public CandidateMap(MapGrid grid, int numberOfPickupItems, int numberOfBrush) {
+    public CandidateMap(MapGrid grid, int numberOfPickupItems, int numberOfBrush, int numberOfRocks) {
         this.numberOfPickupItems = numberOfPickupItems;
         this.numberOfBrush = numberOfBrush;
+        this.numberOfRocks = numberOfRocks;
         this.grid = grid;
     }
 
@@ -27,9 +30,11 @@ public class CandidateMap {
         this.pickupItemsList = new List<PickupItem>();
         this.fixedStructuresList = new List<FixedStructure>();
         this.brushList = new List<RandomBrush>();
+        this.rocksList = new List<Rock>();
         InitializeFixedStructures();
         RandomlyPlacePickupItems(this.numberOfPickupItems);
         RandomlyPlaceBrush(this.numberOfBrush);
+        RandomlyPlaceRocks(this.numberOfRocks);
     }
 
     private bool CheckIfPositionCanBeObstacle(Vector3 position) {
@@ -54,18 +59,33 @@ public class CandidateMap {
         }
     }
 
+    private void RandomlyPlaceRocks(int numberOfRocks) {
+        var count = numberOfRocks;
+        var itemPlacementTryLimit = 100;
+        while (count > 0 && itemPlacementTryLimit > 0) {
+            var randomIndex = Random.Range(0, mapItemsArray.Length);
+            if (mapItemsArray[randomIndex] == false) {
+                // Free space
+                var coordinates = grid.CalculateCoordinatesFromIndex(randomIndex);
+                mapItemsArray[randomIndex] = true;
+                rocksList.Add(new Rock(coordinates)); // Placed item
+                count--;
+            }
+            itemPlacementTryLimit--;
+        }
+    }
+
     private void RandomlyPlaceBrush(int numberOfBrush) {
         var count = numberOfBrush;
         var itemPlacementTryLimit = 100;
         while (count > 0 && itemPlacementTryLimit > 0) {
             var randomIndex = Random.Range(0, mapItemsArray.Length);
-            var randomHeight = Random.Range(-0.2f, 0.2f);
             if (mapItemsArray[randomIndex] == false) {
                 // Free space
                 var coordinates = grid.CalculateCoordinatesFromIndex(randomIndex);
                 mapItemsArray[randomIndex] = true;
                 brushList.Add(new RandomBrush(coordinates)); // Placed item
-                PlaceNeighboringBrush(coordinates + new Vector3(0, 0, randomHeight), randomIndex);
+                PlaceNeighboringBrush(coordinates, randomIndex);
                 count--;
             }
             itemPlacementTryLimit--;
@@ -133,6 +153,7 @@ public class CandidateMap {
         } else if (typeOfWall == 2) { // other L
             int thirdLength = (int)(0.3 * grid.Length);
             position = fixedStructure.Position;
+            AddWall(position + new Vector3(0, 0, 1));
             for (int i = 0; i < thirdLength; i++) {
                 AddWall(position + new Vector3(-1, 0, 0)); // left
                 AddWall(position + new Vector3(-1, 0, 1)); // left & up
@@ -189,7 +210,8 @@ public class CandidateMap {
             mapItemsArray = this.mapItemsArray,
             pickupItemsList = pickupItemsList,
             fixedStructuresList = fixedStructuresList,
-            brushList = brushList
+            brushList = brushList,
+            rocksList = rocksList
         };
     }
 }

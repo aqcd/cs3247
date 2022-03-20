@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3e825038a54e5646be899847d61d435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundPrefab: {fileID: 6616142317143122160, guid: f8aa396952c169d4c898e4d8204c6b60,
+  groundPrefab: {fileID: 8521781394343813498, guid: aab41fa5337936b4193115c849267105,
     type: 3}
 --- !u!4 &447697720
 Transform:
@@ -215,6 +215,8 @@ MonoBehaviour:
   wallPrefab: {fileID: 1507879402583065680, guid: f5afe6ece1be7aa4f80b85d6a40fcc2a,
     type: 3}
   brushPrefab: {fileID: 8689998506251213869, guid: 5866e83bd853b59439b4555bee7fd699,
+    type: 3}
+  rockPrefab: {fileID: 5352347528250386450, guid: fc4bfe88c7adf4642862ed31bcc5ae0e,
     type: 3}
 --- !u!4 &505955337
 Transform:
@@ -785,6 +787,7 @@ MonoBehaviour:
   mapVisualizer: {fileID: 505955336}
   numOfPickupItems: 10
   numOfBrush: 20
+  numOfRocks: 30
   width: 60
   length: 60
 --- !u!4 &896185386

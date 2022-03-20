@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
+using Random = UnityEngine.Random;
 
 public class MapVisualizer : MonoBehaviour {
     private Transform parent;
     public List<GameObject> liGoSpawn = new List<GameObject>(); // Prefabs for pickup items
     public GameObject wallPrefab; // Prefab for wall structure
     public GameObject brushPrefab; // Prefab for brush
+    public GameObject rockPrefab; // Prefab for rock
 
     private IEnumerator coroutine;
 
@@ -30,8 +31,28 @@ public class MapVisualizer : MonoBehaviour {
                 if (PlaceBrush(data, positionOnGrid)) {
                     continue;
                 }
+
+                if (PlaceRock(data, positionOnGrid)) {
+                    continue;
+                }
             }
         }
+    }
+
+    private bool PlaceRock(MapData data, Vector3 positionOnGrid) {
+        foreach (var rock in data.rocksList) {
+            if (rock.Position == positionOnGrid) {
+                float randomScale = Random.Range(0.0f, 2.0f);
+                rockPrefab.transform.localScale += new Vector3(randomScale, randomScale, randomScale);
+                Vector3 offset = new Vector3(0f, -1.0f, 0f);
+                int randomRotation = Random.Range(0, 180);
+                Quaternion rotation = Quaternion.Euler(0, randomRotation, 0);
+                Instantiate(rockPrefab, positionOnGrid + offset, rotation);
+                rockPrefab.transform.localScale = Vector3.one;
+                return true;
+            }
+        }
+        return false;
     }
 
     private bool PlacePickupItem(MapData data, Vector3 positionOnGrid) {
@@ -60,8 +81,11 @@ public class MapVisualizer : MonoBehaviour {
     private bool PlaceBrush(MapData data, Vector3 positionOnGrid) {
         foreach (var brushItem in data.brushList) {
             if (brushItem.Position == positionOnGrid) {
+                float randomHeight = Random.Range(0.0f, 0.8f);
+                brushPrefab.transform.localScale += new Vector3(0.0f, randomHeight, 0.0f); 
                 Vector3 offset = new Vector3(0f, -1.0f, 0f);
                 Instantiate(brushPrefab, positionOnGrid + offset, Quaternion.identity);
+                brushPrefab.transform.localScale = Vector3.one;
                 return true;
             }
         }
