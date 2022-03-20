@@ -184,7 +184,7 @@ public class SkillJoystickController : MonoBehaviour
         isCooldown = true;
         joystick.enabled = false;
 
-        skillObj.SendMessage("Execute", skillPosition);
+        skillObj.SendMessage("Execute", -skillPosition);
     }
 
     public void CancelSkill() {

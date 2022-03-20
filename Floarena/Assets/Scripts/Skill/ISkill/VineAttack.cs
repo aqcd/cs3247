@@ -24,7 +24,7 @@ public class VineAttack : NetworkBehaviour, ISkill
     void SpawnProjectile(Vector3 spawnDir) 
     {
         Vector3 pos = player.transform.position;
-        Quaternion qt = Quaternion.FromToRotation(new Vector3(1, 0, 0), spawnDir);
+        Quaternion qt = Quaternion.FromToRotation(new Vector3(0, 0, 1), spawnDir);
         GameObject projectile = GameObject.Instantiate(projectilePrefab, pos, qt);
         NetworkServer.Spawn(projectile);
         projectile.GetComponent<VineAttackProjectile>().OnSpawn(spawnDir);
