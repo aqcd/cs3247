@@ -17,6 +17,8 @@ public class SkillJoystickController : MonoBehaviour
 
     bool isCooldown = false;
 
+    public bool isCancel = false;
+
     private UISkillVirtualJoystick joystick;
 
     private Canvas skillCanvas;
@@ -70,11 +72,11 @@ public class SkillJoystickController : MonoBehaviour
             skillshotHeadCanvas.transform.rotation = Quaternion.Euler(0.0f, targetRotation, 0.0f);
 
             Vector3 newPosition = skillCanvas.transform.position + position;
-            float distance = Vector3.Distance(newPosition, skillCanvas.transform.position);
-            distance = Mathf.Min(distance, 5);
+            // float distance = Vector3.Distance(newPosition, skillCanvas.transform.position);
+            // distance = Mathf.Min(distance, skill.range);
             Vector3 offset = new Vector3(0.0f, 0.01f, 0.0f);
-            skillshotCanvas.transform.localScale = new Vector3(1.0f, 0.01f, (distance / 5));
-            skillshotHeadCanvas.transform.position = skillCanvas.transform.position + offset - (position.normalized * distance);
+            skillshotCanvas.transform.localScale = new Vector3(0.45f, 0.02f, 2 * skill.range / 5);
+            skillshotHeadCanvas.transform.position = skillCanvas.transform.position + offset - (position.normalized * skill.range);
             skillshotCanvas.enabled = true;
             skillshotHeadCanvas.enabled = true;
             cancelZone.enabled = true;
@@ -85,9 +87,10 @@ public class SkillJoystickController : MonoBehaviour
         {
             Vector3 newPosition = skillCanvas.transform.position + position;
             float distance = Vector3.Distance(newPosition, skillCanvas.transform.position);
-            distance = Mathf.Min(distance, 5);
+            distance = Mathf.Min(distance, skill.range);
             Vector3 offset = new Vector3(0.0f, 0.01f, 0.0f);
             targetCircleCanvas.transform.position = skillCanvas.transform.position + offset - (position.normalized * distance);
+            rangeIndicatorCanvas.transform.localScale = new Vector3(skill.range, 0.0f, skill.range);
             targetCircleCanvas.enabled = true;
             rangeIndicatorCanvas.enabled = true;
             cancelZone.enabled = true;
@@ -128,25 +131,24 @@ public class SkillJoystickController : MonoBehaviour
         cancelZone.enabled = false;
 
         Vector3 skillPosition = new Vector3(pointerPosition.x, 0.0f, pointerPosition.y);
-        Vector3 localPosition = new Vector3(pointerPosition.x, pointerPosition.y, 0.0f);
-        Vector3 worldPosition = transform.TransformPoint(transform.localPosition + localPosition);
+        // Vector3 localPosition = new Vector3(pointerPosition.x, pointerPosition.y, 0.0f);
+        // Vector3 worldPosition = transform.TransformPoint(transform.localPosition + localPosition);
 
-        Vector3 parentPosition = transform.parent.position;
+        // Vector3 parentPosition = transform.parent.position;
         
-        RectTransform cancelArea = cancelZone.rectTransform;
-        Vector3[] cancelSpace = new Vector3[4];
-        cancelArea.GetLocalCorners(cancelSpace);
+        // RectTransform cancelArea = cancelZone.rectTransform;
+        // Vector3[] cancelSpace = new Vector3[4];
+        // cancelArea.GetLocalCorners(cancelSpace);
 
-        for (var i = 0; i < 4; i++)
-        {
-            print(cancelSpace[i]);
-        }
+        // for (var i = 0; i < 4; i++)
+        // {
+        //     print(cancelSpace[i]);
+        // }
 
-        print(localPosition);
+        // print(localPosition);
         
         
-        if (worldPosition.x >  cancelSpace[0].x && worldPosition.y > cancelSpace[0].y &&
-        worldPosition.x < cancelSpace[2].x && worldPosition.y < cancelSpace[2].y)
+        if (isCancel)
         {
             print("cancel");
             return;
