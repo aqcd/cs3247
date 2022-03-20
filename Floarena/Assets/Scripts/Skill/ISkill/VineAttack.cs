@@ -12,6 +12,7 @@ public class VineAttack : NetworkBehaviour, ISkill
     void Awake()
     {
         player = MatchManager.instance.GetPlayer();
+        GameManager.instance.spawnPrefabs.Add(projectilePrefab);
     }
 
     public void Execute(Vector3 skillPosition)
