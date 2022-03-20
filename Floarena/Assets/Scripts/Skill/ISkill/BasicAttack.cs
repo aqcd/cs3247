@@ -26,6 +26,9 @@ public class BasicAttack : MonoBehaviour, ISkill
     {   
         if (Time.time > timeToAttack) 
         {
+            // Set the boolean to play attack animation to true.
+            player.GetComponent<Animator>().SetBool("BasicAttack", true);
+
             Collider[] hitColliders = Physics.OverlapSphere(player.transform.position, attackRange);
             GameObject bestHit = null;
             float bestDistance = Mathf.Infinity;
