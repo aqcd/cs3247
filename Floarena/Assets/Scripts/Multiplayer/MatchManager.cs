@@ -42,7 +42,6 @@ public class MatchManager : NetworkBehaviour {
         countdownOverlay = transform.GetChild(0).GetChild(3).gameObject;
     }
 
-    [Command(requiresAuthority=false)]
     private void CommandAddScore(int playerNum) {
         Debug.Log("Server updating score");
         if (playerNum == 1) {
@@ -71,7 +70,6 @@ public class MatchManager : NetworkBehaviour {
         }
     }
 
-    [Command(requiresAuthority=false)]
     private void StartCountdown() {
         StartCoroutine(CountdownCoroutine(3));
     }
@@ -125,14 +123,12 @@ public class MatchManager : NetworkBehaviour {
 
     // Runs on server to instruct all clients to restart the round
     // Also updates score based on winning player
-    [Command(requiresAuthority=false)]
     public void NewRound(int winningPlayer) {
         CommandAddScore(winningPlayer);
         NewRound();
     }   
 
     // Runs on server to instruct all clients to restart the round
-    [Command(requiresAuthority=false)]
     public void NewRound() {
         ResetCountdownOpacity();
         ResetPlayerPosition();

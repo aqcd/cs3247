@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using System;
 using System.Collections.Generic;
 using UnityEditor;
@@ -205,3 +207,5 @@ public class DictionaryItemStringSpriteDrawer : DictionaryDrawer<string, Sprite>
 // This one is for your custom-made dictionaries.
 [CustomPropertyDrawer(typeof(SkillSpriteDictionary))]
 public class DictionarySkillStringSpriteDrawer : DictionaryDrawer<string, Sprite> { }
+
+#endif

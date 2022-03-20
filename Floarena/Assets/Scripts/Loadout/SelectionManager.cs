@@ -19,20 +19,53 @@ public class SelectionManager : MonoBehaviour
     [SerializeField]
     public SkillSelection[] skillSelections;
 
-    [SerializeField]
-    public ItemSpriteDictionary itemSprites;
-
-    [SerializeField]
-    public SkillSpriteDictionary skillSprites;
+    public Dictionary<string, Sprite> itemSprites;
+    public Dictionary<string, Sprite> skillSprites;
 
     void Awake() {
         if (instance == null) {
             instance = this;
         }
+
+        itemSprites = new Dictionary<string, Sprite>();
+        skillSprites = new Dictionary<string, Sprite>();
     }
 
     void Start() {
-        
+        // Load sprite resources
+        // Load item sprites
+        foreach (var item in Data.ITEMS) {
+            Texture2D itemImg = Resources.Load("ItemIcons/" + item.name) as Texture2D;
+            Sprite itemSprite = Sprite.Create(
+                itemImg,
+                new Rect(0f, 0f, itemImg.width, itemImg.height),
+                new Vector2(0.5f, 0.5f),
+                100f
+            );
+            itemSprites[item.name] = itemSprite;
+        }
+
+        // Load skill sprites
+        foreach (var skill in Data.BASIC_SKILLS) {
+            Texture2D skillImg = Resources.Load("SkillIcons/" + skill.name) as Texture2D;
+            Sprite skillSprite = Sprite.Create(
+                skillImg,
+                new Rect(0f, 0f, skillImg.width, skillImg.height),
+                new Vector2(0.5f, 0.5f),
+                100f
+            );
+            skillSprites[skill.name] = skillSprite;
+        }
+        foreach (var skill in Data.ULTIMATE_SKILLS) {
+            Texture2D skillImg = Resources.Load("SkillIcons/" + skill.name) as Texture2D;
+            Sprite skillSprite = Sprite.Create(
+                skillImg,
+                new Rect(0f, 0f, skillImg.width, skillImg.height),
+                new Vector2(0.5f, 0.5f),
+                100f
+            );
+            skillSprites[skill.name] = skillSprite;
+        }
     }
 
     public void SetEditingPosition(int position) {
