@@ -6,13 +6,13 @@ using Mirror;
 public class VineAttack : NetworkBehaviour, ISkill
 {
     private GameObject player;
-    public GameObject projectilePrefab;
+    private GameObject projectilePrefab;
 
     // Start is called before the first frame update
     void Awake()
     {
         player = MatchManager.instance.GetPlayer();
-        GameManager.instance.spawnPrefabs.Add(projectilePrefab);
+        projectilePrefab = transform.GetComponent<ProjectileManager>().projectilePrefabs[0];
     }
 
     public void Execute(Vector3 skillPosition)
