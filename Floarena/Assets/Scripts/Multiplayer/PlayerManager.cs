@@ -49,6 +49,12 @@ public class PlayerManager : MonoBehaviour
         disableSkillTimer = Mathf.Max(duration, disableSkillTimer);
     }
 
+    public void StunForDuration(float duration)
+    {
+        DisableMoveForDuration(duration);
+        DisableSkillForDuration(duration);
+    }
+
     public bool GetCanMove()
     {
         return canMove;
