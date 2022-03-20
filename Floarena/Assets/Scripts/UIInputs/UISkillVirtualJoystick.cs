@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
 
-public class UIVirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
+public class UISkillVirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
     
     
@@ -20,6 +20,8 @@ public class UIVirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragHandle
     public float magnitudeMultiplier = 1f;
     public bool invertXOutputValue;
     public bool invertYOutputValue;
+
+    public bool isButton = false;
 
     [Header("Output")]
     public UnityEvent<Vector2> joystickOutputEvent;
@@ -41,38 +43,62 @@ public class UIVirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragHandle
     public void OnPointerDown(PointerEventData eventData)
     {
         OnDrag(eventData);
+        if (!isButton)
+        {
+            uiCircle.enabled = true;
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(containerRect, eventData.position, eventData.pressEventCamera, out Vector2 position);
-        
-        position = ApplySizeDelta(position);
-        
-        Vector2 clampedPosition = ClampValuesToMagnitude(position);
-
-        Vector2 outputPosition = ApplyInversionFilter(position);
-
-        OutputPointerEventValue(outputPosition * magnitudeMultiplier);
-
-        if(handleRect)
+        if (!isButton)
         {
-            UpdateHandleRectPosition(clampedPosition * joystickRange);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(containerRect, eventData.position, eventData.pressEventCamera, out Vector2 position);
+        
+            position = ApplySizeDelta(position);
+        
+            Vector2 clampedPosition = ClampValuesToMagnitude(position);
+
+            Vector2 outputPosition = ApplyInversionFilter(position);
+
+            OutputPointerEventValue(outputPosition * magnitudeMultiplier);
+
+            if(handleRect)
+            {
+                UpdateHandleRectPosition(clampedPosition * joystickRange);
+            }
+        } else {
+            OutputPointerEventValue(Vector2.zero);
         }
         
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        OutputPointerEventValue(Vector2.zero);
-
-        if(handleRect)
+        if (!isButton)
         {
-             UpdateHandleRectPosition(Vector2.zero);
-        }
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(containerRect, eventData.position, eventData.pressEventCamera, out Vector2 position);
+        
+            position = ApplySizeDelta(position);
+        
+            Vector2 clampedPosition = ClampValuesToMagnitude(position);
 
-        joystickUpEvent.Invoke(Vector2.zero);
+            Vector2 outputPosition = ApplyInversionFilter(position);
+
+            OutputPointerEventValue(Vector2.zero);
+            uiCircle.enabled = false;
+
+            if(handleRect)
+            {
+                UpdateHandleRectPosition(Vector2.zero);
+            }
+
+            joystickUpEvent.Invoke(outputPosition * magnitudeMultiplier);
+        } else {
+            OutputPointerEventValue(Vector2.zero);
+            uiCircle.enabled = false;
+            joystickUpEvent.Invoke(Vector2.zero);
+        }
     }
 
     private void OutputPointerEventValue(Vector2 pointerPosition)
