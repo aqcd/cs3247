@@ -206,7 +206,9 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
 
         // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
         // if there is no input, set the target speed to 0
-        if (_input.move == Vector2.zero) targetSpeed = 0.0f;
+        if (_input.move == Vector2.zero) { 
+            targetSpeed = 0.0f;
+        }
 
         // a reference to the players current horizontal velocity
         float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
@@ -392,7 +394,7 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
             Vector3 positionOnGrid = collider.transform.position;
             GameObject mapVisualizer = GameObject.Find("MapVisualizer");
             mapVisualizer.GetComponent<MapVisualizer>().SpawnPickupItem(positionOnGrid); // Respawn after delay
-            Destroy(collider.gameObject); // Destroy HealthConsumable
+            //Destroy(collider.gameObject); // Destroy HealthConsumable
         }
     }
 
