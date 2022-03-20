@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class SkillJoystickController : MonoBehaviour
 {
+    public Image skillImage;
     public Image skillImageOverlay;
 
     [SerializeField]
@@ -16,6 +17,7 @@ public class SkillJoystickController : MonoBehaviour
     public int skillIndex;
 
     bool isCooldown = false;
+    float remainingCooldown = 0.0f;
 
     private UIVirtualJoystick joystick;
 
@@ -50,15 +52,41 @@ public class SkillJoystickController : MonoBehaviour
     {
         if (isCooldown)
         {
+            remainingCooldown -= Time.deltaTime;
+            cooldownDisplay.text = remainingCooldown.ToString("#0");
             skillImageOverlay.fillAmount -= 1 / skill.cooldown * Time.deltaTime;
 
             if (skillImageOverlay.fillAmount <= 0)
             {
-                skillImageOverlay.fillAmount = 0;
-                isCooldown = false;
+                StopCooldown();
                 joystick.enabled = true;
             }
         }
+    }
+
+    public void StartCooldown() {
+        skillImageOverlay.fillAmount = 1;
+        isCooldown = true;
+        remainingCooldown = skill.cooldown;
+        Color skillImageColor = skillImage.color;
+        skillImageColor.a = 0.5f;
+        skillImage.color = skillImageColor;
+        Color skillImageOverlayColor = skillImageOverlay.color;
+        skillImageOverlayColor.a = 0.5f;
+        skillImageOverlay.color = skillImageOverlayColor;
+        cooldownDisplay.text = remainingCooldown.ToString("#0");
+    }
+
+    public void StopCooldown() {
+        skillImageOverlay.fillAmount = 0;
+        isCooldown = false;
+        Color skillImageColor = skillImage.color;
+        skillImageColor.a = 1.0f;
+        skillImage.color = skillImageColor;
+        Color skillImageOverlayColor = skillImageOverlay.color;
+        skillImageOverlayColor.a = 1.0f;
+        skillImageOverlay.color = skillImageOverlayColor;
+        cooldownDisplay.text = "";
     }
 
     public void UpdateSkill(Vector2 pointerPosition) {
@@ -129,8 +157,7 @@ public class SkillJoystickController : MonoBehaviour
     public void ResolveSkill(Vector2 pointerPosition) {
         // disable canvas
         // activate Skill based on joystick output
-        skillImageOverlay.fillAmount = 1;
-        isCooldown = true;
+        StartCooldown();
         skillshotCanvas.enabled = false;
         skillshotHeadCanvas.enabled = false;
         targetCircleCanvas.enabled = false;
@@ -178,8 +205,8 @@ public class SkillJoystickController : MonoBehaviour
 
     public void SetSkillImage(Sprite skillImage) {
         // Setting SkillImage
-        transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Image>().sprite = skillImage;
+        transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite = skillImage;
         // Setting SkillImageOverlay
-        transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<Image>().sprite = skillImage;
+        transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<Image>().sprite = skillImage;
     }
 }
