@@ -360,7 +360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5717042c5b675884b980cc9a832c2f40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillImageOverlay: {fileID: 3882854108713415009}
+  skillImageOverlay: {fileID: 3882854108440982204}
   cooldownDisplay: {fileID: 3882854107767029887}
   skillIndex: 0
   cancelZone: {fileID: 0}
@@ -434,7 +434,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 0
   m_FillOrigin: 2
   m_UseSpriteMesh: 0

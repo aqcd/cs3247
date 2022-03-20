@@ -32,10 +32,10 @@ public class EditLoadoutUIManager : MonoBehaviour
         float increase = val - Data.BASE_ATTRIBUTES.GetAttributeValue(attribute);
         component.text = val.ToString();
         if (increase > 0.0) {
-            component.text = component.text + " (+" + increase.ToString() + ")";
+            component.text = component.text + " (+" + increase.ToString("#0.0") + ")";
             component.GetComponent<Text>().color = Color.green;
         } else if (increase < 0.0) {
-            component.text = component.text + " (-" + Math.Abs(increase).ToString() + ")";
+            component.text = component.text + " (-" + Math.Abs(increase).ToString("#0.0") + ")";
             component.GetComponent<Text>().color = Color.red;
         } else {
             component.GetComponent<Text>().color = Color.black;

@@ -52,7 +52,7 @@ public static class Data
     };
 
     public static Item[] DEFAULT_ITEMS = new Item[]{ITEMS[0], ITEMS[1]};
-    public static Skill[] DEFAULT_BASIC_SKILLS = new Skill[]{BASIC_SKILLS[0], BASIC_SKILLS[1]};
+    public static Skill[] DEFAULT_BASIC_SKILLS = new Skill[]{BASIC_SKILLS[1], BASIC_SKILLS[2]};
     public static Skill[] DEFAULT_ULTIMATE_SKILLS = new Skill[]{ULTIMATE_SKILLS[0]};
 
     public static PlayerStats BASE_ATTRIBUTES = new PlayerStats(new Dictionary<Attribute, float>{

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class VineAttack : NetworkBehaviour, ISkill
+public class VinePull : NetworkBehaviour, ISkill
 {
     private GameObject player;
     public GameObject projectilePrefab;
@@ -27,6 +27,6 @@ public class VineAttack : NetworkBehaviour, ISkill
         Quaternion qt = Quaternion.FromToRotation(new Vector3(1, 0, 0), spawnDir);
         GameObject projectile = GameObject.Instantiate(projectilePrefab, pos, qt);
         NetworkServer.Spawn(projectile);
-        projectile.GetComponent<VineAttackProjectile>().OnSpawn(spawnDir);
+        projectile.GetComponent<VinePullProjectile>().OnSpawn(spawnDir);
     }
 }
