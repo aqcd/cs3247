@@ -20,8 +20,10 @@ public class VinePullProjectile : NetworkBehaviour
     
     void Start()
     {   
+        player = MatchManager.instance.GetPlayer();
         deathCoroutine = DeathRoutine();
         StartCoroutine(deathCoroutine);
+        playerCharacterController = player.GetComponent<CharacterController>();
     }
 
     void Update()
@@ -42,7 +44,6 @@ public class VinePullProjectile : NetworkBehaviour
     {
         rb = transform.GetComponent<Rigidbody>();
         rb.AddForce(projectileSpeed * dir, ForceMode.VelocityChange);
-        player = MatchManager.instance.GetPlayer();
     }
 
     private IEnumerator DeathRoutine() {

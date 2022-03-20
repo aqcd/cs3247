@@ -17,13 +17,12 @@ public class VinePull : NetworkBehaviour, ISkill
 
     public void Execute(Vector3 skillPosition)
     {
-        SpawnProjectile(skillPosition.normalized);
+        SpawnProjectile(skillPosition.normalized, player.transform.position);
     }
 
     [Command(requiresAuthority = false)]
-    void SpawnProjectile(Vector3 spawnDir) 
+    void SpawnProjectile(Vector3 spawnDir, Vector3 pos) 
     {
-        Vector3 pos = player.transform.position;
         Quaternion qt = Quaternion.FromToRotation(new Vector3(0, 0, 1), spawnDir);
         GameObject projectile = GameObject.Instantiate(projectilePrefab, pos, qt);
         NetworkServer.Spawn(projectile);

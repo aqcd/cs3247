@@ -17,14 +17,16 @@ public class VineAttack : NetworkBehaviour, ISkill
 
     public void Execute(Vector3 skillPosition)
     {
-        SpawnProjectile(skillPosition.normalized);
+        Debug.Log("Executed " + netId + " Pos: " + player.transform.position);
+        Debug.Log("Player num: " + MatchManager.instance.GetPlayerNum());
+        SpawnProjectile(skillPosition.normalized, player.transform.position);
     }
 
     [Command(requiresAuthority = false)]
-    void SpawnProjectile(Vector3 spawnDir) 
+    void SpawnProjectile(Vector3 spawnDir, Vector3 pos) 
     {
-        Vector3 pos = player.transform.position;
         Quaternion qt = Quaternion.FromToRotation(new Vector3(0, 0, 1), spawnDir);
+        Debug.Log("QUAT: " + qt + " POS: " + pos);
         GameObject projectile = GameObject.Instantiate(projectilePrefab, pos, qt);
         NetworkServer.Spawn(projectile);
         projectile.GetComponent<VineAttackProjectile>().OnSpawn(spawnDir);

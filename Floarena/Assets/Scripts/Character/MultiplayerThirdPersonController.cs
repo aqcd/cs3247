@@ -123,6 +123,7 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         canvas.transform.GetChild(1).gameObject.GetComponent<SkillJoystickController>().AttachSkillCanvas(skillCanvas);
         canvas.transform.GetChild(2).gameObject.GetComponent<SkillJoystickController>().AttachSkillCanvas(skillCanvas);
         canvas.transform.GetChild(3).gameObject.GetComponent<SkillJoystickController>().AttachSkillCanvas(skillCanvas);
+        canvas.transform.GetChild(4).gameObject.GetComponent<SkillJoystickController>().AttachSkillCanvas(skillCanvas);
         
         MultiplayerMobileDisableAutoSwitchControls disableSwitch = canvas.GetComponent<MultiplayerMobileDisableAutoSwitchControls>();
         // disableSwitch.AttachPlayerInput(gameObject.GetComponent<PlayerInput>());

@@ -60,7 +60,7 @@ public class SkillManager : NetworkBehaviour {
 
         // Load the requested skills on the server
         Debug.Log("Player " + MatchManager.instance.GetPlayerNum() + " asking server to load skills");
-        ServerLoadSkills(NetworkClient.connection.connectionId, skillNames);
+        ServerLoadSkills(MatchManager.instance.GetPlayerNum(), skillNames);
 
         // Set skills 
         List<SkillJoystickController> skillJoysticks = JoystickReferences.instance.skillJoysticks;
@@ -71,21 +71,27 @@ public class SkillManager : NetworkBehaviour {
     }
 
     [Command(requiresAuthority=false)]
-    private void ServerLoadSkills(int clientId, string[] skillNames) {
+    private void ServerLoadSkills(int targetPlayer, string[] skillNames) {
+        Debug.Log("called by " + targetPlayer);
+        
         // Load skills
         for (int i = 0; i < skillNames.Length; i++) {
             GameObject skillObjPrefab = Resources.Load("Skills/" + skillNames[i]) as GameObject;
             GameObject skillObj = Instantiate(skillObjPrefab);
             skillObj.transform.parent = transform;
             NetworkServer.Spawn(skillObj);
-            SetSkillObject(NetworkServer.connections[clientId], skillObj, i);
+            SetSkillObject(targetPlayer, skillObj, i);
         }
     }
 
-    [TargetRpc]
-    private void SetSkillObject(NetworkConnection target, GameObject skillObj, int index) {
-        List<SkillJoystickController> skillJoysticks = JoystickReferences.instance.skillJoysticks;
-        skillJoysticks[index].SetSkillObject(skillObj);
+    [ClientRpc]
+    private void SetSkillObject(int targetPlayer, GameObject skillObj, int index) {
+        if (MatchManager.instance.GetPlayerNum() == targetPlayer) {
+            Debug.Log("Player " + targetPlayer + " setting skills");
+            List<SkillJoystickController> skillJoysticks = JoystickReferences.instance.skillJoysticks;
+            skillJoysticks[index].SetSkillObject(skillObj);
+            Debug.Log("Object id: " + skillObj.GetComponent<NetworkIdentity>().netId);
+        }
     }
 
     public void UnLoadSkills() {
