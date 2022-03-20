@@ -60,10 +60,10 @@ public class VinePullProjectile : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other) 
     {
-        StopCoroutine(deathCoroutine);
-        hit = true;
         if (other.gameObject != player)
         {
+            StopCoroutine(deathCoroutine);
+            hit = true;
             Health otherHealth = other.gameObject.GetComponent<Health>();
             if (otherHealth != null) 
             {

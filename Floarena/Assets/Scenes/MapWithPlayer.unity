@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1775786, g: 0.22232206, b: 0.3045176, a: 1}
+  m_IndirectSpecularColor: {r: 0.17757887, g: 0.22232258, b: 0.3045184, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1106,7 +1106,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 431dd852202aa7a41858c59b517719ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInput: {fileID: 0}
 --- !u!114 &1467650734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1628,14 +1627,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2066797185}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 070fb9444c45f41d783af68e42e8ce16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillJoystickController1: {fileID: 638698594}
-  skillJoystickController2: {fileID: 1925776893}
-  skillJoystickController3: {fileID: 90121395}
+  skillJoystickController1: {fileID: 0}
+  skillJoystickController2: {fileID: 0}
+  skillJoystickController3: {fileID: 0}
 --- !u!224 &117836744522181545 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3882854107809581157, guid: 50d161084b28ac642aab324dedb3640e,
