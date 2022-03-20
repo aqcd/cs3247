@@ -153,6 +153,7 @@ public class CandidateMap {
         } else if (typeOfWall == 2) { // other L
             int thirdLength = (int)(0.3 * grid.Length);
             position = fixedStructure.Position;
+            AddWall(position + new Vector3(0, 0, 1));
             for (int i = 0; i < thirdLength; i++) {
                 AddWall(position + new Vector3(-1, 0, 0)); // left
                 AddWall(position + new Vector3(-1, 0, 1)); // left & up
