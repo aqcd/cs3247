@@ -18,16 +18,17 @@ public class VinePullProjectile : NetworkBehaviour
     private IEnumerator deathCoroutine;
     private bool hit = false;
     
-    void Start()
+    void Awake()
     {   
-        player = MatchManager.instance.GetPlayer();
         deathCoroutine = DeathRoutine();
         StartCoroutine(deathCoroutine);
-        playerCharacterController = player.GetComponent<CharacterController>();
     }
 
     void Update()
     {
+        if (playerCharacterController == null) {
+            return;
+        }
         if (remainingDuration > 0.0f) 
         {
             playerCharacterController.Move(direction * pullSpeed * Time.deltaTime);
@@ -40,8 +41,14 @@ public class VinePullProjectile : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void OnSpawn(Vector3 dir) 
+    public void OnSpawn(Vector3 dir, int spawnPlayerNum) 
     {
+        if (MatchManager.instance.GetPlayerNum() == spawnPlayerNum) {
+            player = MatchManager.instance.GetPlayer();
+        } else {
+            player = MatchManager.instance.GetOpponent();
+        }
+        playerCharacterController = player.GetComponent<CharacterController>();
         rb = transform.GetComponent<Rigidbody>();
         rb.AddForce(projectileSpeed * dir, ForceMode.VelocityChange);
     }
