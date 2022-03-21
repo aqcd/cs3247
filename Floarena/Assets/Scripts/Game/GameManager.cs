@@ -12,7 +12,7 @@ public class GameManager : NetworkManager {
     private NetworkConnectionToClient player1Conn;
     private NetworkConnectionToClient player2Conn;
     private Vector3 player1SpawnPos = new Vector3(5, 0, 5);
-    private Vector3 player2SpawnPos = new Vector3(10, 0, 10); // 55, 0, 55
+    private Vector3 player2SpawnPos = new Vector3(55, 0, 55);
 
     public Loadout loadout;
 
@@ -45,8 +45,8 @@ public class GameManager : NetworkManager {
     public void JoinGame() {
         Debug.Log("Clicked");
         if (!NetworkClient.isConnected && !NetworkServer.active) {
-            // networkAddress = "13.215.67.49";
-            networkAddress = "localhost";
+            networkAddress = "13.215.67.49";
+            // networkAddress = "localhost";
             Debug.Log("Not connected");
 
             if (!NetworkClient.active) {
