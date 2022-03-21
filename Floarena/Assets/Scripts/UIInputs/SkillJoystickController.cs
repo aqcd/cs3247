@@ -109,7 +109,7 @@ public class SkillJoystickController : MonoBehaviour
             skillshotHeadCanvas.transform.position = skillCanvas.transform.position + offset - (position.normalized * skill.range);
             skillshotCanvas.enabled = true;
             skillshotHeadCanvas.enabled = true;
-            cancelZone.enabled = true;
+            // cancelZone.enabled = true;
 
         }
 
@@ -123,7 +123,7 @@ public class SkillJoystickController : MonoBehaviour
             rangeIndicatorCanvas.transform.localScale = new Vector3(skill.range, 0.0f, skill.range);
             targetCircleCanvas.enabled = true;
             rangeIndicatorCanvas.enabled = true;
-            cancelZone.enabled = true;
+            // cancelZone.enabled = true;
 
         }
 
@@ -158,7 +158,7 @@ public class SkillJoystickController : MonoBehaviour
         skillshotHeadCanvas.enabled = false;
         targetCircleCanvas.enabled = false;
         rangeIndicatorCanvas.enabled = false;
-        cancelZone.enabled = false;
+        // cancelZone.enabled = false;
 
         Vector3 skillPosition = new Vector3(pointerPosition.x, 0.0f, pointerPosition.y);
         // Vector3 localPosition = new Vector3(pointerPosition.x, pointerPosition.y, 0.0f);
@@ -168,21 +168,21 @@ public class SkillJoystickController : MonoBehaviour
         
         // RectTransform cancelArea = cancelZone.rectTransform;
         // Vector3[] cancelSpace = new Vector3[4];
-        // cancelArea.GetLocalCorners(cancelSpace);
+        // cancelArea.GetWorldCorners(cancelSpace);
 
         // for (var i = 0; i < 4; i++)
         // {
         //     print(cancelSpace[i]);
         // }
 
-        // print(localPosition);
+        // print(worldPosition);
         
         
-        if (isCancel)
-        {
-            print("cancel");
-            return;
-        }
+        // if (isCancel)
+        // {
+        //     print("cancel");
+        //     return;
+        // }
 
         skillImageOverlay.fillAmount = 1;
         isCooldown = true;
@@ -196,7 +196,7 @@ public class SkillJoystickController : MonoBehaviour
         skillshotHeadCanvas.enabled = false;
         targetCircleCanvas.enabled = false;
         rangeIndicatorCanvas.enabled = false;
-        cancelZone.enabled = false;
+        // cancelZone.enabled = false;
     }
 
     public void AttachSkillCanvas(Canvas canvas)
@@ -211,7 +211,7 @@ public class SkillJoystickController : MonoBehaviour
         skillshotHeadCanvas.enabled = false;
         targetCircleCanvas.enabled = false;
         rangeIndicatorCanvas.enabled = false;
-        cancelZone.enabled = false;
+        // cancelZone.enabled = false;
     }
 
     public void SetSkill(Skill skill)
