@@ -102,7 +102,7 @@ public class MapVisualizer : MonoBehaviour {
     }
 
     public void SpawnBerry(Vector3 positionOnGrid) {
-        coroutine = PlaceBerryWithDelay(5.0f, positionOnGrid);
+        coroutine = PlaceBerryWithDelay(20.0f, positionOnGrid);
         StartCoroutine(coroutine);
     }
 
