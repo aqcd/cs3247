@@ -14,10 +14,10 @@ GameObject:
   - component: {fileID: 7107519833623486147}
   - component: {fileID: -2592972473216332157}
   - component: {fileID: 5335557625645817518}
-  - component: {fileID: -1833803636082274280}
+  - component: {fileID: -8249017923666663550}
   m_Layer: 0
-  m_Name: Health_2
-  m_TagString: HealthConsumable
+  m_Name: Berry_1
+  m_TagString: Berry1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -213,7 +213,7 @@ MonoBehaviour:
   visible: 0
   m_AssetId: a232551061eff204988ad9ba3c29dd74
   hasSpawned: 0
---- !u!114 &-1833803636082274280
+--- !u!114 &-8249017923666663550
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -222,9 +222,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3628741095879785448}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cdd0e210247b4641b01d28974ee1f2a, type: 3}
+  m_Script: {fileID: 11500000, guid: 43a336f5dcbb0a744b84d0141a15a707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  _audio: {fileID: 8300000, guid: 5f8a520265d7f984484cedf66d82e479, type: 3}
+  _audio: {fileID: 8300000, guid: fa72a5e13e5ea3c49adcd1bf85d851b7, type: 3}

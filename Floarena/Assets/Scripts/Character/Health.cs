@@ -13,6 +13,12 @@ public class Health : NetworkBehaviour
     public bool hasBar = true;
     public HealthBar healthBar;
 
+    public AudioSource audioSource;
+    public AudioClip deathAudio;
+    public AudioClip attackedAudio;
+    public AudioClip increaseHealthAudio;
+    public AudioClip decreaseHealthAudio;
+
     void Start() {
         if (isLocalPlayer) {
             float temp  = GameManager.instance.loadout.GetLoadoutStats().GetAttributeValue(Attribute.HP);
@@ -43,10 +49,23 @@ public class Health : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void CmdTakeDamage(float damage, int sourcePlayer) {
         currentHealth -= damage;
+        RpcPlayDecreaseHealthAudio();
         if (currentHealth <= 0) {
             // Play dying animation here
+            RpcPlayDeathAudio();
             MatchManager.instance.NewRound(sourcePlayer);
         }
+    }
+
+    [ClientRpc]
+    public void RpcPlayDecreaseHealthAudio() {
+        audioSource.PlayOneShot(attackedAudio, 0.5f);
+        audioSource.PlayOneShot(decreaseHealthAudio, 0.5f);
+    }
+
+    [ClientRpc]
+    public void RpcPlayDeathAudio() {
+        audioSource.PlayOneShot(deathAudio, 0.5f);
     }
 
     [Command(requiresAuthority=false)]
@@ -56,6 +75,12 @@ public class Health : NetworkBehaviour
         } else {
             currentHealth += healing;
         }
+        RpcPlayIncreaseHealthAudio();
+    }
+
+    [ClientRpc]
+    public void RpcPlayIncreaseHealthAudio() {
+        audioSource.PlayOneShot(increaseHealthAudio, 0.5f);
     }
 
     [Command(requiresAuthority=false)]

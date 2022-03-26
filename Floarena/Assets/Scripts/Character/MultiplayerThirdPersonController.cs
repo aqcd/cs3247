@@ -393,8 +393,13 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
             Heal();
             Vector3 positionOnGrid = collider.transform.position;
             GameObject mapVisualizer = GameObject.Find("MapVisualizer");
-            mapVisualizer.GetComponent<MapVisualizer>().SpawnPickupItem(positionOnGrid); // Respawn after delay
-            //Destroy(collider.gameObject); // Destroy HealthConsumable
+            mapVisualizer.GetComponent<MapVisualizer>().SpawnPickupItem(0, positionOnGrid); // index 0 for health consumable
+        } else if (collider.tag == "Berry1") {
+            // Put action for berry here, like increasing attack speed etc
+
+            Vector3 positionOnGrid = collider.transform.position;
+            GameObject mapVisualizer = GameObject.Find("MapVisualizer");
+            mapVisualizer.GetComponent<MapVisualizer>().SpawnBerry(positionOnGrid);
         }
     }
 
@@ -413,6 +418,6 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
     private void OnCollisionEnter(Collision other) {
         if (other.gameObject.tag == "Player") {
             other.gameObject.GetComponent<Health>().TakeDamage(10);
-        }
+        } 
     }
 }
