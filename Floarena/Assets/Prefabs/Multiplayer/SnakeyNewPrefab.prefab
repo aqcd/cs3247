@@ -771,6 +771,7 @@ GameObject:
   - component: {fileID: 981705432428068983}
   - component: {fileID: 5045399255790994984}
   - component: {fileID: 5161634843321687793}
+  - component: {fileID: 253627310577986240}
   m_Layer: 6
   m_Name: MinimapDisplay
   m_TagString: Untagged
@@ -786,7 +787,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5911459085522109188}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.852, z: 0}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_Children: []
   m_Father: {fileID: 127555093809033888}
@@ -854,6 +855,20 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: -0.00000047683716, y: 0, z: -0.0000009536743}
+--- !u!114 &253627310577986240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5911459085522109188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2f9ea0314da2fb4497ceca47c1f6a4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMaterial: {fileID: 2100000, guid: 84335f003ad8f42408d13787e76d4f94, type: 2}
+  opponentMaterial: {fileID: 2100000, guid: 6ec777c59ba249a4aa16956e9dd9a0ee, type: 2}
 --- !u!1 &6100241812404756682
 GameObject:
   m_ObjectHideFlags: 0
