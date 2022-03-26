@@ -9,7 +9,7 @@ public class VinePullProjectile : NetworkBehaviour
     private float projectileSpeed = SkillConstants.VINE_PULL_PROJECTILE_SPEED;
     private float damageMagnitude = SkillConstants.VINE_PULL_DAMAGE;
     private float pullSpeed = SkillConstants.VINE_PULL_PROJECTILE_SPEED * 1.3f;
-    private GameObject player;
+    private GameObject spawningPlayer;
     private CharacterController playerCharacterController;
     private Rigidbody rb;
 
@@ -17,7 +17,7 @@ public class VinePullProjectile : NetworkBehaviour
     private float remainingDuration = 0.0f;
     private IEnumerator deathCoroutine;
     private bool hit = false;
-    
+    private bool isSpawningClient;
     void Awake()
     {   
         deathCoroutine = DeathRoutine();
@@ -44,11 +44,14 @@ public class VinePullProjectile : NetworkBehaviour
     public void OnSpawn(Vector3 dir, int spawnPlayerNum) 
     {
         if (MatchManager.instance.GetPlayerNum() == spawnPlayerNum) {
-            player = MatchManager.instance.GetPlayer();
+            spawningPlayer = MatchManager.instance.GetPlayer();
+            isSpawningClient = true;
         } else {
-            player = MatchManager.instance.GetOpponent();
+            spawningPlayer = MatchManager.instance.GetOpponent();
+            isSpawningClient = false;
         }
-        playerCharacterController = player.GetComponent<CharacterController>();
+        Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), spawningPlayer.GetComponent<Collider>());
+        playerCharacterController = spawningPlayer.GetComponent<CharacterController>();
         rb = transform.GetComponent<Rigidbody>();
         rb.AddForce(projectileSpeed * dir, ForceMode.VelocityChange);
     }
@@ -58,11 +61,14 @@ public class VinePullProjectile : NetworkBehaviour
         GameObject.Destroy(gameObject);
     }
 
-    private void OnTriggerEnter(Collider other) 
+    private void OnCollisionEnter(Collision other) 
     {
-        if (other.gameObject != player)
+        if (other.gameObject != spawningPlayer && isSpawningClient && !hit)
         {
             StopCoroutine(deathCoroutine);
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero; 
+            rb.detectCollisions = false;
             hit = true;
             Health otherHealth = other.gameObject.GetComponent<Health>();
             if (otherHealth != null) 
@@ -75,10 +81,10 @@ public class VinePullProjectile : NetworkBehaviour
 
     private void MovePlayerToTarget(GameObject target) 
     {
-        float distance = Vector3.Distance(player.transform.position, target.transform.position);
-        direction = (target.transform.position - player.transform.position).normalized;
+        float distance = Vector3.Distance(spawningPlayer.transform.position, target.transform.position);
+        direction = (target.transform.position - spawningPlayer.transform.position).normalized;
         remainingDuration = distance/pullSpeed;
-        PlayerManager playerManager = player.GetComponent<PlayerManager>();
+        PlayerManager playerManager = spawningPlayer.GetComponent<PlayerManager>();
         PlayerManager targetPlayerManager = target.GetComponent<PlayerManager>();
         playerManager.StunForDuration(remainingDuration);
         if (targetPlayerManager)
