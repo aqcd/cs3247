@@ -18,8 +18,9 @@ public class Rush : NetworkBehaviour, ISkill {
 
     private float remainingDuration = 0.0f;
 
-    public AudioSource audioSource;
-    public AudioClip rushAudio;
+    private AudioManager audioManager;
+    //public AudioSource audioSource;
+    //public AudioClip rushAudio;
 
     private bool isActive = false;
 
@@ -28,7 +29,8 @@ public class Rush : NetworkBehaviour, ISkill {
         player = MatchManager.instance.GetPlayer();
         characterController = player.GetComponent<CharacterController>();
         playerManager = player.GetComponent<PlayerManager>();
-        audioSource = player.GetComponent<AudioSource>();
+        //audioSource = player.GetComponent<AudioSource>();
+        audioManager = MatchManager.instance.GetComponent<AudioManager>();
     }
 
     void Update() {
@@ -45,7 +47,7 @@ public class Rush : NetworkBehaviour, ISkill {
             isActive = false;
         }
     }
-    
+    /*
     [ClientRpc]
     public void RpcPlayRushAudio() {
         if (!isLocalPlayer) {
@@ -56,11 +58,12 @@ public class Rush : NetworkBehaviour, ISkill {
     [Command(requiresAuthority = false)]
     public void CmdPlayRushAudio() {
         RpcPlayRushAudio();
-    }
+    }*/
 
     public void Execute(Vector3 skillPosition) {
-        CmdPlayRushAudio();
-        audioSource.PlayOneShot(rushAudio, 0.2f); // Only plays audio for local player
+        //CmdPlayRushAudio();
+        //audioSource.PlayOneShot(rushAudio, 0.2f); // Only plays audio for local player
+        audioManager.PlaySound(0, player.transform.position);
         isActive = true;
         remainingDuration = range / speed;
         direction = skillPosition.normalized;
