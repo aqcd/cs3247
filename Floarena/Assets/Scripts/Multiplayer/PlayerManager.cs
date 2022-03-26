@@ -37,6 +37,11 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public void EnableMove() {
+        canMove = true;
+        disableMoveTimer = 0.0f;
+    }
+
     public void DisableMoveForDuration(float duration)
     {
         canMove = false;
@@ -47,6 +52,12 @@ public class PlayerManager : MonoBehaviour
     {
         canSkill = false;
         disableSkillTimer = Mathf.Max(duration, disableSkillTimer);
+    }
+
+    public void StunForDuration(float duration)
+    {
+        DisableMoveForDuration(duration);
+        DisableSkillForDuration(duration);
     }
 
     public bool GetCanMove()

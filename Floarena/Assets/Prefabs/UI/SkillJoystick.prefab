@@ -29,7 +29,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 3882854107767029884}
   - {fileID: 3882854108713415038}
   - {fileID: 3882854108440982205}
   m_Father: {fileID: 2605028563044296412}
@@ -89,7 +88,7 @@ GameObject:
   - component: {fileID: 2605028563044296412}
   - component: {fileID: 8858430807178457540}
   - component: {fileID: 2224782832429749204}
-  - component: {fileID: 4012534869079130179}
+  - component: {fileID: 7685753622212807670}
   m_Layer: 5
   m_Name: UI_Virtual_Joystick
   m_TagString: Untagged
@@ -109,6 +108,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2002098652608612962}
+  - {fileID: 3882854107767029884}
   m_Father: {fileID: 3882854107809581157}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -155,7 +155,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4012534869079130179
+--- !u!114 &7685753622212807670
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -164,7 +164,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2625463611423686781}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2cb8c4d669392748bb924209de33b85, type: 3}
+  m_Script: {fileID: 11500000, guid: fe55d7e69ae3b49f5bda8516e73919c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   containerRect: {fileID: 2605028563044296412}
@@ -174,21 +174,10 @@ MonoBehaviour:
   magnitudeMultiplier: 1
   invertXOutputValue: 0
   invertYOutputValue: 0
+  isButton: 0
   joystickOutputEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3882854107809581156}
-        m_TargetAssemblyTypeName: AbilityJoystick, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   joystickUpEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -221,13 +210,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 2002098652608612962}
-  m_RootOrder: 0
+  m_Father: {fileID: 2605028563044296412}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3882854107767029886
 CanvasRenderer:
@@ -259,12 +248,12 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 100
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 0
+    m_MinSize: 0
+    m_MaxSize: 300
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -360,7 +349,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5717042c5b675884b980cc9a832c2f40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillImageOverlay: {fileID: 3882854108713415009}
+  skillImage: {fileID: 3882854108713415009}
+  skillImageOverlay: {fileID: 3882854108440982204}
   cooldownDisplay: {fileID: 3882854107767029887}
   skillIndex: 0
   cancelZone: {fileID: 0}
@@ -394,7 +384,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2002098652608612962}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -434,7 +424,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 0
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
@@ -469,7 +459,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2002098652608612962}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}

@@ -12,12 +12,13 @@ public class GameManager : NetworkManager {
     private NetworkConnectionToClient player1Conn;
     private NetworkConnectionToClient player2Conn;
     private Vector3 player1SpawnPos = new Vector3(5, 0, 5);
-    private Vector3 player2SpawnPos = new Vector3(10, 0, 10); // 55, 0, 55
+    private Vector3 player2SpawnPos = new Vector3(55, 0, 55);
 
     public Loadout loadout;
 
     [Header("Initialization Prefabs")]
-    public GameObject MultiplayerManagersPrefab;
+    public GameObject MatchManagerPrefab;
+    public GameObject SkillManagerPrefab;
 
     public override void Awake() {
         Debug.Log("Server awake");
@@ -26,7 +27,8 @@ public class GameManager : NetworkManager {
         }
         base.Awake();
         joinConfirmations = 0;
-        spawnPrefabs.Add(MultiplayerManagersPrefab);
+        spawnPrefabs.Add(MatchManagerPrefab);
+        spawnPrefabs.Add(SkillManagerPrefab);
     }
 
     public void HostGame() {
@@ -43,8 +45,8 @@ public class GameManager : NetworkManager {
     public void JoinGame() {
         Debug.Log("Clicked");
         if (!NetworkClient.isConnected && !NetworkServer.active) {
-            // networkAddress = "13.215.67.49";
-            networkAddress = "localhost";
+            networkAddress = "13.215.67.49";
+            // networkAddress = "localhost";
             Debug.Log("Not connected");
 
             if (!NetworkClient.active) {
@@ -120,14 +122,20 @@ public class GameManager : NetworkManager {
             Debug.Log("Player 2 Added");
 
             Debug.Log("Both players are ready, instructing clients to perform further setup");
-            // Spawn MultiplayerManagers on both clients
-            GameObject multiplayerManagers = Instantiate(MultiplayerManagersPrefab);
-            NetworkServer.Spawn(multiplayerManagers);
+            // Spawn MatchManagers on both clients
+            GameObject matchManager = Instantiate(MatchManagerPrefab);
+            NetworkServer.Spawn(matchManager);
 
             // Send initial spawn positions and map seed to MatchManager via a TargetRpc
             int mapSeed = Random.Range(int.MinValue, int.MaxValue);
             MatchManager.instance.InitMatch(player1Conn, player1SpawnPos, mapSeed, 1, 2);
             MatchManager.instance.InitMatch(player2Conn, player2SpawnPos, mapSeed, 2, 1);
+
+            // Spawn SkillManagers on both clients
+            GameObject skillManager = Instantiate(SkillManagerPrefab);
+            NetworkServer.Spawn(skillManager);
+
+            SkillManager.instance.LoadSkills();
 
             MatchManager.instance.NewRound();
         }

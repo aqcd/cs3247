@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class VineAttack : NetworkBehaviour, ISkill
+public class VinePull : NetworkBehaviour, ISkill
 {
     private GameObject player;
     private GameObject projectilePrefab;
@@ -17,18 +17,15 @@ public class VineAttack : NetworkBehaviour, ISkill
 
     public void Execute(Vector3 skillPosition)
     {
-        Debug.Log("Executed " + netId + " Pos: " + player.transform.position);
-        Debug.Log("Player num: " + MatchManager.instance.GetPlayerNum());
-        SpawnProjectile(skillPosition.normalized, player.transform.position);
+        SpawnProjectile(skillPosition.normalized, player.transform.position, MatchManager.instance.GetPlayerNum());
     }
 
     [Command(requiresAuthority = false)]
-    void SpawnProjectile(Vector3 spawnDir, Vector3 pos) 
+    void SpawnProjectile(Vector3 spawnDir, Vector3 pos, int spawnPlayerNum) 
     {
         Quaternion qt = Quaternion.FromToRotation(new Vector3(0, 0, 1), spawnDir);
-        Debug.Log("QUAT: " + qt + " POS: " + pos);
         GameObject projectile = GameObject.Instantiate(projectilePrefab, pos, qt);
         NetworkServer.Spawn(projectile);
-        projectile.GetComponent<VineAttackProjectile>().OnSpawn(spawnDir);
+        projectile.GetComponent<VinePullProjectile>().OnSpawn(spawnDir, spawnPlayerNum);
     }
 }

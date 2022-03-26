@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface ISkill
 {
-    void Execute(Vector3 skillPosition);
+    public void Execute(Vector3 skillPosition);
 }

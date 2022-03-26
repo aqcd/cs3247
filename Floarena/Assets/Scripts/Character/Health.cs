@@ -8,7 +8,7 @@ public class Health : NetworkBehaviour
     [SyncVar(hook = nameof(UpdateMaxHealth))]
     public float maxHealth;
     [SyncVar(hook = nameof(UpdateHealth))]
-    public float currentHealth = 0;
+    public float currentHealth = 1;
 
     public bool hasBar = true;
     public HealthBar healthBar;
@@ -46,17 +46,6 @@ public class Health : NetworkBehaviour
         CmdTakeDamage(damage, MatchManager.instance.GetOpponentNum());
     }
 
-    [Command(requiresAuthority = false)]
-    public void CmdTakeDamage(float damage, int sourcePlayer) {
-        currentHealth -= damage;
-        RpcPlayDecreaseHealthAudio();
-        if (currentHealth <= 0) {
-            // Play dying animation here
-            RpcPlayDeathAudio();
-            MatchManager.instance.NewRound(sourcePlayer);
-        }
-    }
-
     [ClientRpc]
     public void RpcPlayDecreaseHealthAudio() {
         audioSource.PlayOneShot(attackedAudio, 0.5f);
@@ -66,6 +55,21 @@ public class Health : NetworkBehaviour
     [ClientRpc]
     public void RpcPlayDeathAudio() {
         audioSource.PlayOneShot(deathAudio, 0.5f);
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdTakeDamage(float damage, int sourcePlayer) {
+        currentHealth -= damage;
+        RpcPlayDecreaseHealthAudio();
+        if (currentHealth <= 0) {
+            RpcPlayDeathAudio();
+            StartCoroutine(StartNewRound(sourcePlayer));
+        }
+    }
+
+    IEnumerator StartNewRound(int sourcePlayer) {
+        yield return new WaitForSeconds(1f);
+        MatchManager.instance.NewRound(sourcePlayer);
     }
 
     [Command(requiresAuthority=false)]

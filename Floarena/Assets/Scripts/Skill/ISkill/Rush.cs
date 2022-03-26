@@ -12,6 +12,8 @@ public class Rush : NetworkBehaviour, ISkill {
     private float speed = SkillConstants.RUSH_SPEED;
     private float damageMagnitude = SkillConstants.RUSH_DAMAGE;
 
+    private float damageRadius = SkillConstants.RUSH_AOE_RADIUS;
+
     private Vector3 direction = new Vector3();
 
     private float remainingDuration = 0.0f;
@@ -19,7 +21,10 @@ public class Rush : NetworkBehaviour, ISkill {
     public AudioSource audioSource;
     public AudioClip rushAudio;
 
-    void Awake() {
+    private bool isActive = false;
+
+    void Awake()
+    {
         player = MatchManager.instance.GetPlayer();
         characterController = player.GetComponent<CharacterController>();
         playerManager = player.GetComponent<PlayerManager>();
@@ -30,6 +35,14 @@ public class Rush : NetworkBehaviour, ISkill {
         if (remainingDuration > 0.0f) {
             characterController.Move(direction * (speed * Time.deltaTime));
             remainingDuration -= Time.deltaTime;
+
+            if (characterController.velocity.magnitude < 0.99 * speed) {
+                remainingDuration = 0.0f;
+            }
+        } else if (isActive) {
+            Damage();
+            playerManager.EnableMove();
+            isActive = false;
         }
     }
     
@@ -48,9 +61,23 @@ public class Rush : NetworkBehaviour, ISkill {
     public void Execute(Vector3 skillPosition) {
         CmdPlayRushAudio();
         audioSource.PlayOneShot(rushAudio, 0.2f); // Only plays audio for local player
+        isActive = true;
         remainingDuration = range / speed;
         direction = skillPosition.normalized;
         playerManager.DisableMoveForDuration(remainingDuration);
     }
 
+    private void Damage() {
+        Collider[] hitColliders = Physics.OverlapSphere(player.transform.position, damageRadius);
+        foreach (Collider collider in hitColliders) {
+            GameObject hitObject = collider.gameObject;
+            if (hitObject.tag != "Player" && hitObject.tag != "Damageable") {
+                continue;
+            }
+
+            if (hitObject != player) {
+                hitObject.SendMessage("TakeDamage", damageMagnitude);
+            }
+        }
+    }
 }
