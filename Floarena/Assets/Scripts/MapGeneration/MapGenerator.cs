@@ -17,6 +17,9 @@ public class MapGenerator : MonoBehaviour {
     [Range(10, 30)] // Range of number of grass patches
     public int numOfRocks;
 
+    [Range(1, 3)] // Range of number of berry
+    public int numOfBerry;
+
     [Range(40, 60)] // Range of map width and length
     public int width, length = 20;
     private MapGrid grid;
@@ -39,7 +42,7 @@ public class MapGenerator : MonoBehaviour {
         Random.InitState(seed);
         grid = new MapGrid(width, length);
         gridVisualizer.VisualizeGrid(width, length);
-        CandidateMap map = new CandidateMap(grid, numOfPickupItems, numOfBrush, numOfRocks);
+        CandidateMap map = new CandidateMap(grid, numOfPickupItems, numOfBrush, numOfRocks, numOfBerry);
         map.CreateMap();
         mapVisualizer.VisualizeMap(grid, map.ReturnMapData());
     }

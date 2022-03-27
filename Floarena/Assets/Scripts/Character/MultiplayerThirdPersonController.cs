@@ -418,6 +418,12 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
             GameObject mapVisualizer = GameObject.Find("MapVisualizer");
             mapVisualizer.GetComponent<MapVisualizer>().SpawnPickupItem(positionOnGrid); // Respawn after delay
             Destroy(collider.gameObject); // Destroy HealthConsumable
+        } else if (collider.tag == "Berry_1") {
+            Vector3 positionOnGrid = collider.transform.position;
+            GameObject mapVisualizer = GameObject.Find("MapVisualizer");
+            mapVisualizer.GetComponent<MapVisualizer>().SpawnBerry(positionOnGrid); // Respawn after delay
+            audioManager.PlaySound(AudioIndex.TAKE_BERRY_AUDIO, positionOnGrid);
+            Destroy(collider.gameObject); // Destroy HealthConsumable
         }
     }
 
@@ -430,7 +436,7 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
     private void OnTriggerExit(Collider collider) {
         if (collider.tag == "Brush") {
             SetPlayerVisible();
-        } 
+        }
     }
 
     private void OnCollisionEnter(Collision other) {

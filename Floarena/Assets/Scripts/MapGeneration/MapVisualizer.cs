@@ -5,10 +5,11 @@ using Random = UnityEngine.Random;
 
 public class MapVisualizer : MonoBehaviour {
     private Transform parent;
-    public List<GameObject> liGoSpawn = new List<GameObject>(); // Prefabs for pickup items
-    public GameObject wallPrefab; // Prefab for wall structure
-    public GameObject brushPrefab; // Prefab for brush
-    public GameObject rockPrefab; // Prefab for rock
+    public List<GameObject> healthItems = new List<GameObject>();
+    public List<GameObject> berryPrefabs = new List<GameObject>();
+    public GameObject wallPrefab;
+    public GameObject brushPrefab; 
+    public GameObject rockPrefab;
 
     private IEnumerator coroutine;
 
@@ -27,7 +28,11 @@ public class MapVisualizer : MonoBehaviour {
                 if (PlacePickupItem(data, positionOnGrid)) { // Place pickup items
                     continue;
                 }
-                
+
+                if (PlaceBerry(data, positionOnGrid)) {
+                    continue;
+                }
+
                 if (PlaceBrush(data, positionOnGrid)) {
                     continue;
                 }
@@ -55,11 +60,34 @@ public class MapVisualizer : MonoBehaviour {
         return false;
     }
 
+    private bool PlaceBerry(MapData data, Vector3 positionOnGrid) {
+        foreach (var berry in data.berryList) {
+            if (berry.Position == positionOnGrid) {
+                Vector3 offset = new Vector3(0f, -1.0f, 0f);
+                GameObject goToSpawn = berryPrefabs[Random.Range(0, berryPrefabs.Count)];
+                Instantiate(goToSpawn, positionOnGrid + offset, Quaternion.identity);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private IEnumerator PlaceBerryWithDelay(float waitTime, Vector3 positionOnGrid) {
+        yield return new WaitForSeconds(waitTime);
+        GameObject goToSpawn = berryPrefabs[Random.Range(0, berryPrefabs.Count)];
+        Instantiate(goToSpawn, positionOnGrid, Quaternion.identity);
+    }
+
+    public void SpawnBerry(Vector3 positionOnGrid) {
+        coroutine = PlaceBerryWithDelay(20.0f, positionOnGrid);
+        StartCoroutine(coroutine);
+    }
+
     private bool PlacePickupItem(MapData data, Vector3 positionOnGrid) {
         foreach (var pickupItem in data.pickupItemsList) {
             if (pickupItem.Position == positionOnGrid) {
                 Vector3 offset = new Vector3(0f, -1.0f, 0f);
-                GameObject goToSpawn = liGoSpawn[Random.Range(0, liGoSpawn.Count)];
+                GameObject goToSpawn = healthItems[Random.Range(0, healthItems.Count)];
                 Instantiate(goToSpawn, positionOnGrid + offset, Quaternion.identity);
                 return true;
             }
@@ -69,7 +97,7 @@ public class MapVisualizer : MonoBehaviour {
 
     private IEnumerator PlacePickupItemWithDelay(float waitTime, Vector3 positionOnGrid) {
         yield return new WaitForSeconds(waitTime);
-        GameObject goToSpawn = liGoSpawn[Random.Range(0, liGoSpawn.Count)];
+        GameObject goToSpawn = healthItems[Random.Range(0, healthItems.Count)];
         Instantiate(goToSpawn, positionOnGrid, Quaternion.identity);
     }
 

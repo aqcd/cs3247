@@ -9,13 +9,7 @@ public class BrushAudio : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) {
         if (other.tag == "Player" && !audioSource.isPlaying) {
-            audioSource.PlayOneShot(_audio, 0.5f);
-        }
-    }
-
-    void OnCollisionEnter(Collision other) {
-        if (other.gameObject.tag == "Player" && !audioSource.isPlaying) {
-            audioSource.PlayOneShot(_audio, 0.5f);
+            audioSource.PlayOneShot(_audio, 0.05f);
         }
     }
 }

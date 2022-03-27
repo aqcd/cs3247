@@ -9,6 +9,7 @@ TagManager:
   - PlayerCamera
   - Brush
   - HealthConsumable
+  - Berry_1
   layers:
   - Default
   - TransparentFX
