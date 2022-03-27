@@ -13,11 +13,14 @@ public class Health : NetworkBehaviour
     public bool hasBar = true;
     public HealthBar healthBar;
 
+    public AudioManager audioManager;
+
     void Start() {
         if (isLocalPlayer) {
             float temp  = GameManager.instance.loadout.GetLoadoutStats().GetAttributeValue(Attribute.HP);
             SetMaxHealth(temp);
         }
+        audioManager = GetComponent<AudioManager>();
     }
 
     void Update() {
@@ -43,7 +46,9 @@ public class Health : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void CmdTakeDamage(float damage, int sourcePlayer) {
         currentHealth -= damage;
+        audioManager.PlaySound(AudioIndex.DECREASE_HEALTH_AUDIO, transform.position);
         if (currentHealth <= 0) {
+            audioManager.PlaySound(AudioIndex.DEATH_AUDIO, transform.position);
             StartCoroutine(StartNewRound(sourcePlayer));
         }
     }
@@ -60,6 +65,8 @@ public class Health : NetworkBehaviour
         } else {
             currentHealth += healing;
         }
+        audioManager.PlaySound(AudioIndex.INCREASE_HEALTH_AUDIO, transform.position);
+        Debug.Log("Here");
     }
 
     [Command(requiresAuthority=false)]
