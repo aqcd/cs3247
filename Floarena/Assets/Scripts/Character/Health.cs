@@ -66,7 +66,6 @@ public class Health : NetworkBehaviour
             currentHealth += healing;
         }
         audioManager.PlaySound(AudioIndex.INCREASE_HEALTH_AUDIO, transform.position);
-        Debug.Log("Here");
     }
 
     [Command(requiresAuthority=false)]

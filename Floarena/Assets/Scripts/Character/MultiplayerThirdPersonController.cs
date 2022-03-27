@@ -91,6 +91,8 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
     public Material transparentMaterial;
     public Material opaqueMaterial;
 
+    private AudioManager audioManager;
+
     private const float _threshold = 0.01f;
 
     private bool _hasAnimator;
@@ -148,6 +150,8 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         _slider = _controller.GetComponentInChildren<HealthBar>().healthBarSlider.gameObject;
 
         health = GetComponent<Health>();
+
+        audioManager = GetComponent<AudioManager>();
 
         AssignAnimationIDs();
 

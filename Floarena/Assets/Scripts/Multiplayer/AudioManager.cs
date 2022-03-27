@@ -9,11 +9,7 @@ public class AudioManager : NetworkBehaviour {
     public AudioClip[] clips;
 
     void Start() {
-        //GameObject playerRef = MatchManager.instance.GetPlayer();
-        //audioSource = playerRef.GetComponent<AudioSource>();
-        if (isLocalPlayer) {
-            audioSource = GetComponent<AudioSource>(); // May need to get AudioSource from the player through MatchManager
-        }
+        audioSource = GetComponent<AudioSource>(); 
     }
 
     public void PlaySound(int id, Vector3 position) {
