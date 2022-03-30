@@ -8,19 +8,28 @@ public class VineAttackProjectile : NetworkBehaviour
     private float range = SkillConstants.VINE_ATTACK_RANGE;
     private float projectileSpeed = SkillConstants.VINE_ATTACK_PROJECTILE_SPEED;
     private float damageMagnitude = SkillConstants.VINE_ATTACK_DAMAGE;
-    private GameObject player;
+    private GameObject spawningPlayer;
     private Rigidbody rb;
-    // Start is called before the first frame update
-    void Start()
+    private bool isSpawningClient;
+
+    void Awake()
     {
-        player = MatchManager.instance.GetPlayer();
+        Debug.Log("Projectile Spawned");
         StartCoroutine(DeathRoutine());
     }
 
 
     [ClientRpc]
-    public void OnSpawn(Vector3 dir) 
+    public void OnSpawn(Vector3 dir, int spawnPlayerNum) 
     {
+        if (MatchManager.instance.GetPlayerNum() == spawnPlayerNum) {
+            spawningPlayer = MatchManager.instance.GetPlayer();
+            isSpawningClient = true;
+        } else {
+            spawningPlayer = MatchManager.instance.GetOpponent();
+            isSpawningClient = false;
+        }
+        Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), spawningPlayer.GetComponent<Collider>());
         rb = transform.GetComponent<Rigidbody>();
         rb.AddForce(projectileSpeed * dir, ForceMode.VelocityChange);
     }
@@ -30,12 +39,13 @@ public class VineAttackProjectile : NetworkBehaviour
         GameObject.Destroy(gameObject);
     }
 
-    private void OnTriggerEnter(Collider other) 
+    private void OnCollisionEnter(Collision other) 
     {
-        if (other.gameObject != player)
+        Debug.Log("Collision Detected");
+        if (other.gameObject != spawningPlayer && isSpawningClient)
         {
             Health otherHealth = other.gameObject.GetComponent<Health>();
-            if (otherHealth != null) 
+            if (otherHealth != null)
             {
                 otherHealth.TakeDamage(damageMagnitude);
             }

@@ -45,8 +45,8 @@ public class GameManager : NetworkManager {
     public void JoinGame() {
         Debug.Log("Clicked");
         if (!NetworkClient.isConnected && !NetworkServer.active) {
-            networkAddress = "13.215.67.49";
-            // networkAddress = "localhost";
+            // networkAddress = "13.215.67.49";
+            networkAddress = "localhost";
             Debug.Log("Not connected");
 
             if (!NetworkClient.active) {
