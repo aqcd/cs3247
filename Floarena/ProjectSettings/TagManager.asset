@@ -9,6 +9,7 @@ TagManager:
   - PlayerCamera
   - Brush
   - HealthConsumable
+  - MapVisualizer
   layers:
   - Default
   - TransparentFX

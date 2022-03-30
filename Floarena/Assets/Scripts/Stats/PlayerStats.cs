@@ -4,6 +4,16 @@ public class PlayerStats
 {
     Dictionary<Attribute, float> stats;
 
+    public PlayerStats() {
+        this.stats = new Dictionary<Attribute, float>{
+        { Attribute.HP, 0 },
+        { Attribute.AD, 0 },
+        { Attribute.AS, 0 },
+        { Attribute.AR, 0 },
+        { Attribute.MS, 6 },
+        };
+    }
+
     public PlayerStats(Dictionary<Attribute, float> stats) {
         this.stats = stats;
     }

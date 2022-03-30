@@ -10,8 +10,11 @@ public class PlayerManager : MonoBehaviour
     private float disableMoveTimer = 0.0f;
     private float disableSkillTimer = 0.0f;
     // Start is called before the first frame update
+    private PlayerStats playerBuffs;
+    private float ADBuffTimer = 0.0f;
+    private float MSBuffTimer = 0.0f;
     void Awake() {
-
+        playerBuffs = new PlayerStats();
     }
 
     void Update() 
