@@ -1,8 +1,8 @@
 using UnityEngine;
 using Mirror;
-public class HealthConsumable : MonoBehaviour {
+public class HealBerry : MonoBehaviour {
   private MapVisualizer mapVisualizer;
-  public int healMagnitude = 20;
+  public float healMagnitude = PickupConstants.HEAL_BERRY_MAGNITUDE;
   void Start()
   {
     mapVisualizer = GameObject.FindWithTag("MapVisualizer").GetComponent<MapVisualizer>();

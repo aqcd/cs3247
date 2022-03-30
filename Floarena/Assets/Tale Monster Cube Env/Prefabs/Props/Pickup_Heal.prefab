@@ -109,8 +109,9 @@ GameObject:
   - component: {fileID: 2318002876601925569}
   - component: {fileID: 5443694338153038338}
   - component: {fileID: 7107519833623486147}
+  - component: {fileID: 9085373815781828886}
   m_Layer: 0
-  m_Name: Health_2
+  m_Name: Pickup_Heal
   m_TagString: HealthConsumable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -195,3 +196,16 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 198e22835f50d434cad61bebc789302b, type: 2}
+--- !u!114 &9085373815781828886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3628741095879785448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cefcc73d3761374b9f5c2f388bda482, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healMagnitude: 20

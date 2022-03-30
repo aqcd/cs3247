@@ -220,8 +220,8 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         if (!gameObject.GetComponent<PlayerManager>().GetCanMove()) {
             return;
         }
-        // set target speed based on move speed, sprint speed and if sprint is pressed
-        float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
+        // set target speed based on move speed and movement buffs
+        float targetSpeed = MoveSpeed + gameObject.GetComponent<PlayerManager>().GetAttributeBuff(Attribute.MS);
 
         // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
@@ -408,13 +408,14 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
     private void OnTriggerEnter(Collider collider) {
         if (collider.tag == "Brush") {
             SetPlayerInvisible();
-        } else if (collider.tag == "HealthConsumable") {
-            Heal();
-            Vector3 positionOnGrid = collider.transform.position;
-            GameObject mapVisualizer = GameObject.Find("MapVisualizer");
-            mapVisualizer.GetComponent<MapVisualizer>().SpawnPickupItem(positionOnGrid); // Respawn after delay
-            Destroy(collider.gameObject); // Destroy HealthConsumable
-        }
+        } 
+        // else if (collider.tag == "HealthConsumable") {
+        //     Heal();
+        //     Vector3 positionOnGrid = collider.transform.position;
+        //     GameObject mapVisualizer = GameObject.Find("MapVisualizer");
+        //     mapVisualizer.GetComponent<MapVisualizer>().SpawnPickupItem(positionOnGrid); // Respawn after delay
+        //     Destroy(collider.gameObject); // Destroy HealthConsumable
+        // }
     }
 
     private void OnTriggerStay(Collider collider) {

@@ -10,7 +10,7 @@ public class PlayerStats
         { Attribute.AD, 0 },
         { Attribute.AS, 0 },
         { Attribute.AR, 0 },
-        { Attribute.MS, 6 },
+        { Attribute.MS, 0 },
         };
     }
 
@@ -35,7 +35,11 @@ public class PlayerStats
         }
     }
 
-    void ApplyEffect(Effect effect) {
+    public void ResetAttribute(Attribute attribute) {
+        stats[attribute] = 0.0f;
+    }
+
+    public void ApplyEffect(Effect effect) {
         float current = stats[effect.attribute];
         float modified = current + effect.modifier;
         stats[effect.attribute] = modified;
