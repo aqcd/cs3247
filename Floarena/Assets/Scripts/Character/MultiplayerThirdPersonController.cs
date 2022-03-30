@@ -222,7 +222,6 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         }
         // set target speed based on move speed and movement buffs
         float targetSpeed = MoveSpeed + gameObject.GetComponent<PlayerManager>().GetAttributeBuff(Attribute.MS);
-
         // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
         // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude

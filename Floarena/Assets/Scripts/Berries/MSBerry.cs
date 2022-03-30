@@ -1,15 +1,15 @@
 using UnityEngine;
 using Mirror;
-public class ADBerry : MonoBehaviour {
+public class MSBerry : MonoBehaviour {
   private MapVisualizer mapVisualizer;
-  private float buffMagnitude = PickupConstants.AD_BERRY_MAGNITUDE;
-  private float buffDuration = PickupConstants.AD_BERRY_DURATION;
+  private float buffMagnitude = BerryConstants.MS_BERRY_MAGNITUDE;
+  private float buffDuration = BerryConstants.MS_BERRY_DURATION;
 
   private Effect buffEffect;
   void Start()
   {
     mapVisualizer = GameObject.FindWithTag("MapVisualizer").GetComponent<MapVisualizer>();
-    buffEffect = new Effect(Attribute.AD, buffMagnitude);
+    buffEffect = new Effect(Attribute.MS, buffMagnitude);
   }
   private void OnTriggerEnter(Collider collider) 
   {

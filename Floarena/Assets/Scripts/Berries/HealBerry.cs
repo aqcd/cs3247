@@ -2,7 +2,7 @@ using UnityEngine;
 using Mirror;
 public class HealBerry : MonoBehaviour {
   private MapVisualizer mapVisualizer;
-  public float healMagnitude = PickupConstants.HEAL_BERRY_MAGNITUDE;
+  public float healMagnitude = BerryConstants.HEAL_BERRY_MAGNITUDE;
   void Start()
   {
     mapVisualizer = GameObject.FindWithTag("MapVisualizer").GetComponent<MapVisualizer>();
