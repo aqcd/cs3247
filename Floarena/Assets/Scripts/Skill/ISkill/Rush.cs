@@ -20,11 +20,14 @@ public class Rush : NetworkBehaviour, ISkill
 
     private bool isActive = false;
 
+    private AudioManager audioManager;
+
     void Awake()
     {
         player = MatchManager.instance.GetPlayer();
         characterController = player.GetComponent<CharacterController>();
         playerManager = player.GetComponent<PlayerManager>();
+        audioManager = player.GetComponent<AudioManager>();
     }
 
     void Update() {
@@ -48,6 +51,7 @@ public class Rush : NetworkBehaviour, ISkill
         remainingDuration = range / speed;
         direction = skillPosition.normalized;
         playerManager.DisableMoveForDuration(remainingDuration);
+        audioManager.PlaySound(AudioIndex.RUSH_AUDIO, skillPosition);
     }
 
     private void Damage() {

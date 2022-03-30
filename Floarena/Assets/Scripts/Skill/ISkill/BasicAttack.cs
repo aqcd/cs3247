@@ -12,6 +12,8 @@ public class BasicAttack : MonoBehaviour, ISkill
 
     private float timeToAttack = 0.0f;
 
+    private AudioManager audioManager;
+
     void Awake()
     {
         player = MatchManager.instance.GetPlayer();
@@ -20,6 +22,7 @@ public class BasicAttack : MonoBehaviour, ISkill
         attackDamage = stats.GetAttributeValue(Attribute.AD);
         attackRange = stats.GetAttributeValue(Attribute.AR);
         attackCooldown = 1/stats.GetAttributeValue(Attribute.AS);
+        audioManager = player.GetComponent<AudioManager>();
     }
 
     public void Execute(Vector3 skillPosition) {
@@ -63,6 +66,7 @@ public class BasicAttack : MonoBehaviour, ISkill
 
             if (bestHit != null) {
                 bestHit.SendMessage("TakeDamage", attackDamage);
+                audioManager.PlaySound(AudioIndex.BASIC_ATTACK_AUDIO, skillPosition);
             }
             
         }
