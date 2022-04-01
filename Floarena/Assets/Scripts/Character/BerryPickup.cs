@@ -18,7 +18,7 @@ public class BerryPickup : MonoBehaviour
     private void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.CompareTag("Berry")) {
-            channelButton.EnableButton(gameObject.GetComponent<IBerry>());
+            channelButton.EnableButton(collider.gameObject.GetComponent<IBerry>());
         }
     }
 

@@ -14,6 +14,7 @@ public class MSBerry : MonoBehaviour, IBerry {
 
   public void Consume(PlayerManager playerManager)
   {
+    Debug.Log(playerManager.gameObject);
     playerManager.BuffForDuration(buffEffect, buffDuration);
     Vector3 positionOnGrid = transform.position;
     mapVisualizer.SpawnPickupItem(positionOnGrid);

@@ -9,13 +9,7 @@ public class ChannelButtonController : MonoBehaviour
     [SerializeField]
     Image buttonIcon;
 
-    public IBerry activeBerry;
-
-    private GameObject player;
-
-    void Awake() {
-        player = MatchManager.instance.GetPlayer();
-    }
+    private IBerry activeBerry;
 
     public void EnableButton(IBerry berry)
     {
@@ -33,7 +27,7 @@ public class ChannelButtonController : MonoBehaviour
 
     public void BeginChannel()
     {
-        activeBerry.Consume(player.GetComponent<PlayerManager>());
+        activeBerry.Consume(MatchManager.instance.GetPlayer().GetComponent<PlayerManager>());
         DisableButton();
     }
 }
