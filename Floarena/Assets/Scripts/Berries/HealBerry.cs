@@ -1,19 +1,18 @@
 using UnityEngine;
 using Mirror;
-public class HealBerry : MonoBehaviour {
+public class HealBerry : MonoBehaviour, IBerry {
   private MapVisualizer mapVisualizer;
   public float healMagnitude = BerryConstants.HEAL_BERRY_MAGNITUDE;
   void Start()
   {
     mapVisualizer = GameObject.FindWithTag("MapVisualizer").GetComponent<MapVisualizer>();
   }
-  private void OnTriggerEnter(Collider collider) 
+
+  public void Consume(PlayerManager playerManager)
   {
-    if (collider.gameObject.GetComponent<MultiplayerThirdPersonController>().isLocalPlayer) {
-      collider.gameObject.GetComponent<Health>().TakeHealing(healMagnitude);
-    }
+    playerManager.gameObject.GetComponent<Health>().TakeHealing(healMagnitude);
     Vector3 positionOnGrid = transform.position;
-    mapVisualizer.SpawnPickupItem(positionOnGrid); // Trigger respawn timer
-    Destroy(gameObject); // Destroy HealthConsumable
+    mapVisualizer.SpawnPickupItem(positionOnGrid);
+    Destroy(gameObject);
   }
 }

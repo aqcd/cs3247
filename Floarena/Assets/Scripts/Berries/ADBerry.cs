@@ -1,6 +1,6 @@
 using UnityEngine;
 using Mirror;
-public class ADBerry : MonoBehaviour {
+public class ADBerry : MonoBehaviour, IBerry {
   private MapVisualizer mapVisualizer;
   private float buffMagnitude = BerryConstants.AD_BERRY_MAGNITUDE;
   private float buffDuration = BerryConstants.AD_BERRY_DURATION;
@@ -11,11 +11,10 @@ public class ADBerry : MonoBehaviour {
     mapVisualizer = GameObject.FindWithTag("MapVisualizer").GetComponent<MapVisualizer>();
     buffEffect = new Effect(Attribute.AD, buffMagnitude);
   }
-  private void OnTriggerEnter(Collider collider) 
+
+  public void Consume(PlayerManager playerManager)
   {
-    if (collider.gameObject.GetComponent<MultiplayerThirdPersonController>().isLocalPlayer) {
-        collider.gameObject.GetComponent<PlayerManager>().BuffForDuration(buffEffect, buffDuration);
-    }
+    playerManager.BuffForDuration(buffEffect, buffDuration);
     Vector3 positionOnGrid = transform.position;
     mapVisualizer.SpawnPickupItem(positionOnGrid);
     Destroy(gameObject);

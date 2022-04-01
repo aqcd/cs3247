@@ -3,16 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BerryPickup : MonoBehaviour
-{
-    // Start is called before the first frame update
+{   
+    [SerializeField]
+    public SphereCollider berryCollider;
+    private ChannelButtonController channelButton;
+
     void Start()
     {
-        
+        berryCollider.radius = BerryConstants.PICKUP_RANGE;
+        GameObject channel = GameObject.Find("ChannelButton");
+        channelButton = channel.GetComponent<ChannelButtonController>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider collider)
     {
-        
+        if (collider.gameObject.CompareTag("Berry")) {
+            channelButton.EnableButton(gameObject.GetComponent<IBerry>());
+        }
+    }
+
+    private void OnTriggerExit(Collider collider)
+    {
+        if (collider.gameObject.CompareTag("Berry")) {
+            channelButton.DisableButton();
+        }
     }
 }

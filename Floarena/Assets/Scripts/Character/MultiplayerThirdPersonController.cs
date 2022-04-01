@@ -408,13 +408,6 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         if (collider.tag == "Brush") {
             SetPlayerInvisible();
         } 
-        // else if (collider.tag == "HealthConsumable") {
-        //     Heal();
-        //     Vector3 positionOnGrid = collider.transform.position;
-        //     GameObject mapVisualizer = GameObject.Find("MapVisualizer");
-        //     mapVisualizer.GetComponent<MapVisualizer>().SpawnPickupItem(positionOnGrid); // Respawn after delay
-        //     Destroy(collider.gameObject); // Destroy HealthConsumable
-        // }
     }
 
     private void OnTriggerStay(Collider collider) {

@@ -110,9 +110,9 @@ GameObject:
   - component: {fileID: 5443694338153038338}
   - component: {fileID: 7107519833623486147}
   - component: {fileID: 9085373815781828886}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pickup_Heal
-  m_TagString: HealthConsumable
+  m_TagString: Berry
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
