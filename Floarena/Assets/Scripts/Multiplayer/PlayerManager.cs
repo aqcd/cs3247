@@ -15,7 +15,7 @@ public class PlayerManager : MonoBehaviour
     //TODO: Change to private after testing
     public Dictionary<Attribute, float> buffDurations;
     void Awake() {
-        playerBuffs = new PlayerStats();
+        playerBuffs = Data.ZEROED_ATTRIBUTES;
         buffDurations = new Dictionary<Attribute, float>{
             { Attribute.HP, 0 },
             { Attribute.AD, 0 },
