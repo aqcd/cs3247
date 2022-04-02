@@ -12,4 +12,7 @@ public static class BerryConstants
 
     public static float MS_BERRY_MAGNITUDE = 2.5f;
     public static float MS_BERRY_DURATION = 15.0f;
+
+    public static float AS_BERRY_MAGNITUDE = 0.2f;
+    public static float AS_BERRY_DURATION = 15.0f;
 }

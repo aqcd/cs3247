@@ -8,6 +8,7 @@ public class BasicAttack : MonoBehaviour, ISkill
     private GameObject opponent;
     private float attackDamage;
     private float attackRange;
+    private float baseAttackSpeed;
     private float attackCooldown;
 
     private PlayerManager playerManager;
@@ -21,7 +22,13 @@ public class BasicAttack : MonoBehaviour, ISkill
         PlayerStats stats = GameManager.instance.loadout.GetLoadoutStats();
         attackDamage = stats.GetAttributeValue(Attribute.AD);
         attackRange = stats.GetAttributeValue(Attribute.AR);
-        attackCooldown = 1/stats.GetAttributeValue(Attribute.AS);
+        baseAttackSpeed = stats.GetAttributeValue(Attribute.AS);
+        attackCooldown = 1/baseAttackSpeed;
+    }
+
+    void Update()
+    {
+        attackCooldown = 1/(baseAttackSpeed + playerManager.GetAttributeBuff(Attribute.AS));
     }
 
     public void Execute(Vector3 skillPosition) {
