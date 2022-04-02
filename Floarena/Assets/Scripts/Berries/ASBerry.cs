@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class ASBerry : MonoBehaviour, IBerry
+public class ASBerry : NetworkBehaviour, IBerry
 {
     private MapVisualizer mapVisualizer;
   private float buffMagnitude = BerryConstants.AS_BERRY_MAGNITUDE;
@@ -18,6 +19,11 @@ public class ASBerry : MonoBehaviour, IBerry
   public void Consume(PlayerManager playerManager)
   {
     playerManager.BuffForDuration(buffEffect, buffDuration);
+    DestroySelf();
+  }
+  
+  public void DestroySelf()
+  {
     Vector3 positionOnGrid = transform.position;
     mapVisualizer.SpawnPickupItem(positionOnGrid);
     Destroy(gameObject);

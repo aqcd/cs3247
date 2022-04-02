@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3049536130634995445}
   - component: {fileID: 1159977706162188661}
-  - component: {fileID: 1595910292710661423}
   m_Layer: 7
   m_Name: BerryCollider
   m_TagString: Untagged
@@ -45,19 +44,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 3
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1595910292710661423
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 263302428649336534}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8582619188ef2bb4fa278a36284064cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  berryCollider: {fileID: 1159977706162188661}
 --- !u!1 &760820273794983962
 GameObject:
   m_ObjectHideFlags: 0
@@ -80,6 +66,7 @@ GameObject:
   - component: {fileID: 5771204218330618543}
   - component: {fileID: 8998000184696695564}
   - component: {fileID: 8268536058541031718}
+  - component: {fileID: 4894627222648910942}
   m_Layer: 0
   m_Name: SnakeyNewPrefab
   m_TagString: Player
@@ -313,6 +300,9 @@ MonoBehaviour:
   currentHealth: 1
   hasBar: 1
   healthBar: {fileID: 5350780418209049455}
+  damageTakenEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5771204218330618543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,6 +384,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e389e90d1b130184e8c3f44fc655151c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4894627222648910942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760820273794983962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 616fdde4d9008e04d8fba5fa911a25e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  berryCollider: {fileID: 1159977706162188661}
 --- !u!1 &1037389978970139353
 GameObject:
   m_ObjectHideFlags: 0

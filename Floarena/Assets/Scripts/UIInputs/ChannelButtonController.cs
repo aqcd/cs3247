@@ -9,11 +9,10 @@ public class ChannelButtonController : MonoBehaviour
     [SerializeField]
     Image buttonIcon;
 
-    private IBerry activeBerry;
-
     private float channelTime = 0.0f;
 
     private bool isChanneling = false;
+    private BerryPickupManager pickupManager;
 
     void Start()
     {
@@ -34,16 +33,18 @@ public class ChannelButtonController : MonoBehaviour
             }
         }
     }
-    public void EnableButton(IBerry berry) {
+
+    public void RegisterBerryPickup(BerryPickupManager pickup){
+        this.pickupManager = pickup;
+    }
+    public void EnableButton() {
         if (!isChanneling){
-            this.activeBerry = berry;
             button.interactable = true;
             buttonIcon.color = new Color(buttonIcon.color.r, buttonIcon.color.g, buttonIcon.color.b, 1f);
         }
     }
 
     public void DisableButton() {
-        this.activeBerry = null;
         button.interactable = false;
         buttonIcon.color = new Color(buttonIcon.color.r, buttonIcon.color.g, buttonIcon.color.b, 0.5f);
     }
@@ -59,6 +60,7 @@ public class ChannelButtonController : MonoBehaviour
     private void ResolveChannel() {
         channelTime = 0.0f;
         isChanneling = false;
-        activeBerry.Consume(MatchManager.instance.GetPlayer().GetComponent<PlayerManager>());
+        pickupManager.CmdConsumeBerry();
+        DisableButton();
     }
 }
