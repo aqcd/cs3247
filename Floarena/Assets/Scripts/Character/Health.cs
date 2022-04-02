@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.Events;
 using Mirror;
 
 public class Health : NetworkBehaviour
@@ -12,6 +14,9 @@ public class Health : NetworkBehaviour
 
     public bool hasBar = true;
     public HealthBar healthBar;
+    public UnityEvent damageTakenEvent;
+    
+    private ParticleSystemManager particleSystemManager;
 
     public AudioManager audioManager;
 
@@ -19,8 +24,13 @@ public class Health : NetworkBehaviour
         if (isLocalPlayer) {
             float temp  = GameManager.instance.loadout.GetLoadoutStats().GetAttributeValue(Attribute.HP);
             SetMaxHealth(temp);
+            damageTakenEvent.AddListener(GameObject.Find("ChannelButton").GetComponent<ChannelButtonController>().InterruptChannel);
         }
+
         audioManager = GetComponent<AudioManager>();
+
+        particleSystemManager = gameObject.GetComponent<ParticleSystemManager>();
+        Debug.Log("HP: " + particleSystemManager);
     }
 
     void Update() {
@@ -40,7 +50,11 @@ public class Health : NetworkBehaviour
     }
 
     public void TakeDamage(float damage) {
+        damageTakenEvent.Invoke();
         CmdTakeDamage(damage, MatchManager.instance.GetOpponentNum());
+        if (particleSystemManager != null) {
+            particleSystemManager.PlayDMG();
+        }
     }
 
     [Command(requiresAuthority = false)]
@@ -65,7 +79,12 @@ public class Health : NetworkBehaviour
         } else {
             currentHealth += healing;
         }
+
         audioManager.PlaySound(AudioIndex.INCREASE_HEALTH_AUDIO, transform.position);
+
+        if (particleSystemManager != null) {
+            particleSystemManager.PlayHeal();
+        }
     }
 
     [Command(requiresAuthority=false)]

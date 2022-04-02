@@ -24,6 +24,7 @@ public class UISkillVirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragH
     public bool isButton = false;
 
     [Header("Output")]
+    public UnityEvent joystickMoveEvent;
     public UnityEvent<Vector2> joystickOutputEvent;
     public UnityEvent<Vector2> joystickUpEvent;
 
@@ -103,6 +104,7 @@ public class UISkillVirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragH
 
     private void OutputPointerEventValue(Vector2 pointerPosition)
     {
+        joystickMoveEvent.Invoke();
         joystickOutputEvent.Invoke(pointerPosition);
     }
 
