@@ -7,7 +7,6 @@ public class HealthBar : MonoBehaviour
 {
     public Slider healthBarSlider;
     public Health objectHealth;
-    //public Text healthString;
     private float barWidth;
 
     public GameObject dividerPrefab;
@@ -17,7 +16,6 @@ public class HealthBar : MonoBehaviour
 
     public void Init(float maxHealth)
     {
-        //healthString = gameObject.transform.GetChild(1).transform.GetComponent<Text>();
         healthBarSlider.maxValue = maxHealth;
         healthBarSlider.value = maxHealth;
         RectTransform rt = gameObject.GetComponent<RectTransform>();
@@ -39,6 +37,5 @@ public class HealthBar : MonoBehaviour
     public void SetHealth(float hp)
     {
         healthBarSlider.value = hp;
-        //healthString.text = hp.ToString();
     }
 }

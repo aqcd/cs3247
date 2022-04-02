@@ -10,11 +10,13 @@ public class BasicAttack : MonoBehaviour, ISkill
     private float attackRange;
     private float attackCooldown;
 
+    private PlayerManager playerManager;
     private float timeToAttack = 0.0f;
 
     void Awake()
     {
         player = MatchManager.instance.GetPlayer();
+        playerManager = player.GetComponent<PlayerManager>();
         // get attributes from loadout and calculate attack stats
         PlayerStats stats = GameManager.instance.loadout.GetLoadoutStats();
         attackDamage = stats.GetAttributeValue(Attribute.AD);
@@ -62,7 +64,8 @@ public class BasicAttack : MonoBehaviour, ISkill
             }
 
             if (bestHit != null) {
-                bestHit.SendMessage("TakeDamage", attackDamage);
+                float damage = attackDamage + playerManager.GetAttributeBuff(Attribute.AD);
+                bestHit.SendMessage("TakeDamage", damage);
             }
             
         }
