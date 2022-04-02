@@ -15,7 +15,7 @@ public class CandidateMap {
     private List<FixedStructure> fixedStructuresList;
     private List<RandomBrush> brushList;
     private List<Rock> rocksList;
-    private List<Berry> berryList;
+    private List<DemoBerry> berryList;
 
     public MapGrid Grid { get => grid; }
     public bool[] MapItemsArray { get => mapItemsArray; }
@@ -34,7 +34,7 @@ public class CandidateMap {
         this.fixedStructuresList = new List<FixedStructure>();
         this.brushList = new List<RandomBrush>();
         this.rocksList = new List<Rock>();
-        this.berryList = new List<Berry>();
+        this.berryList = new List<DemoBerry>();
         InitializeFixedStructures();
         RandomlyPlacePickupItems(this.numberOfPickupItems);
         RandomlyPlaceBrush(this.numberOfBrush);
@@ -57,7 +57,7 @@ public class CandidateMap {
                 // Free space
                 var coordinates = grid.CalculateCoordinatesFromIndex(randomIndex);
                 mapItemsArray[randomIndex] = true;
-                berryList.Add(new Berry(coordinates)); // Placed item
+                berryList.Add(new DemoBerry(coordinates)); // Placed item
                 count--;
             }
             itemPlacementTryLimit--;

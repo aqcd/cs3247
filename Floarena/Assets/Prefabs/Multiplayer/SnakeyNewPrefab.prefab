@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 8268536058541031718}
   - component: {fileID: -512737721729164919}
   - component: {fileID: -1951845398569697292}
+  - component: {fileID: 5625795584382318345}
   m_Layer: 0
   m_Name: SnakeyNewPrefab
   m_TagString: Player
@@ -462,6 +463,14 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!81 &5625795584382318345
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760820273794983962}
+  m_Enabled: 0
 --- !u!1 &1037389978970139353
 GameObject:
   m_ObjectHideFlags: 0
@@ -901,7 +910,7 @@ GameObject:
   - component: {fileID: 253627310577986240}
   m_Layer: 6
   m_Name: MinimapDisplay
-  m_TagString: Untagged
+  m_TagString: MinimapDisplay
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
