@@ -12,12 +12,16 @@ public class Health : NetworkBehaviour
 
     public bool hasBar = true;
     public HealthBar healthBar;
+    
+    private ParticleSystemManager particleSystemManager;
 
     void Start() {
         if (isLocalPlayer) {
             float temp  = GameManager.instance.loadout.GetLoadoutStats().GetAttributeValue(Attribute.HP);
             SetMaxHealth(temp);
         }
+        particleSystemManager = gameObject.GetComponent<ParticleSystemManager>();
+        Debug.Log("HP: " + particleSystemManager);
     }
 
     void Update() {
@@ -38,6 +42,9 @@ public class Health : NetworkBehaviour
 
     public void TakeDamage(float damage) {
         CmdTakeDamage(damage, MatchManager.instance.GetOpponentNum());
+        if (particleSystemManager != null) {
+            particleSystemManager.PlayDMG();
+        }
     }
 
     [Command(requiresAuthority = false)]
@@ -59,6 +66,9 @@ public class Health : NetworkBehaviour
             currentHealth = maxHealth;
         } else {
             currentHealth += healing;
+        }
+        if (particleSystemManager != null) {
+            particleSystemManager.PlayHeal();
         }
     }
 
