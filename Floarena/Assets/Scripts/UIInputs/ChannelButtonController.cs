@@ -15,6 +15,16 @@ public class ChannelButtonController : MonoBehaviour
 
     private bool isChanneling = false;
 
+    void Start()
+    {
+        GameObject moveJoystick = GameObject.Find("UI_Virtual_Joystick_Move");
+        moveJoystick.GetComponent<UIVirtualJoystick>().joystickMoveEvent.AddListener(InterruptChannel);
+        GameObject[] skillJoysticks = GameObject.FindGameObjectsWithTag("SkillJoystick");
+        foreach (GameObject joystick in skillJoysticks) {
+            joystick.GetComponent<UISkillVirtualJoystick>().joystickMoveEvent.AddListener(InterruptChannel);
+        }
+    }
+
     void Update() 
     {
         if (isChanneling) {

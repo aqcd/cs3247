@@ -410,6 +410,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI_Skill_Virtual_Joystick
       objectReference: {fileID: 0}
+    - target: {fileID: 2625463611423686781, guid: 50d161084b28ac642aab324dedb3640e,
+        type: 3}
+      propertyPath: m_TagString
+      value: Joystick
+      objectReference: {fileID: 0}
     - target: {fileID: 3882854107809581154, guid: 50d161084b28ac642aab324dedb3640e,
         type: 3}
       propertyPath: m_Name
@@ -753,6 +758,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UI_Skill_Virtual_Joystick
+      objectReference: {fileID: 0}
+    - target: {fileID: 2625463611423686781, guid: 50d161084b28ac642aab324dedb3640e,
+        type: 3}
+      propertyPath: m_TagString
+      value: Joystick
       objectReference: {fileID: 0}
     - target: {fileID: 3882854107809581154, guid: 50d161084b28ac642aab324dedb3640e,
         type: 3}
@@ -1099,6 +1109,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UI_Virtual_Joystick_Move
+      objectReference: {fileID: 0}
+    - target: {fileID: 1423390416140222447, guid: 6eb08bfc0fd869c47b796c42ada099da,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 2976711156707159110, guid: 6eb08bfc0fd869c47b796c42ada099da,
         type: 3}
@@ -1550,6 +1565,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1467650738}
     m_Modifications:
+    - target: {fileID: 2625463611423686781, guid: 50d161084b28ac642aab324dedb3640e,
+        type: 3}
+      propertyPath: m_TagString
+      value: Joystick
+      objectReference: {fileID: 0}
     - target: {fileID: 3882854107809581154, guid: 50d161084b28ac642aab324dedb3640e,
         type: 3}
       propertyPath: m_Name
@@ -2067,6 +2087,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UI_Skill_Virtual_Joystick
+      objectReference: {fileID: 0}
+    - target: {fileID: 2625463611423686781, guid: 50d161084b28ac642aab324dedb3640e,
+        type: 3}
+      propertyPath: m_TagString
+      value: Joystick
       objectReference: {fileID: 0}
     - target: {fileID: 3882854107809581154, guid: 50d161084b28ac642aab324dedb3640e,
         type: 3}

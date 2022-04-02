@@ -22,6 +22,7 @@ public class UIVirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragHandle
     public bool invertYOutputValue;
 
     [Header("Output")]
+    public UnityEvent joystickMoveEvent;
     public UnityEvent<Vector2> joystickOutputEvent;
     public UnityEvent<Vector2> joystickUpEvent;
 
@@ -77,6 +78,7 @@ public class UIVirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragHandle
 
     private void OutputPointerEventValue(Vector2 pointerPosition)
     {
+        joystickMoveEvent.Invoke();
         joystickOutputEvent.Invoke(pointerPosition);
     }
 

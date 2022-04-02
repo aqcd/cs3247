@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.Events;
 using Mirror;
 
 public class Health : NetworkBehaviour
@@ -12,11 +14,12 @@ public class Health : NetworkBehaviour
 
     public bool hasBar = true;
     public HealthBar healthBar;
-
+    public UnityEvent damageTakenEvent;
     void Start() {
         if (isLocalPlayer) {
             float temp  = GameManager.instance.loadout.GetLoadoutStats().GetAttributeValue(Attribute.HP);
             SetMaxHealth(temp);
+            damageTakenEvent.AddListener(GameObject.Find("ChannelButton").GetComponent<ChannelButtonController>().InterruptChannel);
         }
     }
 
@@ -37,6 +40,7 @@ public class Health : NetworkBehaviour
     }
 
     public void TakeDamage(float damage) {
+        damageTakenEvent.Invoke();
         CmdTakeDamage(damage, MatchManager.instance.GetOpponentNum());
     }
 
