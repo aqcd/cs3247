@@ -96,8 +96,10 @@ public class PlayerManager : MonoBehaviour
 
     public void BuffForDuration(Effect effect, float duration)
     {
+        Debug.Log("Applying Buff: " + effect.attribute);
         float currentBuffDuration = buffDurations[effect.attribute];
         if (currentBuffDuration < duration) {
+            playerBuffs.ResetAttribute(effect.attribute);
             playerBuffs.ApplyEffect(effect);
             buffDurations[effect.attribute] = duration;
         }

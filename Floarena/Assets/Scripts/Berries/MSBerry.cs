@@ -1,6 +1,6 @@
 using UnityEngine;
 using Mirror;
-public class MSBerry : MonoBehaviour, IBerry {
+public class MSBerry : NetworkBehaviour, IBerry {
   private MapVisualizer mapVisualizer;
   private float buffMagnitude = BerryConstants.MS_BERRY_MAGNITUDE;
   private float buffDuration = BerryConstants.MS_BERRY_DURATION;
@@ -15,6 +15,11 @@ public class MSBerry : MonoBehaviour, IBerry {
   public void Consume(PlayerManager playerManager)
   {
     playerManager.BuffForDuration(buffEffect, buffDuration);
+    DestroySelf();
+  }
+
+  public void DestroySelf()
+  {
     Vector3 positionOnGrid = transform.position;
     mapVisualizer.SpawnPickupItem(positionOnGrid);
     Destroy(gameObject);

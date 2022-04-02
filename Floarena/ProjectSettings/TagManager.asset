@@ -11,6 +11,7 @@ TagManager:
   - HealthConsumable
   - MapVisualizer
   - Berry
+  - SkillJoystick
   layers:
   - Default
   - TransparentFX

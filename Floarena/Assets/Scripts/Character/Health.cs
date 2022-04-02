@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.Events;
 using Mirror;
 
 public class Health : NetworkBehaviour
@@ -12,6 +14,7 @@ public class Health : NetworkBehaviour
 
     public bool hasBar = true;
     public HealthBar healthBar;
+    public UnityEvent damageTakenEvent;
     
     private ParticleSystemManager particleSystemManager;
 
@@ -19,6 +22,7 @@ public class Health : NetworkBehaviour
         if (isLocalPlayer) {
             float temp  = GameManager.instance.loadout.GetLoadoutStats().GetAttributeValue(Attribute.HP);
             SetMaxHealth(temp);
+            damageTakenEvent.AddListener(GameObject.Find("ChannelButton").GetComponent<ChannelButtonController>().InterruptChannel);
         }
         particleSystemManager = gameObject.GetComponent<ParticleSystemManager>();
         Debug.Log("HP: " + particleSystemManager);
@@ -41,6 +45,7 @@ public class Health : NetworkBehaviour
     }
 
     public void TakeDamage(float damage) {
+        damageTakenEvent.Invoke();
         CmdTakeDamage(damage, MatchManager.instance.GetOpponentNum());
         if (particleSystemManager != null) {
             particleSystemManager.PlayDMG();
