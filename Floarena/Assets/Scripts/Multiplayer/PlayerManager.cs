@@ -101,6 +101,7 @@ public class PlayerManager : MonoBehaviour
             playerBuffs.ApplyEffect(effect);
             buffDurations[effect.attribute] = duration;
         }
+        BuffIconsManager.instance.SetBuff(effect.attribute);
     }
 
     public float GetAttributeBuff(Attribute attribute)
