@@ -8,4 +8,5 @@ public struct MapData {
     public List<FixedStructure> fixedStructuresList;
     public List<RandomBrush> brushList;
     public List<Rock> rocksList;
+    public List<DemoBerry> berryList;
 }

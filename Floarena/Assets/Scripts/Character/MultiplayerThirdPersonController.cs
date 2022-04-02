@@ -130,6 +130,9 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
 
         Loadout loadout = GameManager.instance.loadout;
         this.MoveSpeed = loadout.GetLoadoutStats().GetAttributeValue(Attribute.MS);
+
+        // enable local audiolistener 
+        GetComponent<AudioListener>().enabled = true;
     }
 
     public override void OnStartAuthority()
@@ -366,25 +369,50 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
     }
 
+    // Transcluent to self and completely invisible to others 
     private void SetPlayerInvisible() {
         if (this.isLocalPlayer) {
-            this.GetComponentInChildren<SkinnedMeshRenderer>().material = transparentMaterial;
+            SetSelfInvisible();
+            /*this.GetComponentInChildren<SkinnedMeshRenderer>().material = transparentMaterial;
             Color color = transparentMaterial.color;
             color.a = 0.8f;
             this.GetComponentInChildren<SkinnedMeshRenderer>().material.color = color;
 
             Color barColor = _slider.GetComponent<Image>().color;
             barColor.a = 0.2f;
-            _slider.GetComponent<Image>().color = barColor;
+            _slider.GetComponent<Image>().color = barColor;*/
         } else {
-            foreach (SkinnedMeshRenderer s in _controller.GetComponentsInChildren<SkinnedMeshRenderer>()) {
-                s.enabled = false;
+            float distance = Vector3.Distance(MatchManager.instance.GetPlayer().transform.position, transform.position);
+            if (distance < 3.0f) {
+                SetSelfInvisible();
+                foreach (SkinnedMeshRenderer s in _controller.GetComponentsInChildren<SkinnedMeshRenderer>()) {
+                    s.enabled = true;
+                }
+                _slider.SetActive(true);
+                this.GetComponentInChildren<MeshRenderer>().enabled = true; // Minimap
+            } else {
+                foreach (SkinnedMeshRenderer s in _controller.GetComponentsInChildren<SkinnedMeshRenderer>()) {
+                    s.enabled = false;
+                }
+                _slider.SetActive(false);
+                this.GetComponentInChildren<MeshRenderer>().enabled = false; // Minimap
             }
 
-            _slider.SetActive(false);
         }
     }
 
+    private void SetSelfInvisible() {
+        this.GetComponentInChildren<SkinnedMeshRenderer>().material = transparentMaterial;
+        Color color = transparentMaterial.color;
+        color.a = 0.8f;
+        this.GetComponentInChildren<SkinnedMeshRenderer>().material.color = color;
+
+        Color barColor = _slider.GetComponent<Image>().color;
+        barColor.a = 0.2f;
+        _slider.GetComponent<Image>().color = barColor;
+    }
+
+    // Fully visible
     private void SetPlayerVisible() {
         this.GetComponentInChildren<SkinnedMeshRenderer>().material = opaqueMaterial;
 
@@ -396,6 +424,8 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
             s.enabled = true;
         }
         _slider.SetActive(true);
+
+        this.GetComponentInChildren<MeshRenderer>().enabled = true; // Minimap
     }
 
     private void Heal() {

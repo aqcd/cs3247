@@ -27,7 +27,7 @@ public class MapVisualizer : MonoBehaviour {
                 if (PlacePickupItem(data, positionOnGrid)) { // Place pickup items
                     continue;
                 }
-                
+
                 if (PlaceBrush(data, positionOnGrid)) {
                     continue;
                 }
@@ -82,7 +82,7 @@ public class MapVisualizer : MonoBehaviour {
         foreach (var brushItem in data.brushList) {
             if (brushItem.Position == positionOnGrid) {
                 float randomHeight = Random.Range(0.0f, 0.8f);
-                brushPrefab.transform.localScale += new Vector3(0.0f, randomHeight, 0.0f); 
+                brushPrefab.transform.localScale += new Vector3(0.0f, randomHeight, 0.0f);
                 Vector3 offset = new Vector3(0f, -1.0f, 0f);
                 Instantiate(brushPrefab, positionOnGrid + offset, Quaternion.identity);
                 brushPrefab.transform.localScale = Vector3.one;
