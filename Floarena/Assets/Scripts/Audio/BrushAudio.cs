@@ -9,7 +9,7 @@ public class BrushAudio : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) {
         if (other.tag == "Player" && !audioSource.isPlaying) {
-            audioSource.PlayOneShot(_audio, 0.05f);
+            audioSource.PlayOneShot(_audio, 0.5f);
         }
     }
 }
