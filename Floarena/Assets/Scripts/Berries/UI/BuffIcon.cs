@@ -22,9 +22,20 @@ public class BuffIcon : MonoBehaviour {
     }
 
     void Update() {
-        remainingDuration -= Time.deltaTime;
+        remainingDuration = playerManager.GetBuffDuration(attribute);
         image.fillAmount = remainingDuration / fullDuration;
         if (remainingDuration < 0.0f) {
+        switch (attribute) {
+            case Attribute.AD:
+                BuffIconsManager.instance.hasADBuff = false;
+                break;
+            case Attribute.AS:
+                BuffIconsManager.instance.hasASBuff = false;
+                break;
+            case Attribute.MS:
+                BuffIconsManager.instance.hasMSBuff = false;
+                break;
+        }
             Destroy(gameObject);
         }
     }

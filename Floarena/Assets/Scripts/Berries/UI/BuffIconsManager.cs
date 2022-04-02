@@ -12,6 +12,8 @@ public class BuffIconsManager : MonoBehaviour
     [SerializeField]
     GameObject parentElement;
 
+    public bool hasADBuff, hasASBuff, hasMSBuff;
+
     void Awake() {
         if (instance == null) {
             instance = this;
@@ -31,16 +33,22 @@ public class BuffIconsManager : MonoBehaviour
         Image image;
         switch (attribute) {
             case Attribute.AD:
+                if (hasADBuff) { break; }
+                hasADBuff = true;
                 go = Instantiate(ADBuffIcon, parentElement.transform.position, parentElement.transform.rotation);
                 image = go.GetComponent<Image>();
                 image.transform.SetParent(parentElement.transform, false);
                 break;
             case Attribute.AS:
+                if (hasASBuff) { break; }
+                hasASBuff = true;
                 go = Instantiate(ASBuffIcon, parentElement.transform.position, parentElement.transform.rotation);
                 image = go.GetComponent<Image>();
                 image.transform.SetParent(parentElement.transform, false);
                 break;
             case Attribute.MS:
+                if (hasMSBuff) { break; }
+                hasMSBuff = true;
                 go = Instantiate(MSBuffIcon, parentElement.transform.position, parentElement.transform.rotation);
                 image = go.GetComponent<Image>();
                 image.transform.SetParent(parentElement.transform, false);
