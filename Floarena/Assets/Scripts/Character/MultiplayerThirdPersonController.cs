@@ -91,8 +91,6 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
     public Material transparentMaterial;
     public Material opaqueMaterial;
 
-    private AudioManager audioManager;
-
     private const float _threshold = 0.01f;
 
     private bool _hasAnimator;
@@ -132,6 +130,7 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
 
         Loadout loadout = GameManager.instance.loadout;
         this.MoveSpeed = loadout.GetLoadoutStats().GetAttributeValue(Attribute.MS);
+
         // enable local audiolistener 
         GetComponent<AudioListener>().enabled = true;
     }
@@ -152,8 +151,6 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         _slider = _controller.GetComponentInChildren<HealthBar>().healthBarSlider.gameObject;
 
         health = GetComponent<Health>();
-
-        audioManager = GetComponent<AudioManager>();
 
         AssignAnimationIDs();
 
@@ -226,9 +223,8 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         if (!gameObject.GetComponent<PlayerManager>().GetCanMove()) {
             return;
         }
-        // set target speed based on move speed, sprint speed and if sprint is pressed
-        float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
-
+        // set target speed based on move speed and movement buffs
+        float targetSpeed = MoveSpeed + gameObject.GetComponent<PlayerManager>().GetAttributeBuff(Attribute.MS);
         // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
         // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
@@ -371,34 +367,37 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         
         // when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
         Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
-
-        Gizmos.color = Color.white;
-        Gizmos.DrawSphere(transform.position, 10.0f);
     }
 
     // Transcluent to self and completely invisible to others 
     private void SetPlayerInvisible() {
-        if (this.isLocalPlayer) { // Appear transcluent to self 
+        if (this.isLocalPlayer) {
             SetSelfInvisible();
+            /*this.GetComponentInChildren<SkinnedMeshRenderer>().material = transparentMaterial;
+            Color color = transparentMaterial.color;
+            color.a = 0.8f;
+            this.GetComponentInChildren<SkinnedMeshRenderer>().material.color = color;
+
+            Color barColor = _slider.GetComponent<Image>().color;
+            barColor.a = 0.2f;
+            _slider.GetComponent<Image>().color = barColor;*/
         } else {
             float distance = Vector3.Distance(MatchManager.instance.GetPlayer().transform.position, transform.position);
-            if (distance < 3.0f) { 
+            if (distance < 3.0f) {
                 SetSelfInvisible();
-
                 foreach (SkinnedMeshRenderer s in _controller.GetComponentsInChildren<SkinnedMeshRenderer>()) {
                     s.enabled = true;
                 }
                 _slider.SetActive(true);
-
                 this.GetComponentInChildren<MeshRenderer>().enabled = true; // Minimap
-            } else { 
+            } else {
                 foreach (SkinnedMeshRenderer s in _controller.GetComponentsInChildren<SkinnedMeshRenderer>()) {
                     s.enabled = false;
                 }
                 _slider.SetActive(false);
-                
                 this.GetComponentInChildren<MeshRenderer>().enabled = false; // Minimap
             }
+
         }
     }
 
@@ -426,8 +425,7 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         }
         _slider.SetActive(true);
 
-        // Minimap
-        this.GetComponentInChildren<MeshRenderer>().enabled = true;
+        this.GetComponentInChildren<MeshRenderer>().enabled = true; // Minimap
     }
 
     private void Heal() {
@@ -439,19 +437,7 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
     private void OnTriggerEnter(Collider collider) {
         if (collider.tag == "Brush") {
             SetPlayerInvisible();
-        } else if (collider.tag == "HealthConsumable") {
-            Heal();
-            Vector3 positionOnGrid = collider.transform.position;
-            GameObject mapVisualizer = GameObject.Find("MapVisualizer");
-            mapVisualizer.GetComponent<MapVisualizer>().SpawnPickupItem(positionOnGrid); // Respawn after delay
-            Destroy(collider.gameObject); // Destroy HealthConsumable
-        } else if (collider.tag == "Berry_1") {
-            Vector3 positionOnGrid = collider.transform.position;
-            GameObject mapVisualizer = GameObject.Find("MapVisualizer");
-            mapVisualizer.GetComponent<MapVisualizer>().SpawnBerry(positionOnGrid); // Respawn after delay
-            audioManager.PlaySound(AudioIndex.TAKE_BERRY_AUDIO, positionOnGrid);
-            Destroy(collider.gameObject); // Destroy HealthConsumable
-        }
+        } 
     }
 
     private void OnTriggerStay(Collider collider) {
@@ -463,7 +449,7 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
     private void OnTriggerExit(Collider collider) {
         if (collider.tag == "Brush") {
             SetPlayerVisible();
-        }
+        } 
     }
 
     private void OnCollisionEnter(Collision other) {

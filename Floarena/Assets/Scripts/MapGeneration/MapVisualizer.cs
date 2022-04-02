@@ -82,16 +82,16 @@ public class MapVisualizer : MonoBehaviour {
         coroutine = PlaceBerryWithDelay(20.0f, positionOnGrid);
         StartCoroutine(coroutine);
     }
-
+    
     private bool PlacePickupItem(MapData data, Vector3 positionOnGrid) {
-        foreach (var pickupItem in data.pickupItemsList) {
+        /*foreach (var pickupItem in data.pickupItemsList) {
             if (pickupItem.Position == positionOnGrid) {
                 Vector3 offset = new Vector3(0f, -1.0f, 0f);
                 GameObject goToSpawn = healthItems[Random.Range(0, healthItems.Count)];
                 Instantiate(goToSpawn, positionOnGrid + offset, Quaternion.identity);
                 return true;
             }
-        }
+        }*/
         return false;
     }
 

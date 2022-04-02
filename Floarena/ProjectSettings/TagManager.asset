@@ -9,8 +9,8 @@ TagManager:
   - PlayerCamera
   - Brush
   - HealthConsumable
-  - Berry_1
-  - MinimapDisplay
+  - MapVisualizer
+  - Berry
   layers:
   - Default
   - TransparentFX
@@ -19,7 +19,7 @@ TagManager:
   - Water
   - UI
   - Minimap
-  - 
+  - Berries
   - 
   - 
   - 
