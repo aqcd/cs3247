@@ -126,7 +126,7 @@ public class SkillJoystickController : MonoBehaviour
             skillshotCanvas.enabled = true;
             skillshotHeadCanvas.enabled = true;
 
-            if (pointerPosition.x >= cancelMinX && pointerPosition.x <= cancelMaxX && pointerPosition.y >= cancelMinY && pointerPosition.y <= cancelMinY)
+            if (pointerPosition.x >= cancelMinX && pointerPosition.x <= cancelMaxX && pointerPosition.y >= cancelMinY && pointerPosition.y <= cancelMaxY)
             {
                 cancelNormal.enabled = false;
                 cancelRed.enabled = true;
@@ -149,7 +149,7 @@ public class SkillJoystickController : MonoBehaviour
             targetCircleCanvas.enabled = true;
             rangeIndicatorCanvas.enabled = true;
 
-            if (pointerPosition.x >= cancelMinX && pointerPosition.x <= cancelMaxX && pointerPosition.y >= cancelMinY && pointerPosition.y <= cancelMinY)
+            if (pointerPosition.x >= cancelMinX && pointerPosition.x <= cancelMaxX && pointerPosition.y >= cancelMinY && pointerPosition.y <= cancelMaxY)
             {
                 cancelNormal.enabled = false;
                 cancelRed.enabled = true;
@@ -186,7 +186,6 @@ public class SkillJoystickController : MonoBehaviour
     public void ResolveSkill(Vector2 pointerPosition) {
         // disable canvas
         // activate Skill based on joystick output
-        StartCooldown();
         skillshotCanvas.enabled = false;
         skillshotHeadCanvas.enabled = false;
         targetCircleCanvas.enabled = false;
@@ -217,7 +216,7 @@ public class SkillJoystickController : MonoBehaviour
         //     print("cancel");
         //     return;
         // }
-        if (pointerPosition.x > cancelMinX && pointerPosition.x < cancelMaxX && pointerPosition.y > cancelMinY && pointerPosition.y < cancelMinY)
+        if (pointerPosition.x > cancelMinX && pointerPosition.x < cancelMaxX && pointerPosition.y > cancelMinY && pointerPosition.y < cancelMaxY)
         {
 
         } else {
