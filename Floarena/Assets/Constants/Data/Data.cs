@@ -3,9 +3,9 @@ using System.Collections.Generic;
 public static class Data
 {
     public static Item[] ITEMS = new Item[]{
-        new Item("Sturdy Soil", new Effect[]{new Effect(Attribute.HP, 80f), new Effect(Attribute.MS, -0.6f)}),
-        new Item("Light Soil", new Effect[]{new Effect(Attribute.HP, -20f), new Effect(Attribute.MS, 1.2f)}),
-        new Item("Prickly Thorns", new Effect[]{new Effect(Attribute.HP, 20f), new Effect(Attribute.AD, 2f)}),
+        new Item("Sturdy Soil", new Effect[]{new Effect(Attribute.HP, 50f), new Effect(Attribute.MS, -0.5f)}),
+        new Item("Light Soil", new Effect[]{new Effect(Attribute.HP, -20f), new Effect(Attribute.MS, 1.0f)}),
+        new Item("Prickly Thorns", new Effect[]{new Effect(Attribute.HP, 20f), new Effect(Attribute.AD, 3f)}),
     };
 
     public static Skill[] BASIC_ATTACK_SKILLS = new Skill[]{
@@ -62,7 +62,7 @@ public static class Data
         { Attribute.AD, 7 },
         { Attribute.AS, 1 },
         { Attribute.AR, 1 },
-        { Attribute.MS, 6 },
+        { Attribute.MS, 5 },
     });
 
     public static PlayerStats ZEROED_ATTRIBUTES = new PlayerStats(new Dictionary<Attribute, float>{

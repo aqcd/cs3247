@@ -11,7 +11,7 @@ public static class SkillConstants
     public static float RUSH_COOLDOWN = 7.0f;
     public static float RUSH_AOE_RADIUS = 2.0f;
 
-    public static float VINE_ATTACK_DAMAGE = 15.0f;
+    public static float VINE_ATTACK_DAMAGE = 12.0f;
     public static float VINE_ATTACK_RANGE = 8.0f;
     public static float VINE_ATTACK_PROJECTILE_SPEED = 10.0f;
     public static float VINE_ATTACK_COOLDOWN = 5.0f;
