@@ -496,7 +496,7 @@ PrefabInstance:
     - target: {fileID: 2625463611423686781, guid: 50d161084b28ac642aab324dedb3640e,
         type: 3}
       propertyPath: m_TagString
-      value: Joystick
+      value: SkillJoystick
       objectReference: {fileID: 0}
     - target: {fileID: 3882854107809581154, guid: 50d161084b28ac642aab324dedb3640e,
         type: 3}
@@ -881,7 +881,7 @@ PrefabInstance:
     - target: {fileID: 2625463611423686781, guid: 50d161084b28ac642aab324dedb3640e,
         type: 3}
       propertyPath: m_TagString
-      value: Joystick
+      value: SkillJoystick
       objectReference: {fileID: 0}
     - target: {fileID: 3882854107809581154, guid: 50d161084b28ac642aab324dedb3640e,
         type: 3}
@@ -1906,7 +1906,7 @@ PrefabInstance:
     - target: {fileID: 2625463611423686781, guid: 50d161084b28ac642aab324dedb3640e,
         type: 3}
       propertyPath: m_TagString
-      value: Joystick
+      value: SkillJoystick
       objectReference: {fileID: 0}
     - target: {fileID: 3882854107809581154, guid: 50d161084b28ac642aab324dedb3640e,
         type: 3}
@@ -2357,7 +2357,7 @@ PrefabInstance:
     - target: {fileID: 2625463611423686781, guid: 50d161084b28ac642aab324dedb3640e,
         type: 3}
       propertyPath: m_TagString
-      value: Joystick
+      value: SkillJoystick
       objectReference: {fileID: 0}
     - target: {fileID: 3882854107809581154, guid: 50d161084b28ac642aab324dedb3640e,
         type: 3}

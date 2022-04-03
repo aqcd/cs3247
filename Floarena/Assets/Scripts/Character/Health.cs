@@ -24,9 +24,9 @@ public class Health : NetworkBehaviour
         if (isLocalPlayer) {
             float temp  = GameManager.instance.loadout.GetLoadoutStats().GetAttributeValue(Attribute.HP);
             SetMaxHealth(temp);
-            damageTakenEvent.AddListener(gameObject.GetComponent<BerryPickupManager>().InterruptChannel);
+            
         }
-
+        // damageTakenEvent.AddListener(gameObject.GetComponent<BerryPickupManager>().InterruptChannel);
         audioManager = GetComponent<AudioManager>();
 
         particleSystemManager = gameObject.GetComponent<ParticleSystemManager>();
@@ -38,6 +38,9 @@ public class Health : NetworkBehaviour
 
     // Hook to currentHealth SyncVar
     void UpdateHealth(float oldHealth, float newHealth) {
+        if (newHealth < oldHealth) {
+            damageTakenEvent.Invoke();
+        }
         if (hasBar) {
             healthBar.SetHealth(newHealth);    
         }
@@ -50,7 +53,6 @@ public class Health : NetworkBehaviour
     }
 
     public void TakeDamage(float damage) {
-        damageTakenEvent.Invoke();
         CmdTakeDamage(damage, MatchManager.instance.GetOpponentNum());
         if (particleSystemManager != null) {
             particleSystemManager.PlayDMG();
