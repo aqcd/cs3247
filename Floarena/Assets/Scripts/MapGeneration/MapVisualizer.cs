@@ -136,19 +136,19 @@ public class MapVisualizer : MonoBehaviour {
         }
 
         for (int i = -20; i < 80; i++) {
-            for (int j = 61; j < 81; j++) {
+            for (int j = 61; j < 80; j++) {
                 PlaceRandomTree(new Vector3(i, 0, j));
             }
         }
 
         for (int i = -20; i < 0; i++) {
-            for (int j = 0; j < 61; j++) {
+            for (int j = 0; j < 60; j++) {
                 PlaceRandomTree(new Vector3(i, 0, j));
             }
         }
 
-        for (int i = 61; i < 81; i++) {
-            for (int j = 0; j < 61; j++) {
+        for (int i = 61; i < 80; i++) {
+            for (int j = 0; j < 60; j++) {
                 PlaceRandomTree(new Vector3(i, 0, j));
             }
         }
