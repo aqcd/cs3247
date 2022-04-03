@@ -204,5 +204,7 @@ public class MatchManager : NetworkBehaviour {
         playerRef.GetComponent<Health>().ResetHealth();
         playerRef.GetComponent<Health>().healthBar.SetBarColor(GetPlayerNum());
         opponentRef.GetComponent<Health>().healthBar.SetBarColor(GetOpponentNum());
+        playerRef.GetComponentInChildren<MinimapPlayerColour>().SetMaterials(GetPlayerNum());
+        opponentRef.GetComponentInChildren<MinimapPlayerColour>().SetMaterials(GetOpponentNum());
     }
 }
