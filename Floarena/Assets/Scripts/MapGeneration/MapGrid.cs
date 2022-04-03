@@ -24,15 +24,6 @@ public class MapGrid {
         }
     }
 
-    public void SetCell(int x, int z, CellObjectType objectType) {
-        cellGrid[z, x].ObjectType = objectType;
-        cellGrid[z, x].IsTaken = false;
-    }
-
-    public void SetCell(float x, float z, CellObjectType objectType) {
-        SetCell((int)x, (int)z, objectType);
-    }
-
     public bool IsCellTaken(int x, int z) {
         return cellGrid[z, x].IsTaken;
     }
@@ -71,15 +62,5 @@ public class MapGrid {
         int x = randomIndex % width;
         int z = randomIndex / width;
         return new Vector3(x, 0, z);
-    }
-
-    public void CheckCoordinates() {
-        for (int i = 0; i < cellGrid.GetLength(0); i++) {
-            System.Text.StringBuilder b = new System.Text.StringBuilder();
-            for (int j = 0; j < cellGrid.GetLength(1); j++) {
-                b.Append(j + "," + i + " ");
-            }
-            Debug.Log(b.ToString());
-        }
     }
 }

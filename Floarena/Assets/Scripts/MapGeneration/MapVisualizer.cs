@@ -26,7 +26,6 @@ public class MapVisualizer : MonoBehaviour {
         for (int i = 0; i < data.mapItemsArray.Length; i++) {
             if (data.mapItemsArray[i]) {
                 var positionOnGrid = grid.CalculateCoordinatesFromIndex(i);
-                grid.SetCell(positionOnGrid.x, positionOnGrid.z, CellObjectType.PickupItem);
 
                 if (PlacePickupItem(data, positionOnGrid)) { // Place pickup items
                     continue;
@@ -48,10 +47,10 @@ public class MapVisualizer : MonoBehaviour {
             if (rock.Position == positionOnGrid) {
                 float randomScale = Random.Range(0.0f, 2.0f);
                 rockPrefab.transform.localScale += new Vector3(randomScale, randomScale, randomScale);
-                Vector3 offset = new Vector3(0f, -1.0f, 0f);
                 int randomRotation = Random.Range(0, 180);
                 Quaternion rotation = Quaternion.Euler(0, randomRotation, 0);
-                Instantiate(rockPrefab, positionOnGrid + offset, rotation);
+                GameObject obj = Instantiate(rockPrefab, positionOnGrid, rotation);
+                obj.transform.parent = gameObject.transform;
                 rockPrefab.transform.localScale = Vector3.one;
                 return true;
             }
@@ -62,9 +61,9 @@ public class MapVisualizer : MonoBehaviour {
     private bool PlacePickupItem(MapData data, Vector3 positionOnGrid) {
         foreach (var pickupItem in data.pickupItemsList) {
             if (pickupItem.Position == positionOnGrid) {
-                Vector3 offset = new Vector3(0f, -1.0f, 0f);
                 GameObject goToSpawn = liGoSpawn[Random.Range(0, liGoSpawn.Count)];
-                Instantiate(goToSpawn, positionOnGrid + offset, Quaternion.identity);
+                GameObject obj = Instantiate(goToSpawn, positionOnGrid, Quaternion.identity);
+                obj.transform.parent = gameObject.transform;
                 return true;
             }
         }
@@ -79,7 +78,7 @@ public class MapVisualizer : MonoBehaviour {
             if (data.mapItemsArray[randomIndex] == false) {
                 data.mapItemsArray[randomIndex] = true;
                 Vector3 coordinates = grid.CalculateCoordinatesFromIndex(randomIndex);
-                return new Vector3(coordinates.x, -1, coordinates.z);
+                return coordinates;
             }
             itemPlacementTryLimit--;
         }
@@ -94,7 +93,8 @@ public class MapVisualizer : MonoBehaviour {
     private IEnumerator PlacePickupItemWithDelay(float waitTime, Vector3 positionOnGrid) {
         yield return new WaitForSeconds(waitTime);
         GameObject goToSpawn = liGoSpawn[Random.Range(0, liGoSpawn.Count)];
-        Instantiate(goToSpawn, positionOnGrid, Quaternion.identity);
+        GameObject obj = Instantiate(goToSpawn, positionOnGrid, Quaternion.identity);
+        obj.transform.parent = gameObject.transform;
     }
 
     public void SpawnPickupItem(Vector3 positionOnGrid) {
@@ -109,8 +109,8 @@ public class MapVisualizer : MonoBehaviour {
             if (brushItem.Position == positionOnGrid) {
                 float randomHeight = Random.Range(0.0f, 0.8f);
                 brushPrefab.transform.localScale += new Vector3(0.0f, randomHeight, 0.0f);
-                Vector3 offset = new Vector3(0f, -1.0f, 0f);
-                Instantiate(brushPrefab, positionOnGrid + offset, Quaternion.identity);
+                GameObject obj = Instantiate(brushPrefab, positionOnGrid, Quaternion.identity);
+                obj.transform.parent = gameObject.transform;
                 brushPrefab.transform.localScale = Vector3.one;
                 return true;
             }
@@ -120,19 +120,48 @@ public class MapVisualizer : MonoBehaviour {
 
     private void PlaceFixedStructures(MapGrid grid, MapData data) {
         foreach (var fixedStructure in data.fixedStructuresList) {
-            var obstaclePosition = fixedStructure.Position;
-            grid.SetCell(obstaclePosition.x, obstaclePosition.z, CellObjectType.FixedStructure);
-            Instantiate(wallPrefab, obstaclePosition, Quaternion.identity);
-            //CreateIndicator(obstaclePosition, Color.red, PrimitiveType.Cube);
+            var position = fixedStructure.Position;
+            float randomHeight = Random.Range(0.0f, 0.8f);
+            wallPrefab.transform.localScale += new Vector3(0.0f, randomHeight, 0.0f);
+            GameObject obj = Instantiate(wallPrefab, position, Quaternion.identity);
+            obj.transform.parent = gameObject.transform;
+            wallPrefab.transform.localScale = Vector3.one;
+        }
+
+        // Trees in the background
+        for (int i = -20; i < 80; i++) {
+            for (int j = -1; j > -21; j--) {
+                PlaceRandomTree(new Vector3(i, 0, j));
+            }
+        }
+
+        for (int i = -20; i < 80; i++) {
+            for (int j = 61; j < 81; j++) {
+                PlaceRandomTree(new Vector3(i, 0, j));
+            }
+        }
+
+        for (int i = -20; i < 0; i++) {
+            for (int j = 0; j < 61; j++) {
+                PlaceRandomTree(new Vector3(i, 0, j));
+            }
+        }
+
+        for (int i = 61; i < 81; i++) {
+            for (int j = 0; j < 61; j++) {
+                PlaceRandomTree(new Vector3(i, 0, j));
+            }
         }
     }
 
-    // Spawn primitive indicator when prefabs are not used 
-    private void CreateIndicator(Vector3 position, Color color, PrimitiveType sphere) {
-        var element = GameObject.CreatePrimitive(sphere);
-        element.transform.position = position + new Vector3(0.5f, 0.5f, 0.5f);
-        element.transform.parent = parent;
-        var renderer = element.GetComponent<Renderer>();
-        renderer.material.SetColor("_Color", color);
+    void PlaceRandomTree(Vector3 position) {
+        var prob = Random.Range(0, 3); // [0, 3)
+        if (prob < 1) {
+            float randomHeight = Random.Range(0.0f, 0.8f);
+            wallPrefab.transform.localScale += new Vector3(0.0f, randomHeight, 0.0f);
+            GameObject obj = Instantiate(wallPrefab, position, Quaternion.identity);
+            obj.transform.parent = gameObject.transform;
+            wallPrefab.transform.localScale = Vector3.one;
+        }
     }
 }
