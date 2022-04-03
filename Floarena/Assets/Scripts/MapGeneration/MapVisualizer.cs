@@ -22,6 +22,7 @@ public class MapVisualizer : MonoBehaviour {
         this.grid = grid;
         this.data = data;
         PlaceFixedStructures(grid, data);
+        PlaceBackground();
 
         for (int i = 0; i < data.mapItemsArray.Length; i++) {
             if (data.mapItemsArray[i]) {
@@ -127,41 +128,51 @@ public class MapVisualizer : MonoBehaviour {
             obj.transform.parent = gameObject.transform;
             wallPrefab.transform.localScale = Vector3.one;
         }
+    }
 
-        // Trees in the background
+    void PlaceBackground() {
         for (int i = -20; i < 80; i++) {
             for (int j = -1; j > -21; j--) {
-                PlaceRandomTree(new Vector3(i, 0, j));
+                PlaceRandomItem(new Vector3(i, 0, j));
             }
         }
 
         for (int i = -20; i < 80; i++) {
             for (int j = 61; j < 80; j++) {
-                PlaceRandomTree(new Vector3(i, 0, j));
+                PlaceRandomItem(new Vector3(i, 0, j));
             }
         }
 
         for (int i = -20; i < 0; i++) {
             for (int j = 0; j < 60; j++) {
-                PlaceRandomTree(new Vector3(i, 0, j));
+                PlaceRandomItem(new Vector3(i, 0, j));
             }
         }
 
         for (int i = 61; i < 80; i++) {
             for (int j = 0; j < 60; j++) {
-                PlaceRandomTree(new Vector3(i, 0, j));
+                PlaceRandomItem(new Vector3(i, 0, j));
             }
         }
     }
 
-    void PlaceRandomTree(Vector3 position) {
-        var prob = Random.Range(0, 3); // [0, 3)
-        if (prob < 1) {
+    void PlaceRandomItem(Vector3 position) {
+        var prob = Random.Range(0, 4); // [0, 3)
+        var prob2 = Random.Range(0, 10);
+        if (prob == 0) { // Tree
             float randomHeight = Random.Range(0.0f, 0.8f);
             wallPrefab.transform.localScale += new Vector3(0.0f, randomHeight, 0.0f);
             GameObject obj = Instantiate(wallPrefab, position, Quaternion.identity);
             obj.transform.parent = gameObject.transform;
             wallPrefab.transform.localScale = Vector3.one;
-        }
+        } else if (prob == 1 && prob2 == 2) { // Rock
+            float randomScale = Random.Range(0.0f, 2.0f);
+            rockPrefab.transform.localScale += new Vector3(randomScale, randomScale, randomScale);
+            int randomRotation = Random.Range(0, 180);
+            Quaternion rotation = Quaternion.Euler(0, randomRotation, 0);
+            GameObject obj = Instantiate(rockPrefab, position, rotation);
+            obj.transform.parent = gameObject.transform;
+            rockPrefab.transform.localScale = Vector3.one;
+        } 
     }
 }
