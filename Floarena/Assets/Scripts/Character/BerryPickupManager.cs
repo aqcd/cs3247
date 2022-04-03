@@ -11,9 +11,13 @@ public class BerryPickupManager : NetworkBehaviour {
     [SyncVar(hook = nameof(UpdateIsChanneling))]
     public bool isChanneling = false;
     public ChannelBar channelBar;
+
+    private AudioManager audioManager;
+
     void Start()
     {
         berryCollider.radius = BerryConstants.PICKUP_RANGE;
+        audioManager = GetComponent<AudioManager>();
         if (isLocalPlayer) {
             GameObject channel = GameObject.Find("ChannelButton");
             channelButton = channel.GetComponent<ChannelButtonController>();
@@ -118,6 +122,7 @@ public class BerryPickupManager : NetworkBehaviour {
         }
         if (isLocalPlayer) {
             activeBerry.SendMessage("Consume", MatchManager.instance.GetPlayer().GetComponent<PlayerManager>());
+            audioManager.PlaySound(AudioIndex.TAKE_BERRY_AUDIO, transform.position);
         } else {
             activeBerry.SendMessage("DestroySelf");
         }
