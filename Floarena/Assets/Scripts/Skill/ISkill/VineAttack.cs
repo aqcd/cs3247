@@ -20,8 +20,6 @@ public class VineAttack : NetworkBehaviour, ISkill
 
     public void Execute(Vector3 skillPosition)
     {
-        Debug.Log("Executed " + netId + " Pos: " + player.transform.position);
-        Debug.Log("Player num: " + MatchManager.instance.GetPlayerNum());
         SpawnProjectile(skillPosition.normalized, player.transform.position, MatchManager.instance.GetPlayerNum());
         audioManager.PlaySound(AudioIndex.VINE_ATTACK_AUDIO, skillPosition);
     }
@@ -30,7 +28,6 @@ public class VineAttack : NetworkBehaviour, ISkill
     void SpawnProjectile(Vector3 spawnDir, Vector3 pos, int spawnPlayerNum) 
     {
         Quaternion qt = Quaternion.FromToRotation(new Vector3(0, 0, 1), spawnDir);
-        Debug.Log("QUAT: " + qt + " POS: " + pos);
         GameObject projectile = GameObject.Instantiate(projectilePrefab, pos, qt);
         NetworkServer.Spawn(projectile);
         projectile.GetComponent<VineAttackProjectile>().OnSpawn(spawnDir, spawnPlayerNum);
