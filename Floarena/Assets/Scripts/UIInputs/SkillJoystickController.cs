@@ -96,8 +96,6 @@ public class SkillJoystickController : MonoBehaviour
         if (skill.aimType == Skill.AimType.SKILLSHOT && !isCooldown)
         {
             float targetRotation = Mathf.Atan2(position.x, position.z) * Mathf.Rad2Deg + mainCamera.transform.eulerAngles.y;
-            Debug.Log("SKILLSHOT: " + targetRotation);
-            Debug.Log(skillshotCanvas);
             skillshotCanvas.transform.rotation = Quaternion.Euler(0.0f, targetRotation, 0.0f);
             skillshotHeadCanvas.transform.rotation = Quaternion.Euler(0.0f, targetRotation, 0.0f);
 

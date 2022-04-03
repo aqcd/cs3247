@@ -30,8 +30,7 @@ public class HealthBar : MonoBehaviour
             float offset_current = i * lineOffset - dividerWidth;
             GameObject divider = Instantiate(dividerPrefab, transform);
             divider.transform.position -= new Vector3(offset_current, 0 , 0);
-        }
-        
+        }    
     }
 
     public void SetHealth(float hp)
