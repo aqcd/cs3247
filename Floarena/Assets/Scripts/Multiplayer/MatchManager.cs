@@ -33,7 +33,7 @@ public class MatchManager : NetworkBehaviour {
             instance = this;
         }
 
-        player1ScoreText = transform.GetChild(0).GetChild(0).GetComponent<Text>();
+        player1ScoreText = transform.GetChild(0).GetChild(1).GetComponent<Text>();
         player2ScoreText = transform.GetChild(0).GetChild(2).GetComponent<Text>();
         player1ScoreText.text = player1Score.ToString();
         player2ScoreText.text = player2Score.ToString();
