@@ -7,8 +7,13 @@ public class BerryPickupManager : NetworkBehaviour {
     public SphereCollider berryCollider;
     private ChannelButtonController channelButton;
     private IBerry activeBerry;
+    [SyncVar]
+    private float channelTime = 0.0f;
+    [SyncVar]
+    public bool isChanneling = false;
+    public ChannelBar channelBar;
 
-    private AudioManager audioManager; 
+    private AudioManager audioManager;
 
     void Start()
     {
@@ -17,8 +22,24 @@ public class BerryPickupManager : NetworkBehaviour {
         channelButton = channel.GetComponent<ChannelButtonController>();
         audioManager = GetComponent<AudioManager>();
         if (isLocalPlayer) {
-            Debug.Log("Registering SELF Pickup");
             channelButton.RegisterBerryPickup(this);
+            GameObject moveJoystick = GameObject.Find("UI_Virtual_Joystick_Move");
+            moveJoystick.GetComponent<UIVirtualJoystick>().joystickMoveEvent.AddListener(InterruptChannel);
+            GameObject[] skillJoysticks = GameObject.FindGameObjectsWithTag("SkillJoystick");
+            foreach (GameObject joystick in skillJoysticks) {
+                joystick.GetComponent<UISkillVirtualJoystick>().joystickMoveEvent.AddListener(InterruptChannel);
+            }
+        }
+    }
+
+    void Update()
+    {
+        if (isChanneling) {
+            channelTime += Time.deltaTime;
+            channelBar.SetChannel(BerryConstants.CHANNEL_DURATION - channelTime);
+            if (channelTime >= BerryConstants.CHANNEL_DURATION) {
+                ResolveChannel();
+            }
         }
     }
 
@@ -36,6 +57,28 @@ public class BerryPickupManager : NetworkBehaviour {
             channelButton.DisableButton();
         }
     }
+
+    public void BeginChannel()
+    {
+        isChanneling = true;
+        channelBar.EnableBar();
+    }
+
+    public void InterruptChannel()
+    {
+        isChanneling = false;
+        channelTime = 0.0f;
+        channelBar.DisableBar();
+    }
+    
+    private void ResolveChannel() {
+        channelTime = 0.0f;
+        isChanneling = false;
+        CmdConsumeBerry();
+        channelBar.DisableBar();
+        channelButton.DisableButton();
+    }
+
     [Command]
     public void CmdConsumeBerry()
     {

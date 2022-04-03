@@ -24,7 +24,7 @@ public class Health : NetworkBehaviour
         if (isLocalPlayer) {
             float temp  = GameManager.instance.loadout.GetLoadoutStats().GetAttributeValue(Attribute.HP);
             SetMaxHealth(temp);
-            damageTakenEvent.AddListener(GameObject.Find("ChannelButton").GetComponent<ChannelButtonController>().InterruptChannel);
+            damageTakenEvent.AddListener(gameObject.GetComponent<BerryPickupManager>().InterruptChannel);
         }
 
         audioManager = GetComponent<AudioManager>();
