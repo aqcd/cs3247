@@ -5,6 +5,8 @@ using Random = UnityEngine.Random;
 
 public class MapVisualizer : MonoBehaviour {
     private Transform parent;
+    private MapGrid grid;
+    private MapData data;
     public List<GameObject> liGoSpawn = new List<GameObject>(); // Prefabs for pickup items
     public GameObject wallPrefab; // Prefab for wall structure
     public GameObject brushPrefab; // Prefab for brush
@@ -17,6 +19,8 @@ public class MapVisualizer : MonoBehaviour {
     }
 
     public void VisualizeMap(MapGrid grid, MapData data) {
+        this.grid = grid;
+        this.data = data;
         PlaceFixedStructures(grid, data);
 
         for (int i = 0; i < data.mapItemsArray.Length; i++) {
@@ -35,7 +39,7 @@ public class MapVisualizer : MonoBehaviour {
                 if (PlaceRock(data, positionOnGrid)) {
                     continue;
                 }
-            }
+            }            
         }
     }
 
@@ -67,6 +71,26 @@ public class MapVisualizer : MonoBehaviour {
         return false;
     }
 
+    // Return a random valid coordinate to spawn berry
+    public Vector3 GetRandomCoordinates() {
+        var itemPlacementTryLimit = data.mapItemsArray.Length;
+        while (itemPlacementTryLimit > 0) {
+            var randomIndex = Random.Range(0, data.mapItemsArray.Length);
+            if (data.mapItemsArray[randomIndex] == false) {
+                data.mapItemsArray[randomIndex] = true;
+                Vector3 coordinates = grid.CalculateCoordinatesFromIndex(randomIndex);
+                return new Vector3(coordinates.x, -1, coordinates.z);
+            }
+            itemPlacementTryLimit--;
+        }
+        return new Vector3(-1, 0, -1);
+    }
+
+    public void SetPositionAsEmpty(Vector3 position) {
+        int indexAtPosition = grid.CalculateIndexFromCoordinates(position.x, position.z);
+        data.mapItemsArray[indexAtPosition] = false;
+    }
+
     private IEnumerator PlacePickupItemWithDelay(float waitTime, Vector3 positionOnGrid) {
         yield return new WaitForSeconds(waitTime);
         GameObject goToSpawn = liGoSpawn[Random.Range(0, liGoSpawn.Count)];
@@ -74,7 +98,9 @@ public class MapVisualizer : MonoBehaviour {
     }
 
     public void SpawnPickupItem(Vector3 positionOnGrid) {
-        coroutine = PlacePickupItemWithDelay(5.0f, positionOnGrid);
+        Vector3 spawnPosition = GetRandomCoordinates();
+        SetPositionAsEmpty(positionOnGrid);
+        coroutine = PlacePickupItemWithDelay(5.0f, spawnPosition);
         StartCoroutine(coroutine);
     }
 
