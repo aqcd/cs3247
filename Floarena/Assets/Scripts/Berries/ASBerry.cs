@@ -5,7 +5,7 @@ using Mirror;
 
 public class ASBerry : NetworkBehaviour, IBerry
 {
-    private MapVisualizer mapVisualizer;
+  private MapVisualizer mapVisualizer;
   private float buffMagnitude = BerryConstants.AS_BERRY_MAGNITUDE;
   private float buffDuration = BerryConstants.AS_BERRY_DURATION;
 

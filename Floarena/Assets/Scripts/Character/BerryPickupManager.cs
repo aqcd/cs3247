@@ -6,88 +6,120 @@ public class BerryPickupManager : NetworkBehaviour {
     [SerializeField]
     public SphereCollider berryCollider;
     private ChannelButtonController channelButton;
-    private IBerry activeBerry;
-    [SyncVar]
+    private GameObject activeBerry;
     private float channelTime = 0.0f;
-    [SyncVar]
+    [SyncVar(hook = nameof(UpdateIsChanneling))]
     public bool isChanneling = false;
     public ChannelBar channelBar;
     void Start()
     {
         berryCollider.radius = BerryConstants.PICKUP_RANGE;
-        GameObject channel = GameObject.Find("ChannelButton");
-        channelButton = channel.GetComponent<ChannelButtonController>();
         if (isLocalPlayer) {
+            GameObject channel = GameObject.Find("ChannelButton");
+            channelButton = channel.GetComponent<ChannelButtonController>();
             channelButton.RegisterBerryPickup(this);
             GameObject moveJoystick = GameObject.Find("UI_Virtual_Joystick_Move");
             moveJoystick.GetComponent<UIVirtualJoystick>().joystickMoveEvent.AddListener(InterruptChannel);
             GameObject[] skillJoysticks = GameObject.FindGameObjectsWithTag("SkillJoystick");
             foreach (GameObject joystick in skillJoysticks) {
+                Debug.Log("Joystick registration" + joystick);
                 joystick.GetComponent<UISkillVirtualJoystick>().joystickMoveEvent.AddListener(InterruptChannel);
             }
+            Health health = gameObject.GetComponent<Health>();
+            Debug.Log("Health registration" + health);
+            health.damageTakenEvent.AddListener(InterruptChannel);
         }
     }
 
     void Update()
-    {
+    {   
         if (isChanneling) {
+            if (activeBerry == null) {
+                InterruptChannel();
+                channelButton.DisableButton();
+                return;
+            }
             channelTime += Time.deltaTime;
             channelBar.SetChannel(BerryConstants.CHANNEL_DURATION - channelTime);
             if (channelTime >= BerryConstants.CHANNEL_DURATION) {
-                ResolveChannel();
+                if (isLocalPlayer) {
+                    ResolveChannel();
+                    channelButton.DisableButton();
+                }
             }
+        } else {
+            channelTime = 0.0f;
         }
     }
 
     private void OnTriggerStay(Collider collider)
     {
         if (collider.gameObject.CompareTag("Berry")) {
-            activeBerry = collider.gameObject.GetComponent<IBerry>();
-            channelButton.EnableButton();
+            activeBerry = collider.gameObject;
+            if (isLocalPlayer) {
+                channelButton.EnableButton();
+            }
         }
     }
 
     private void OnTriggerExit(Collider collider)
     {
         if (collider.gameObject.CompareTag("Berry")) {
-            channelButton.DisableButton();
+            activeBerry = null;
+            if (isLocalPlayer) {
+                channelButton.DisableButton();
+            }
         }
     }
 
-    public void BeginChannel()
-    {
-        isChanneling = true;
-        channelBar.EnableBar();
-    }
-
-    public void InterruptChannel()
-    {
-        isChanneling = false;
-        channelTime = 0.0f;
-        channelBar.DisableBar();
-    }
-    
-    private void ResolveChannel() {
-        channelTime = 0.0f;
-        isChanneling = false;
-        CmdConsumeBerry();
-        channelBar.DisableBar();
-        channelButton.DisableButton();
+    void UpdateIsChanneling(bool oldChannel, bool newChannel) {
+        isChanneling = newChannel;
     }
 
     [Command]
-    public void CmdConsumeBerry()
+    public void BeginChannel()
     {
-        RpcConsumeBerry();
+        isChanneling = true;
+        RpcEnableBar();
     }
 
+    [Command]
+    public void InterruptChannel()
+    {
+        if (isChanneling) {
+            Debug.Log("Interrupting");
+            isChanneling = false;
+            RpcDisableBar();
+        }
+    }
+    [Command]
+    private void ResolveChannel() {
+        isChanneling = false;
+        RpcConsumeBerry();
+        RpcDisableBar();
+    }
+    
+    [ClientRpc]
+    private void RpcEnableBar()
+    {
+        channelBar.EnableBar();
+    }
+    [ClientRpc]
+    private void RpcDisableBar()
+    {
+        channelTime = 0.0f;
+        channelBar.DisableBar();
+    }
     [ClientRpc]
     private void RpcConsumeBerry()
     {
+        if (activeBerry == null) {
+            return;
+        }
         if (isLocalPlayer) {
-            activeBerry.Consume(MatchManager.instance.GetPlayer().GetComponent<PlayerManager>());
+            activeBerry.SendMessage("Consume", MatchManager.instance.GetPlayer().GetComponent<PlayerManager>());
         } else {
-            activeBerry.DestroySelf();
+            activeBerry.SendMessage("DestroySelf");
         }
         activeBerry = null;
     }
