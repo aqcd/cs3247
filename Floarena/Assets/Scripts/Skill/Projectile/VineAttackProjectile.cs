@@ -14,7 +14,6 @@ public class VineAttackProjectile : NetworkBehaviour
 
     void Awake()
     {
-        Debug.Log("Projectile Spawned");
         StartCoroutine(DeathRoutine());
     }
 
@@ -41,7 +40,6 @@ public class VineAttackProjectile : NetworkBehaviour
 
     private void OnCollisionEnter(Collision other) 
     {
-        Debug.Log("Collision Detected");
         if (other.gameObject != spawningPlayer && isSpawningClient)
         {
             Health otherHealth = other.gameObject.GetComponent<Health>();
@@ -49,7 +47,7 @@ public class VineAttackProjectile : NetworkBehaviour
             {
                 otherHealth.TakeDamage(damageMagnitude);
             }
+            GameObject.Destroy(gameObject);
         }
-        GameObject.Destroy(gameObject);
     }
 }

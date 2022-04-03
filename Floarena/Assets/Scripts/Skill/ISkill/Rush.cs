@@ -8,8 +8,8 @@ public class Rush : NetworkBehaviour, ISkill
     private GameObject player;
     private CharacterController characterController;
     private PlayerManager playerManager;
-    private float range = SkillConstants.RUSH_RANGE;
     private float speed = SkillConstants.RUSH_SPEED;
+    private float range = SkillConstants.RUSH_RANGE;
     private float damageMagnitude = SkillConstants.RUSH_DAMAGE;
 
     private float damageRadius = SkillConstants.RUSH_AOE_RADIUS;
@@ -48,7 +48,7 @@ public class Rush : NetworkBehaviour, ISkill
     public void Execute(Vector3 skillPosition)
     {
         isActive = true;
-        remainingDuration = range / speed;
+        remainingDuration = Mathf.Min(skillPosition.magnitude, range) / speed;
         direction = skillPosition.normalized;
         playerManager.DisableMoveForDuration(remainingDuration);
         audioManager.PlaySound(AudioIndex.RUSH_AUDIO, skillPosition);
