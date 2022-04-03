@@ -9,9 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4002735393995862132}
-  - component: {fileID: 852922281134172130}
-  - component: {fileID: 7443933700333020367}
-  - component: {fileID: 8720799092611744740}
+  - component: {fileID: 3082752359709545217}
+  - component: {fileID: 5582852495024487438}
   m_Layer: 6
   m_Name: MinimapDisplay
   m_TagString: HealthConsumable
@@ -27,21 +26,21 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1348274411726486312}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1, z: 1.5}
+  m_LocalPosition: {x: 0, y: 0.254, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children: []
   m_Father: {fileID: 4369225407168652194}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &852922281134172130
+--- !u!33 &3082752359709545217
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1348274411726486312}
-  m_Mesh: {fileID: 4300000, guid: 198e22835f50d434cad61bebc789302b, type: 2}
---- !u!23 &7443933700333020367
+  m_Mesh: {fileID: -6941263664690881946, guid: 73ee1feab1f8c4747a271cf684e33399, type: 3}
+--- !u!23 &5582852495024487438
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -60,8 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8cfcbf5b0a8c46148a9dd457aa15a4e8, type: 2}
-  - {fileID: 2100000, guid: ff8f106e5c9e34da28ad9cee6edb2255, type: 2}
+  - {fileID: -7147128732045209735, guid: 73ee1feab1f8c4747a271cf684e33399, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -74,7 +72,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -83,20 +81,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8720799092611744740
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1348274411726486312}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 198e22835f50d434cad61bebc789302b, type: 2}
 --- !u!1 &3628741095879785448
 GameObject:
   m_ObjectHideFlags: 0
@@ -106,10 +90,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4369225407168652194}
-  - component: {fileID: 2318002876601925569}
-  - component: {fileID: 5443694338153038338}
-  - component: {fileID: 7107519833623486147}
   - component: {fileID: 9085373815781828886}
+  - component: {fileID: 9021537979632931191}
+  - component: {fileID: 5987039393018517747}
+  - component: {fileID: 6086547313739804563}
+  - component: {fileID: 2146362506729441447}
   m_Layer: 7
   m_Name: Pickup_Heal
   m_TagString: Berry
@@ -124,23 +109,36 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3628741095879785448}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 4002735393995862132}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &2318002876601925569
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &9085373815781828886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3628741095879785448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cefcc73d3761374b9f5c2f388bda482, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healMagnitude: 20
+--- !u!33 &9021537979632931191
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3628741095879785448}
-  m_Mesh: {fileID: 4300000, guid: 198e22835f50d434cad61bebc789302b, type: 2}
---- !u!23 &5443694338153038338
+  m_Mesh: {fileID: -6941263664690881946, guid: 73ee1feab1f8c4747a271cf684e33399, type: 3}
+--- !u!23 &5987039393018517747
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -159,8 +157,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8cfcbf5b0a8c46148a9dd457aa15a4e8, type: 2}
-  - {fileID: 2100000, guid: ff8f106e5c9e34da28ad9cee6edb2255, type: 2}
+  - {fileID: -7147128732045209735, guid: 73ee1feab1f8c4747a271cf684e33399, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -173,7 +170,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -182,7 +179,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &7107519833623486147
+--- !u!64 &6086547313739804563
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -195,8 +192,8 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 198e22835f50d434cad61bebc789302b, type: 2}
---- !u!114 &9085373815781828886
+  m_Mesh: {fileID: -6941263664690881946, guid: 73ee1feab1f8c4747a271cf684e33399, type: 3}
+--- !u!114 &2146362506729441447
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -205,7 +202,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3628741095879785448}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cefcc73d3761374b9f5c2f388bda482, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healMagnitude: 20
+  sceneId: 0
+  serverOnly: 0
+  visible: 0
+  m_AssetId: a232551061eff204988ad9ba3c29dd74
+  hasSpawned: 0
