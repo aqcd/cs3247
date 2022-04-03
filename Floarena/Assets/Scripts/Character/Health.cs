@@ -22,9 +22,7 @@ public class Health : NetworkBehaviour
 
     void Start() {
         if (isLocalPlayer) {
-            float temp  = GameManager.instance.loadout.GetLoadoutStats().GetAttributeValue(Attribute.HP);
-            SetMaxHealth(temp);
-            
+            damageTakenEvent.AddListener(gameObject.GetComponent<BerryPickupManager>().InterruptChannel);
         }
         // damageTakenEvent.AddListener(gameObject.GetComponent<BerryPickupManager>().InterruptChannel);
         audioManager = GetComponent<AudioManager>();
@@ -97,8 +95,11 @@ public class Health : NetworkBehaviour
         // GameObject.Destroy(gameObject);
     }
 
+    // Resets player health on all clients
     [Command(requiresAuthority = false)]
     public void ResetHealth() {
+        float temp  = GameManager.instance.loadout.GetLoadoutStats().GetAttributeValue(Attribute.HP);
+        SetMaxHealth(temp);
         currentHealth = maxHealth;
     }
 

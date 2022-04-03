@@ -30,7 +30,17 @@ public class HealthBar : MonoBehaviour
             float offset_current = i * lineOffset - dividerWidth;
             GameObject divider = Instantiate(dividerPrefab, transform);
             divider.transform.position -= new Vector3(offset_current, 0 , 0);
-        }    
+        }
+    }
+
+    public void SetBarColor(int whichPlayersBar) {
+        if (whichPlayersBar == 1) {
+            // If I'm player 1, set healthbar to blue
+            transform.GetChild(0).GetComponent<Image>().color = new Color(0f, 0.4f, 1f, 1f);
+        } else {
+            // If I'm player 2, set healthbar to red
+            transform.GetChild(0).GetComponent<Image>().color = new Color(0.87f, 0.05f, 0f, 1f);
+        }
     }
 
     public void SetHealth(float hp)

@@ -130,23 +130,28 @@ public class MatchManager : NetworkBehaviour {
 
     // Runs on server to instruct all clients to restart the round
     public void NewRound() {
+        Debug.Log("Starting new round!");
         ResetCountdownOpacity();
         ResetPlayerPosition();
         StartCountdown();
     }
 
+    // Return reference to my player object, relative to me
     public GameObject GetPlayer() {
         return playerRef;
     }
 
+    // Return reference to opponent's player object, relative to me
     public GameObject GetOpponent() {
         return opponentRef;
     }
 
+    // Returns what is my player number, relative to me
     public int GetPlayerNum() {
         return playerNum;
     }
 
+    // Returns what is the opponent's player number, relative to me
     public int GetOpponentNum() {
         return opponentNum;
     }
@@ -195,7 +200,9 @@ public class MatchManager : NetworkBehaviour {
 
         playerRef.GetComponent<CharacterController>().enabled = true;
 
-        // Reset player health
+        // Reset current player health on all clients
         playerRef.GetComponent<Health>().ResetHealth();
+        playerRef.GetComponent<Health>().healthBar.SetBarColor(GetPlayerNum());
+        opponentRef.GetComponent<Health>().healthBar.SetBarColor(GetOpponentNum());
     }
 }
