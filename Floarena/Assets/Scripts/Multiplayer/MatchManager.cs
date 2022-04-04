@@ -64,12 +64,14 @@ public class MatchManager : NetworkBehaviour {
 
     private void UpdateScoreboardPlayer1(int oldScore, int newScore) {
         player1ScoreText.text = newScore.ToString();
-        player1ScoreAdd.GetComponent<ScoreAdd>().StartAnim("+" + newScore.ToString());
+        int scoreChange = newScore - oldScore;
+        player1ScoreAdd.GetComponent<ScoreAdd>().StartAnim("+" + scoreChange.ToString());
     }
 
     private void UpdateScoreboardPlayer2(int oldScore, int newScore) {
         player2ScoreText.text = newScore.ToString();
-        player2ScoreAdd.GetComponent<ScoreAdd>().StartAnim("+" + newScore.ToString());
+        int scoreChange = newScore - oldScore;
+        player2ScoreAdd.GetComponent<ScoreAdd>().StartAnim("+" + scoreChange.ToString());
     }
 
     private void UpdateCountdown(int oldCount, int newCount) {

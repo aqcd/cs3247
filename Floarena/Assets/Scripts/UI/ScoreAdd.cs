@@ -18,7 +18,7 @@ public class ScoreAdd : MonoBehaviour {
 
     public void StartAnim(string scoreText) {
         text.text = scoreText;
-        FadeInCoroutine();
+        StartCoroutine(FadeInCoroutine());
     }
 
     IEnumerator FadeInCoroutine() {

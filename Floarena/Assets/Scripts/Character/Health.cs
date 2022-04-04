@@ -23,6 +23,8 @@ public class Health : NetworkBehaviour
     public GameObject dmgIndicator;
     public GameObject healIndicator;
 
+    private bool isDead = false;
+
     void Start() {
         if (isLocalPlayer) {
             damageTakenEvent.AddListener(gameObject.GetComponent<BerryPickupManager>().InterruptChannel);
@@ -65,8 +67,11 @@ public class Health : NetworkBehaviour
         currentHealth -= damage;
         audioManager.PlaySound(AudioIndex.DECREASE_HEALTH_AUDIO, transform.position);
         if (currentHealth <= 0) {
-            audioManager.PlaySound(AudioIndex.DEATH_AUDIO, transform.position);
-            StartCoroutine(StartNewRound(sourcePlayer));
+            if (!isDead) {
+                isDead = true;
+                audioManager.PlaySound(AudioIndex.DEATH_AUDIO, transform.position);
+                StartCoroutine(StartNewRound(sourcePlayer));
+            }
         }
 
         GameObject obj = Instantiate(dmgIndicator, transform.position, transform.rotation);
@@ -76,6 +81,7 @@ public class Health : NetworkBehaviour
 
     IEnumerator StartNewRound(int sourcePlayer) {
         yield return new WaitForSeconds(1f);
+        isDead = false;
         MatchManager.instance.NewRound(sourcePlayer);
     }
 
