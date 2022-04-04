@@ -1,4 +1,4 @@
-Hello! Welcome to Floarena!
+Hello! Welcome to Florarena!
 
 ## Setup
 
