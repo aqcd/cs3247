@@ -67,15 +67,16 @@ MonoBehaviour:
       m_Calls: []
   m_text: -250
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ebb05dbd16deed54db5517656ec9e46e, type: 2}
+  m_sharedMaterial: {fileID: -5811301594189397853, guid: ebb05dbd16deed54db5517656ec9e46e,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190306
-  m_fontColor: {r: 0.8867924, g: 0, b: 0, a: 1}
+    rgba: 4278196168
+  m_fontColor: {r: 0.7830189, g: 0.09079949, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -279,6 +280,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 988d916806e18b64abbab9ab8a56c690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   text: {fileID: 460492543}
   maxHeight: 2
   maxFontSize: 2

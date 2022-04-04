@@ -247,7 +247,7 @@ GameObject:
   - component: {fileID: 1225580418}
   - component: {fileID: 6270014007274492399}
   m_Layer: 0
-  m_Name: HealIndicator
+  m_Name: ScoreIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

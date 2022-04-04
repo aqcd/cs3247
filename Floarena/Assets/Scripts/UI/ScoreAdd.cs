@@ -2,29 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using Mirror;
 
-public class ShrinkingIndicator : NetworkBehaviour {
-
+public class ScoreAdd : MonoBehaviour {
     public TMP_Text text;
-    private Vector3 startPos;
-    public float maxHeight = 10f;
-    public float maxFontSize = 2f;
-    private float startFontSize;
-
-    [ClientRpc]
-    public void StartAnim(string indicatorVal) {
-        text.text = indicatorVal;
-        
-        // Start off with damage indicator being invisible
-        Color origColor = text.color;
-        origColor.a = 0;
-        text.color = origColor;
+    Vector3 startPos;
+    public float maxHeight = 3f;
+    
+    void Start() {
+        Color curColor = text.color;
+        curColor.a = 0;
+        text.color = curColor;
 
         startPos = transform.position;
-        startFontSize = text.fontSize;
+    }
 
-        StartCoroutine(FadeInCoroutine());  
+    public void StartAnim(string scoreText) {
+        text.text = scoreText;
+        FadeInCoroutine();
     }
 
     IEnumerator FadeInCoroutine() {
@@ -42,9 +36,6 @@ public class ShrinkingIndicator : NetworkBehaviour {
             // Have the prefab rise up
             transform.position = new Vector3(startPos.x, startPos.y + val * maxHeight, startPos.z + val * maxHeight);
 
-            // Have prefab's font size increase over time
-            text.fontSize = val * maxFontSize;
-
             if (val >= 0.8f) {
                 break;
             }
@@ -56,7 +47,7 @@ public class ShrinkingIndicator : NetworkBehaviour {
         // Fade out the indicator
         StartCoroutine(FadeOutCoroutine());
     }
- 
+
     IEnumerator FadeOutCoroutine() {
         float startTime = Time.time;
         float curTime = startTime;
@@ -74,6 +65,7 @@ public class ShrinkingIndicator : NetworkBehaviour {
             curTime = Time.time;
         }
 
-        Destroy(gameObject);
+        // Reset start position
+        transform.position = startPos;
     }
 }

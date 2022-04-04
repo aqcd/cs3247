@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using UnityEngine.UI;
+using TMPro;
 
 public class MatchManager : NetworkBehaviour {
     public static MatchManager instance;
@@ -19,8 +20,8 @@ public class MatchManager : NetworkBehaviour {
     private int player1Score = 0;
     [SyncVar(hook = nameof(UpdateScoreboardPlayer2))]
     private int player2Score = 0;
-    private Text player1ScoreText;
-    private Text player2ScoreText;
+    private TMP_Text player1ScoreText;
+    private TMP_Text player2ScoreText;
 
     // Countdown variables
     [SyncVar(hook = nameof(UpdateCountdown))]
@@ -28,18 +29,24 @@ public class MatchManager : NetworkBehaviour {
     private Text countdownText;
     private GameObject countdownOverlay;
 
+    private GameObject player1ScoreAdd;
+    private GameObject player2ScoreAdd;
+
     void Awake() {
         if (instance == null) {
             instance = this;
         }
 
-        player1ScoreText = transform.GetChild(0).GetChild(1).GetComponent<Text>();
-        player2ScoreText = transform.GetChild(0).GetChild(2).GetComponent<Text>();
+        player1ScoreText = transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>();
+        player2ScoreText = transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>();
         player1ScoreText.text = player1Score.ToString();
         player2ScoreText.text = player2Score.ToString();
 
         countdownText = transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<Text>();
         countdownOverlay = transform.GetChild(0).GetChild(3).gameObject;
+
+        player1ScoreAdd = transform.GetChild(0).GetChild(4).gameObject;
+        player2ScoreAdd = transform.GetChild(0).GetChild(5).gameObject;
     }
 
     private void CommandAddScore(int playerNum) {
@@ -56,10 +63,12 @@ public class MatchManager : NetworkBehaviour {
 
     private void UpdateScoreboardPlayer1(int oldScore, int newScore) {
         player1ScoreText.text = newScore.ToString();
+        player1ScoreAdd.GetComponent<ScoreAdd>().StartAnim("+" + newScore.ToString());
     }
 
     private void UpdateScoreboardPlayer2(int oldScore, int newScore) {
         player2ScoreText.text = newScore.ToString();
+        player2ScoreAdd.GetComponent<ScoreAdd>().StartAnim("+" + newScore.ToString());
     }
 
     private void UpdateCountdown(int oldCount, int newCount) {

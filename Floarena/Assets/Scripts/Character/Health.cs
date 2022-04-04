@@ -92,6 +92,10 @@ public class Health : NetworkBehaviour
         if (particleSystemManager != null) {
             particleSystemManager.PlayHeal();
         }
+
+        GameObject obj = Instantiate(healIndicator, transform.position, transform.rotation);
+        NetworkServer.Spawn(obj);
+        obj.GetComponent<ShrinkingIndicator>().StartAnim("+" + healing.ToString());
     }
 
     [Command(requiresAuthority=false)]
