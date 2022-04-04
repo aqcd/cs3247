@@ -49,12 +49,13 @@ public class MatchManager : NetworkBehaviour {
         player2ScoreAdd = transform.GetChild(0).GetChild(5).gameObject;
     }
 
-    private void CommandAddScore(int playerNum) {
+    [Command(requiresAuthority = false)]
+    public void CommandAddScore(int playerNum, int scoreToAdd) {
         Debug.Log("Server updating score");
         if (playerNum == 1) {
-            player1Score++;
+            player1Score += scoreToAdd;
         } else if (playerNum == 2) {
-            player2Score++;
+            player2Score += scoreToAdd;
         } else {
             player1Score = 0;
             player2Score = 0;
@@ -133,7 +134,7 @@ public class MatchManager : NetworkBehaviour {
     // Runs on server to instruct all clients to restart the round
     // Also updates score based on winning player
     public void NewRound(int winningPlayer) {
-        CommandAddScore(winningPlayer);
+        CommandAddScore(winningPlayer, 10);
         NewRound();
     }   
 

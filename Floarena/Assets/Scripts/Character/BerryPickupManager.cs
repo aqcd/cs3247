@@ -138,9 +138,13 @@ public class BerryPickupManager : NetworkBehaviour {
         if (isLocalPlayer) {
             activeBerry.SendMessage("Consume", MatchManager.instance.GetPlayer().GetComponent<PlayerManager>());
             audioManager.PlaySound(AudioIndex.TAKE_BERRY_AUDIO, transform.position);
+
+            Debug.Log("Giving player points!");
+            MatchManager.instance.CommandAddScore(MatchManager.instance.GetOpponentNum(), 3);
         } else {
             activeBerry.SendMessage("DestroySelf");
         }
+
         activeBerry = null;
     }
 }
