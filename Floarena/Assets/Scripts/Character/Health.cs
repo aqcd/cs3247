@@ -20,6 +20,9 @@ public class Health : NetworkBehaviour
 
     public AudioManager audioManager;
 
+    public GameObject dmgIndicator;
+    public GameObject healIndicator;
+
     void Start() {
         if (isLocalPlayer) {
             damageTakenEvent.AddListener(gameObject.GetComponent<BerryPickupManager>().InterruptChannel);
@@ -65,6 +68,10 @@ public class Health : NetworkBehaviour
             audioManager.PlaySound(AudioIndex.DEATH_AUDIO, transform.position);
             StartCoroutine(StartNewRound(sourcePlayer));
         }
+
+        GameObject obj = Instantiate(dmgIndicator, transform.position, transform.rotation);
+        NetworkServer.Spawn(obj);
+        obj.GetComponent<ShrinkingIndicator>().StartAnim("-" + damage.ToString());
     }
 
     IEnumerator StartNewRound(int sourcePlayer) {

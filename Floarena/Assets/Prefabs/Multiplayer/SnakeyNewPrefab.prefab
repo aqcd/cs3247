@@ -312,6 +312,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   audioManager: {fileID: 0}
+  dmgIndicator: {fileID: 8724809343095337402, guid: 1d4d0c82d9a721f42aacce3ef4cb1fa1,
+    type: 3}
+  healIndicator: {fileID: 8724809343095337402, guid: 7451fcad85779fa43b1d41801b72bfc2,
+    type: 3}
 --- !u!114 &5771204218330618543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -405,6 +409,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5cbe339cd1123f4f90dcffc11780b3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   ADUP: {fileID: 2132925274899100053}
   ASUP: {fileID: 8559472140617195678}
   MSUP: {fileID: 3964558356923387540}
