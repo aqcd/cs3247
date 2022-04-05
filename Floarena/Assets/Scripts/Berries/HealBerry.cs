@@ -2,6 +2,8 @@ using UnityEngine;
 public class HealBerry : MonoBehaviour, IBerry {
   private MapVisualizer mapVisualizer;
   public float healMagnitude = BerryConstants.HEAL_BERRY_MAGNITUDE;
+  [SerializeField]
+  private Canvas canvas;
   void Start()
   {
     mapVisualizer = GameObject.FindWithTag("MapVisualizer").GetComponent<MapVisualizer>();
@@ -18,5 +20,14 @@ public class HealBerry : MonoBehaviour, IBerry {
     Vector3 positionOnGrid = transform.position;
     mapVisualizer.SpawnPickupItem(positionOnGrid);
     Destroy(gameObject);
+  }
+  public void EnableCanvas()
+  {
+    canvas.enabled = true;
+  }
+
+  public void DisableCanvas()
+  {
+    canvas.enabled = false;
   }
 }
