@@ -20,4 +20,7 @@ public static class SkillConstants
     public static float VINE_PULL_RANGE = 8.0f;
     public static float VINE_PULL_PROJECTILE_SPEED = 10.0f;
     public static float VINE_PULL_COOLDOWN = 10.0f;
+
+    public static float INVUL_DURATION = 3.0f;
+    public static float INVUL_COOLDOWN = 12.0f;
 }

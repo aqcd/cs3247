@@ -15,6 +15,8 @@ public class Health : NetworkBehaviour
     public bool hasBar = true;
     public HealthBar healthBar;
     public UnityEvent damageTakenEvent;
+
+    public bool isInvulnerable = false;
     
     private ParticleSystemManager particleSystemManager;
 
@@ -53,9 +55,12 @@ public class Health : NetworkBehaviour
     }
 
     public void TakeDamage(float damage) {
-        CmdTakeDamage(damage, MatchManager.instance.GetOpponentNum());
-        if (particleSystemManager != null) {
-            particleSystemManager.PlayDMG();
+        if (!isInvulnerable)
+        {
+            CmdTakeDamage(damage, MatchManager.instance.GetOpponentNum());
+            if (particleSystemManager != null) {
+                particleSystemManager.PlayDMG();
+            }
         }
     }
 
@@ -87,6 +92,16 @@ public class Health : NetworkBehaviour
         if (particleSystemManager != null) {
             particleSystemManager.PlayHeal();
         }
+    }
+
+    public void BecomeInvulnerable(float duration)
+    {
+        isInvulnerable = true;
+    }
+
+    public void EndInvulnerable()
+    {
+        isInvulnerable = false;
     }
 
     [Command(requiresAuthority=false)]
