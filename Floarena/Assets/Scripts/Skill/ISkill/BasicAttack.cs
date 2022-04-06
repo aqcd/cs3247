@@ -34,6 +34,7 @@ public class BasicAttack : MonoBehaviour, ISkill
     public void Execute(Vector3 skillPosition) {
         // Set the boolean to play attack animation to true.
         player.GetComponent<Animator>().SetBool("BasicAttack", true);
+        player.GetComponent<Animator>().SetFloat("ASModifier", baseAttackSpeed + (1.0f - attackCooldown));
         StartCoroutine(ExecuteHit(skillPosition));
     }
 
