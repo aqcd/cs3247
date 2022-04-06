@@ -19,7 +19,6 @@ public class MatchManager : NetworkBehaviour {
 
     
     // Player score variables and references
-    public int maxScore = 50;
     [SyncVar(hook = nameof(UpdateScoreboardPlayer1))]
     private int player1Score = 0;
     [SyncVar(hook = nameof(UpdateScoreboardPlayer2))]
@@ -39,16 +38,56 @@ public class MatchManager : NetworkBehaviour {
 
 
     // Overall match state variables and references
+    public int maxScore = 20; //50;
     public GameObject winScreen;
     public GameObject lossScreen;
     public TMP_Text timerText;
-    // [SyncVar(hook = nameof())]
-    // private int matchTime;
-
+    public int matchTotalTime = 30; //123;
+    [SyncVar(hook = nameof(UpdateMatchTime))]
+    private int matchTime;
 
     void Awake() {
         if (instance == null) {
             instance = this;
+        }
+    }
+
+    [Command(requiresAuthority = false)]
+    public void StartMatch() {
+        StartCoroutine(MatchTimerCoroutine(matchTotalTime));
+    }
+
+    // Runs on the server
+    IEnumerator MatchTimerCoroutine(int startTime) {
+        matchTime = startTime;
+        
+        while (matchTime >= 0) {
+            yield return new WaitForSeconds(1f);
+            matchTime--;
+        }
+
+        // Game will end once coroutine reaches here
+        if (player1Score > player2Score) {
+            ShowEndScreen(GameManager.instance.player1Conn, true);
+            ShowEndScreen(GameManager.instance.player2Conn, false);
+        } else if (player1Score < player2Score) {
+            ShowEndScreen(GameManager.instance.player1Conn, false);
+            ShowEndScreen(GameManager.instance.player2Conn, true);
+        } else {
+            // Handle draws one day lol
+            Debug.Log("It's a draw!");
+        }
+    }   
+
+    // Hook that triggers locally whenever server updates match time
+    private void UpdateMatchTime(int oldTime, int newTime) {
+        if (newTime != -1) {
+            timerText.text = newTime.ToString();
+            if (newTime <= 30) {
+                timerText.color = new Color(1, 0, 0, 1);
+            }
+        } else {
+            timerText.text = "END";
         }
     }
 
@@ -170,7 +209,7 @@ public class MatchManager : NetworkBehaviour {
 
     // Runs independently on each client to spawn the map and place the player in the approriate location
     [TargetRpc]
-    public void InitMatch(NetworkConnection target, Vector3 position, int mapSeed, int localPlayerNum, int opponentPlayerNum) {
+    public void InitPlayer(NetworkConnection target, Vector3 position, int mapSeed, int localPlayerNum, int opponentPlayerNum) {
         playerNum = localPlayerNum;
         opponentNum = opponentPlayerNum;
         localPlayerSpawnPos = position;

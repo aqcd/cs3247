@@ -128,8 +128,8 @@ public class GameManager : NetworkManager {
 
             // Send initial spawn positions and map seed to MatchManager via a TargetRpc
             int mapSeed = Random.Range(int.MinValue, int.MaxValue);
-            MatchManager.instance.InitMatch(player1Conn, player2SpawnPos, mapSeed, 2, 1);
-            MatchManager.instance.InitMatch(player2Conn, player1SpawnPos, mapSeed, 1, 2);
+            MatchManager.instance.InitPlayer(player1Conn, player2SpawnPos, mapSeed, 2, 1);
+            MatchManager.instance.InitPlayer(player2Conn, player1SpawnPos, mapSeed, 1, 2);
 
             // Spawn SkillManagers on both clients
             GameObject skillManager = Instantiate(SkillManagerPrefab);
@@ -140,6 +140,8 @@ public class GameManager : NetworkManager {
             // Spawn both players
             MatchManager.instance.RespawnPlayer(player1Conn);
             MatchManager.instance.RespawnPlayer(player2Conn);
+
+            MatchManager.instance.StartMatch();
         }
     }
 

@@ -395,8 +395,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 557.8, y: -10}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 900, y: -10}
+  m_SizeDelta: {x: 100, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &4994323473164137934
 CanvasRenderer:
@@ -426,7 +426,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: 999
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ebb05dbd16deed54db5517656ec9e46e, type: 2}
   m_sharedMaterial: {fileID: -5811301594189397853, guid: ebb05dbd16deed54db5517656ec9e46e,
@@ -436,8 +436,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278236965
-  m_fontColor: {r: 0.14509805, g: 0.7176471, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -461,7 +461,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -887,7 +887,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 338.7, y: -10}
+  m_AnchoredPosition: {x: 740, y: -10}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &3399912093309209889
@@ -928,8 +928,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278236965
-  m_fontColor: {r: 0.14509805, g: 0.7176471, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1312,16 +1312,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  maxScore: 1
   player1ScoreText: {fileID: 7881433160663351026}
   player2ScoreText: {fileID: 7596599926966264806}
   player1ScoreAdd: {fileID: 1569695695394292895}
   player2ScoreAdd: {fileID: 2952266468993157824}
   countdownText: {fileID: 847650569835740333}
   countdownOverlay: {fileID: 370839507739557857}
+  maxScore: 11
   winScreen: {fileID: 8754350329150748952}
   lossScreen: {fileID: 4264277995254223338}
   timerText: {fileID: 3123172320090728714}
+  matchTotalTime: 30
 --- !u!1 &8754350329150748952
 GameObject:
   m_ObjectHideFlags: 0
