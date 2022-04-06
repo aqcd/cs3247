@@ -82,9 +82,11 @@ public class BerryPickupManager : NetworkBehaviour {
 
     private void OnTriggerExit(Collider collider)
     {
-        if (collider.gameObject.CompareTag("Berry") && collider.gameObject == activeBerry) {
-            activeBerry.SendMessage("DisableCanvas");
-            activeBerry = null;
+        if (collider.gameObject.CompareTag("Berry")) {
+            collider.gameObject.SendMessage("DisableCanvas");
+            if (collider.gameObject == activeBerry) {
+                activeBerry = null;
+            }
             if (isLocalPlayer) {
                 channelButton.DisableButton();
             }
@@ -136,6 +138,7 @@ public class BerryPickupManager : NetworkBehaviour {
             return;
         }
         if (isLocalPlayer) {
+            activeBerry.SendMessage("DisableCanvas");
             activeBerry.SendMessage("Consume", MatchManager.instance.GetPlayer().GetComponent<PlayerManager>());
             audioManager.PlaySound(AudioIndex.TAKE_BERRY_AUDIO, transform.position);
 
