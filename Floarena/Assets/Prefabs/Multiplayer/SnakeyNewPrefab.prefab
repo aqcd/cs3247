@@ -312,6 +312,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   audioManager: {fileID: 0}
+  dmgIndicator: {fileID: 8724809343095337402, guid: 1d4d0c82d9a721f42aacce3ef4cb1fa1,
+    type: 3}
+  healIndicator: {fileID: 8724809343095337402, guid: 7451fcad85779fa43b1d41801b72bfc2,
+    type: 3}
 --- !u!114 &5771204218330618543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -405,6 +409,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5cbe339cd1123f4f90dcffc11780b3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   ADUP: {fileID: 2132925274899100053}
   ASUP: {fileID: 8559472140617195678}
   MSUP: {fileID: 3964558356923387540}
@@ -1054,7 +1060,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7263586116992862398}
-  m_LocalRotation: {x: -0, y: 0.258819, z: 0.9659259, w: 0}
+  m_LocalRotation: {x: 0, y: 0.38268343, z: 0.92387956, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: -0.03}
   m_LocalScale: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
   m_Children:
@@ -1062,7 +1068,7 @@ RectTransform:
   - {fileID: 4064491033160151092}
   m_Father: {fileID: 127555093809033888}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: -30, y: 0, z: 180}
+  m_LocalEulerAnglesHint: {x: -45, y: 0, z: 180}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 1}
@@ -1457,6 +1463,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4643982001797675519}
     m_Modifications:
+    - target: {fileID: 3573400752131676297, guid: 23384a39d1ba7a7499512386a0ceb520,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3573400752131676297, guid: 23384a39d1ba7a7499512386a0ceb520,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.051609326
+      objectReference: {fileID: 0}
+    - target: {fileID: 3573400752131676297, guid: 23384a39d1ba7a7499512386a0ceb520,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.8773585
+      objectReference: {fileID: 0}
     - target: {fileID: 3616509788038618004, guid: 23384a39d1ba7a7499512386a0ceb520,
         type: 3}
       propertyPath: m_Pivot.x
