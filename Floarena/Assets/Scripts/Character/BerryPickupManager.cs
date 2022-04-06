@@ -14,10 +14,13 @@ public class BerryPickupManager : NetworkBehaviour {
 
     private AudioManager audioManager;
 
+    private Animator _animator;
+
     void Start()
     {
         berryCollider.radius = BerryConstants.PICKUP_RANGE;
         audioManager = GetComponent<AudioManager>();
+        _animator = GetComponent<Animator>();
         if (isLocalPlayer) {
             GameObject channel = GameObject.Find("ChannelButton");
             channelButton = channel.GetComponent<ChannelButtonController>();
@@ -64,6 +67,9 @@ public class BerryPickupManager : NetworkBehaviour {
                 closestBerry = FindClosestBerry(activeBerry, collider.gameObject);
             }
             if (closestBerry != activeBerry) {
+                if (activeBerry != null) {
+                    activeBerry.SendMessage("DisableCanvas");
+                }
                 activeBerry = closestBerry;
                 if (isLocalPlayer) {
                     channelButton.EnableButton();
@@ -82,11 +88,13 @@ public class BerryPickupManager : NetworkBehaviour {
 
     private void OnTriggerExit(Collider collider)
     {
-        if (collider.gameObject.CompareTag("Berry") && collider.gameObject == activeBerry) {
-            activeBerry.SendMessage("DisableCanvas");
-            activeBerry = null;
-            if (isLocalPlayer) {
+        if (collider.gameObject.CompareTag("Berry")) {
+            collider.gameObject.SendMessage("DisableCanvas");
+            if (collider.gameObject == activeBerry) {
+                activeBerry = null;
+                if (isLocalPlayer) {
                 channelButton.DisableButton();
+            }
             }
         }
     }
@@ -99,6 +107,7 @@ public class BerryPickupManager : NetworkBehaviour {
     public void BeginChannel()
     {
         isChanneling = true;
+        _animator.SetBool("isPicking", true);
         RpcEnableBar();
     }
 
@@ -108,12 +117,14 @@ public class BerryPickupManager : NetworkBehaviour {
         if (isChanneling) {
             Debug.Log("Interrupting");
             isChanneling = false;
+            _animator.SetBool("isPicking", false);
             RpcDisableBar();
         }
     }
     [Command]
     private void ResolveChannel() {
         isChanneling = false;
+        _animator.SetBool("isPicking", false);
         RpcConsumeBerry();
         RpcDisableBar();
     }
@@ -136,11 +147,16 @@ public class BerryPickupManager : NetworkBehaviour {
             return;
         }
         if (isLocalPlayer) {
+            activeBerry.SendMessage("DisableCanvas");
             activeBerry.SendMessage("Consume", MatchManager.instance.GetPlayer().GetComponent<PlayerManager>());
             audioManager.PlaySound(AudioIndex.TAKE_BERRY_AUDIO, transform.position);
+
+            Debug.Log("Giving player points!");
+            MatchManager.instance.CommandAddScore(MatchManager.instance.GetOpponentNum(), 3);
         } else {
             activeBerry.SendMessage("DestroySelf");
         }
+
         activeBerry = null;
     }
 }

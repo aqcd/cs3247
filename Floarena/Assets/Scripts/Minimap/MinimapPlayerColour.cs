@@ -17,26 +17,17 @@ public class MinimapPlayerColour : MonoBehaviour
     }
 
     void Update() {
-        if (set) { return; }
-        set = SetMaterials();
+        // if (set) { return; }
+        // set = SetMaterials();
     }
 
-    private bool SetMaterials() {
-        GameObject parent = gameObject.transform.parent.gameObject;
-        GameObject playerRef = MatchManager.instance.GetPlayer();
-        if (playerRef == null) { return false; }
-
-        Debug.Log("MPC: " + parent);
-        Debug.Log("MPC: " + playerRef);
-
+    public void SetMaterials(int playerNum) {
         Renderer r = gameObject.GetComponent<Renderer>();
 
-        if (parent == playerRef) {
+        if (playerNum == 1) {
             r.material = playerMaterial;
         } else {
             r.material = opponentMaterial;
         }
-
-        return true;
     }
 }

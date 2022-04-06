@@ -22,11 +22,14 @@ public class Health : NetworkBehaviour
 
     public AudioManager audioManager;
 
+    public GameObject dmgIndicator;
+    public GameObject healIndicator;
+
+    private bool isDead = false;
+
     void Start() {
         if (isLocalPlayer) {
-            float temp  = GameManager.instance.loadout.GetLoadoutStats().GetAttributeValue(Attribute.HP);
-            SetMaxHealth(temp);
-            
+            damageTakenEvent.AddListener(gameObject.GetComponent<BerryPickupManager>().InterruptChannel);
         }
         // damageTakenEvent.AddListener(gameObject.GetComponent<BerryPickupManager>().InterruptChannel);
         audioManager = GetComponent<AudioManager>();
@@ -69,13 +72,21 @@ public class Health : NetworkBehaviour
         currentHealth -= damage;
         audioManager.PlaySound(AudioIndex.DECREASE_HEALTH_AUDIO, transform.position);
         if (currentHealth <= 0) {
-            audioManager.PlaySound(AudioIndex.DEATH_AUDIO, transform.position);
-            StartCoroutine(StartNewRound(sourcePlayer));
+            if (!isDead) {
+                isDead = true;
+                audioManager.PlaySound(AudioIndex.DEATH_AUDIO, transform.position);
+                StartCoroutine(StartNewRound(sourcePlayer));
+            }
         }
+
+        GameObject obj = Instantiate(dmgIndicator, transform.position, transform.rotation);
+        NetworkServer.Spawn(obj);
+        obj.GetComponent<ShrinkingIndicator>().StartAnim("-" + damage.ToString());
     }
 
     IEnumerator StartNewRound(int sourcePlayer) {
         yield return new WaitForSeconds(1f);
+        isDead = false;
         MatchManager.instance.NewRound(sourcePlayer);
     }
 
@@ -92,6 +103,10 @@ public class Health : NetworkBehaviour
         if (particleSystemManager != null) {
             particleSystemManager.PlayHeal();
         }
+
+        GameObject obj = Instantiate(healIndicator, transform.position, transform.rotation);
+        NetworkServer.Spawn(obj);
+        obj.GetComponent<ShrinkingIndicator>().StartAnim("+" + healing.ToString());
     }
 
     public void BecomeInvulnerable(float duration)
@@ -119,8 +134,11 @@ public class Health : NetworkBehaviour
         // GameObject.Destroy(gameObject);
     }
 
+    // Resets player health on all clients
     [Command(requiresAuthority = false)]
     public void ResetHealth() {
+        float temp  = GameManager.instance.loadout.GetLoadoutStats().GetAttributeValue(Attribute.HP);
+        SetMaxHealth(temp);
         currentHealth = maxHealth;
     }
 

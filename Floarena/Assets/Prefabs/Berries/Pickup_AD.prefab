@@ -255,7 +255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73387ba3e9c847f4784f040189296df8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heightDelta: 0.7
+  heightDelta: 0.3
   heightSpeed: 2
   angleSpeed: 1
 --- !u!1001 &5550149107630864805
@@ -398,7 +398,7 @@ PrefabInstance:
     - target: {fileID: 5623510828777064620, guid: 6e0946e223e28b7479bfefcfa1f9b31c,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7394934730306310374, guid: 6e0946e223e28b7479bfefcfa1f9b31c,
         type: 3}
