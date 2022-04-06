@@ -59,16 +59,31 @@ public class BerryPickupManager : NetworkBehaviour {
     private void OnTriggerStay(Collider collider)
     {
         if (collider.gameObject.CompareTag("Berry")) {
-            activeBerry = collider.gameObject;
-            if (isLocalPlayer) {
-                channelButton.EnableButton();
+            GameObject closestBerry = collider.gameObject;
+            if (activeBerry != null && activeBerry != closestBerry) {
+                closestBerry = FindClosestBerry(activeBerry, collider.gameObject);
+            }
+            if (closestBerry != activeBerry) {
+                activeBerry = closestBerry;
+                if (isLocalPlayer) {
+                    channelButton.EnableButton();
+                    activeBerry.SendMessage("EnableCanvas");
+                }
             }
         }
     }
 
+    private GameObject FindClosestBerry(GameObject berry1, GameObject berry2)
+    {
+        float sqrdist1 = (berry1.transform.position - transform.position).sqrMagnitude;
+        float sqrdist2 = (berry2.transform.position - transform.position).sqrMagnitude;
+        return sqrdist1 <= sqrdist2 ? berry1 : berry2;
+    }
+
     private void OnTriggerExit(Collider collider)
     {
-        if (collider.gameObject.CompareTag("Berry")) {
+        if (collider.gameObject.CompareTag("Berry") && collider.gameObject == activeBerry) {
+            activeBerry.SendMessage("DisableCanvas");
             activeBerry = null;
             if (isLocalPlayer) {
                 channelButton.DisableButton();
