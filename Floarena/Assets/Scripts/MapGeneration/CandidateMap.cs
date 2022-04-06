@@ -130,6 +130,10 @@ public class CandidateMap {
             int halfLength = (int)(0.5 * grid.Length);
             position = fixedStructure.Position;
             for (int i = 0; i < halfLength; i++) {
+                if ((i >= 6 && i <= 8) || (i >= 22 && i <= 24)) { // gap in diagonal wall
+                    position += new Vector3(1, 0, -1);
+                    continue;
+                }
                 AddWall(position + new Vector3(1, 0, 0)); // right
                 AddWall(position + new Vector3(2, 0, 0)); // right
                 position = position + new Vector3(1, 0, 0);
@@ -140,12 +144,20 @@ public class CandidateMap {
             int thirdLength = (int)(0.3 * grid.Length);
             position = fixedStructure.Position;
             for (int i = 0; i < thirdLength; i++) {
+                if (i >= 5 && i <= 7) { // gap
+                    position += new Vector3(1, 0, 0);
+                    continue;
+                }
                 AddWall(position + new Vector3(1, 0, 0)); // right
                 AddWall(position + new Vector3(1, 0, 1)); // right & up
                 position = position + new Vector3(1, 0, 0);
             }
             position = fixedStructure.Position;
             for (int j = 0; j < thirdLength; j++) {
+                if (j >= 5 && j <= 7) { // gap
+                    position += new Vector3(0, 0, 1);
+                    continue;
+                }
                 AddWall(position + new Vector3(0, 0, 1)); // up
                 AddWall(position + new Vector3(1, 0, 1)); // up & right
                 position = position + new Vector3(0, 0, 1);
@@ -155,12 +167,20 @@ public class CandidateMap {
             position = fixedStructure.Position;
             AddWall(position + new Vector3(0, 0, 1));
             for (int i = 0; i < thirdLength; i++) {
+                if (i >= 5 && i <= 7) { // gap
+                    position += new Vector3(-1, 0, 0);
+                    continue;
+                }
                 AddWall(position + new Vector3(-1, 0, 0)); // left
                 AddWall(position + new Vector3(-1, 0, 1)); // left & up
                 position = position + new Vector3(-1, 0, 0);
             }
             position = fixedStructure.Position;
             for (int j = 0; j < thirdLength; j++) {
+                if (j >= 5 && j <= 7) { // gap
+                    position += new Vector3(0, 0, -1);
+                    continue;
+                }
                 AddWall(position + new Vector3(0, 0, -1)); // down
                 AddWall(position + new Vector3(-1, 0, -1)); // down & left
                 position = position + new Vector3(0, 0, -1);

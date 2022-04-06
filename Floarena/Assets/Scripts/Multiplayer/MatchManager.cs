@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using UnityEngine.UI;
+using TMPro;
 
 public class MatchManager : NetworkBehaviour {
     public static MatchManager instance;
@@ -19,8 +20,8 @@ public class MatchManager : NetworkBehaviour {
     private int player1Score = 0;
     [SyncVar(hook = nameof(UpdateScoreboardPlayer2))]
     private int player2Score = 0;
-    private Text player1ScoreText;
-    private Text player2ScoreText;
+    private TMP_Text player1ScoreText;
+    private TMP_Text player2ScoreText;
 
     // Countdown variables
     [SyncVar(hook = nameof(UpdateCountdown))]
@@ -28,26 +29,33 @@ public class MatchManager : NetworkBehaviour {
     private Text countdownText;
     private GameObject countdownOverlay;
 
+    private GameObject player1ScoreAdd;
+    private GameObject player2ScoreAdd;
+
     void Awake() {
         if (instance == null) {
             instance = this;
         }
 
-        player1ScoreText = transform.GetChild(0).GetChild(0).GetComponent<Text>();
-        player2ScoreText = transform.GetChild(0).GetChild(2).GetComponent<Text>();
+        player1ScoreText = transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>();
+        player2ScoreText = transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>();
         player1ScoreText.text = player1Score.ToString();
         player2ScoreText.text = player2Score.ToString();
 
         countdownText = transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<Text>();
         countdownOverlay = transform.GetChild(0).GetChild(3).gameObject;
+
+        player1ScoreAdd = transform.GetChild(0).GetChild(4).gameObject;
+        player2ScoreAdd = transform.GetChild(0).GetChild(5).gameObject;
     }
 
-    private void CommandAddScore(int playerNum) {
+    [Command(requiresAuthority = false)]
+    public void CommandAddScore(int playerNum, int scoreToAdd) {
         Debug.Log("Server updating score");
         if (playerNum == 1) {
-            player1Score++;
+            player1Score += scoreToAdd;
         } else if (playerNum == 2) {
-            player2Score++;
+            player2Score += scoreToAdd;
         } else {
             player1Score = 0;
             player2Score = 0;
@@ -56,10 +64,14 @@ public class MatchManager : NetworkBehaviour {
 
     private void UpdateScoreboardPlayer1(int oldScore, int newScore) {
         player1ScoreText.text = newScore.ToString();
+        int scoreChange = newScore - oldScore;
+        player1ScoreAdd.GetComponent<ScoreAdd>().StartAnim("+" + scoreChange.ToString());
     }
 
     private void UpdateScoreboardPlayer2(int oldScore, int newScore) {
         player2ScoreText.text = newScore.ToString();
+        int scoreChange = newScore - oldScore;
+        player2ScoreAdd.GetComponent<ScoreAdd>().StartAnim("+" + scoreChange.ToString());
     }
 
     private void UpdateCountdown(int oldCount, int newCount) {
@@ -124,29 +136,34 @@ public class MatchManager : NetworkBehaviour {
     // Runs on server to instruct all clients to restart the round
     // Also updates score based on winning player
     public void NewRound(int winningPlayer) {
-        CommandAddScore(winningPlayer);
+        CommandAddScore(winningPlayer, 10);
         NewRound();
     }   
 
     // Runs on server to instruct all clients to restart the round
     public void NewRound() {
+        Debug.Log("Starting new round!");
         ResetCountdownOpacity();
         ResetPlayerPosition();
         StartCountdown();
     }
 
+    // Return reference to my player object, relative to me
     public GameObject GetPlayer() {
         return playerRef;
     }
 
+    // Return reference to opponent's player object, relative to me
     public GameObject GetOpponent() {
         return opponentRef;
     }
 
+    // Returns what is my player number, relative to me
     public int GetPlayerNum() {
         return playerNum;
     }
 
+    // Returns what is the opponent's player number, relative to me
     public int GetOpponentNum() {
         return opponentNum;
     }
@@ -195,7 +212,11 @@ public class MatchManager : NetworkBehaviour {
 
         playerRef.GetComponent<CharacterController>().enabled = true;
 
-        // Reset player health
+        // Reset current player health on all clients
         playerRef.GetComponent<Health>().ResetHealth();
+        playerRef.GetComponent<Health>().healthBar.SetBarColor(GetPlayerNum());
+        opponentRef.GetComponent<Health>().healthBar.SetBarColor(GetOpponentNum());
+        playerRef.GetComponentInChildren<MinimapPlayerColour>().SetMaterials(GetPlayerNum());
+        opponentRef.GetComponentInChildren<MinimapPlayerColour>().SetMaterials(GetOpponentNum());
     }
 }

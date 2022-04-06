@@ -9,6 +9,9 @@ TagManager:
   - PlayerCamera
   - Brush
   - HealthConsumable
+  - MapVisualizer
+  - Berry
+  - SkillJoystick
   layers:
   - Default
   - TransparentFX
@@ -17,7 +20,7 @@ TagManager:
   - Water
   - UI
   - Minimap
-  - 
+  - Berries
   - 
   - 
   - 

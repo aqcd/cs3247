@@ -402,7 +402,7 @@ MonoBehaviour:
   liGoSpawn:
   - {fileID: 3628741095879785448, guid: a7be7db179bc75c43bb018d4b0005758, type: 3}
   - {fileID: 3628741095879785448, guid: a232551061eff204988ad9ba3c29dd74, type: 3}
-  wallPrefab: {fileID: 1507879402583065680, guid: f5afe6ece1be7aa4f80b85d6a40fcc2a,
+  wallPrefab: {fileID: 8689998506251213869, guid: f632e1753dfa6b244a289951167135d0,
     type: 3}
   brushPrefab: {fileID: 8689998506251213869, guid: 5866e83bd853b59439b4555bee7fd699,
     type: 3}

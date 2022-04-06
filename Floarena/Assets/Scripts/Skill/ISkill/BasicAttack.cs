@@ -8,23 +8,33 @@ public class BasicAttack : MonoBehaviour, ISkill
     private GameObject opponent;
     private float attackDamage;
     private float attackRange;
+    private float baseAttackSpeed;
     private float attackCooldown;
 
+    private PlayerManager playerManager;
     private float timeToAttack = 0.0f;
 
     void Awake()
     {
         player = MatchManager.instance.GetPlayer();
+        playerManager = player.GetComponent<PlayerManager>();
         // get attributes from loadout and calculate attack stats
         PlayerStats stats = GameManager.instance.loadout.GetLoadoutStats();
         attackDamage = stats.GetAttributeValue(Attribute.AD);
         attackRange = stats.GetAttributeValue(Attribute.AR);
-        attackCooldown = 1/stats.GetAttributeValue(Attribute.AS);
+        baseAttackSpeed = stats.GetAttributeValue(Attribute.AS);
+        attackCooldown = 1/baseAttackSpeed;
+    }
+
+    void Update()
+    {
+        attackCooldown = 1/(baseAttackSpeed + playerManager.GetAttributeBuff(Attribute.AS));
     }
 
     public void Execute(Vector3 skillPosition) {
         // Set the boolean to play attack animation to true.
         player.GetComponent<Animator>().SetBool("BasicAttack", true);
+        player.GetComponent<Animator>().SetFloat("ASModifier", baseAttackSpeed + (1.0f - attackCooldown));
         StartCoroutine(ExecuteHit(skillPosition));
     }
 
@@ -62,7 +72,8 @@ public class BasicAttack : MonoBehaviour, ISkill
             }
 
             if (bestHit != null) {
-                bestHit.SendMessage("TakeDamage", attackDamage);
+                float damage = attackDamage + playerManager.GetAttributeBuff(Attribute.AD);
+                bestHit.SendMessage("TakeDamage", damage);
             }
             
         }

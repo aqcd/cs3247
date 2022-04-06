@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1507609531813000877}
   - component: {fileID: 7856570985895445731}
   - component: {fileID: 8808896622348135610}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Circle Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 8938895677353439153}
   - component: {fileID: 3554307387717151468}
   - component: {fileID: 5027294291330967083}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Indicator Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 6181091150607965127}
   - component: {fileID: 6454536212506107146}
   - component: {fileID: 3517365437479573124}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Indicator Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 5511484844532913072}
   - component: {fileID: 7266020316195834874}
   - component: {fileID: 3177509062848665928}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Circle Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -362,7 +362,7 @@ GameObject:
   - component: {fileID: 229107507663786639}
   - component: {fileID: 6360938804715809176}
   - component: {fileID: 6046970006467300649}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Skillshot Head Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -461,7 +461,7 @@ GameObject:
   - component: {fileID: 2641622732322216839}
   - component: {fileID: 7067524554880121774}
   - component: {fileID: 6863888277315174806}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Skillshot Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -536,7 +536,7 @@ GameObject:
   - component: {fileID: 3274528964641387846}
   - component: {fileID: 9145491269670453347}
   - component: {fileID: 9171186464412292244}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Skillshot Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -612,7 +612,7 @@ GameObject:
   - component: {fileID: 3523846515745499388}
   - component: {fileID: 8611079099138305732}
   - component: {fileID: 4413075953682284449}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Skillshot Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -712,7 +712,7 @@ GameObject:
   - component: {fileID: 3515436880179735625}
   - component: {fileID: 1188836000976958366}
   - component: {fileID: 3776239201506954922}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: AbilityCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
