@@ -64,6 +64,9 @@ public class BerryPickupManager : NetworkBehaviour {
                 closestBerry = FindClosestBerry(activeBerry, collider.gameObject);
             }
             if (closestBerry != activeBerry) {
+                if (activeBerry != null) {
+                    activeBerry.SendMessage("DisableCanvas");
+                }
                 activeBerry = closestBerry;
                 if (isLocalPlayer) {
                     channelButton.EnableButton();
@@ -86,9 +89,9 @@ public class BerryPickupManager : NetworkBehaviour {
             collider.gameObject.SendMessage("DisableCanvas");
             if (collider.gameObject == activeBerry) {
                 activeBerry = null;
-            }
-            if (isLocalPlayer) {
+                if (isLocalPlayer) {
                 channelButton.DisableButton();
+            }
             }
         }
     }
