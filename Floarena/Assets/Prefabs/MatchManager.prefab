@@ -31,7 +31,7 @@ RectTransform:
   m_Children:
   - {fileID: 5811141921315560405}
   m_Father: {fileID: 5123179235871792082}
-  m_RootOrder: 7
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1018,12 +1018,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5123179235871792082}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1024, y: 1024}
+  m_SizeDelta: {x: 2457.6, y: 1228.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4157107035359739855
 CanvasRenderer:
@@ -1176,9 +1176,9 @@ RectTransform:
   - {fileID: 3349079040038610146}
   - {fileID: 6050795652368349563}
   - {fileID: 6486835135785972977}
-  - {fileID: 424547896765329108}
   - {fileID: 4744735505856042011}
   - {fileID: 1696014359313518917}
+  - {fileID: 424547896765329108}
   m_Father: {fileID: 7370047323525045882}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1312,12 +1312,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  maxScore: 1
   player1ScoreText: {fileID: 7881433160663351026}
   player2ScoreText: {fileID: 7596599926966264806}
-  countdownText: {fileID: 847650569835740333}
-  countdownOverlay: {fileID: 370839507739557857}
   player1ScoreAdd: {fileID: 1569695695394292895}
   player2ScoreAdd: {fileID: 2952266468993157824}
+  countdownText: {fileID: 847650569835740333}
+  countdownOverlay: {fileID: 370839507739557857}
   winScreen: {fileID: 8754350329150748952}
   lossScreen: {fileID: 4264277995254223338}
   timerText: {fileID: 3123172320090728714}
@@ -1351,12 +1352,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5123179235871792082}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1024, y: 1024}
+  m_SizeDelta: {x: 2457.6, y: 1228.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6902665874057253522
 CanvasRenderer:

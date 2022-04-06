@@ -36,9 +36,6 @@ public class Health : NetworkBehaviour
         Debug.Log("HP: " + particleSystemManager);
     }
 
-    void Update() {
-    }
-
     // Hook to currentHealth SyncVar
     void UpdateHealth(float oldHealth, float newHealth) {
         if (newHealth < oldHealth) {

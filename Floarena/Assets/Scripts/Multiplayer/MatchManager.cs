@@ -19,6 +19,7 @@ public class MatchManager : NetworkBehaviour {
 
     
     // Player score variables and references
+    public int maxScore = 50;
     [SyncVar(hook = nameof(UpdateScoreboardPlayer1))]
     private int player1Score = 0;
     [SyncVar(hook = nameof(UpdateScoreboardPlayer2))]
@@ -56,8 +57,22 @@ public class MatchManager : NetworkBehaviour {
         Debug.Log("Server updating score");
         if (playerNum == 1) {
             player1Score += scoreToAdd;
+
+            // Handle end-game if score is >= 50
+            if (player1Score >= maxScore) {
+                ShowEndScreen(GameManager.instance.player1Conn, true);
+                ShowEndScreen(GameManager.instance.player2Conn, false);
+            }
+
         } else if (playerNum == 2) {
             player2Score += scoreToAdd;
+
+            // Handle end-game if score is >= 50
+            if (player2Score >= maxScore) {
+                ShowEndScreen(GameManager.instance.player1Conn, false);
+                ShowEndScreen(GameManager.instance.player2Conn, true);
+            }
+            
         } else {
             player1Score = 0;
             player2Score = 0;
@@ -88,9 +103,6 @@ public class MatchManager : NetworkBehaviour {
         }
         countdownText.text = "Start!";
 
-        // 
-        // playerRef.SetActive(true);
-
         // Once countdown has ended, tell clients to fade out the countdown
         // text and panel
         StartCoroutine(FadeoutCountdownCoroutine());
@@ -119,7 +131,6 @@ public class MatchManager : NetworkBehaviour {
     }
 
     private void ResetCountdown() {
-        // playerRef.SetActive(false);
         countdownOverlay.SetActive(true);
         SetCountdownOpacity(0.7f);
         StartCoroutine(CountdownCoroutine(3));
@@ -217,19 +228,71 @@ public class MatchManager : NetworkBehaviour {
 
         ResetCountdown();
     }
-    // [Command(requiresAuthority = false)]
-    // private void CmdResetPlayerPosition(int playerNumToReset) {
-    //     RpcResetPlayerPosition(playerNumToReset);
-    // }
-    // [ClientRpc]
-    // private void RpcResetPlayerPosition(int playerNumToReset) {
-    //     if (playerNumToReset == playerNum) {
-            
-    //     } else if (playerNumToReset == opponentNum) {
-    //         opponentRef.transform.position = 
-    //     } else {
-    //         throw new System.Exception("Unknown player's position trying to be reset!");
-    //     }
+
+    [TargetRpc]
+    private void ShowEndScreen(NetworkConnection target, bool didWin) {
+        GameObject endScreen;
+        if (didWin) {
+            winScreen.SetActive(true);
+            endScreen = winScreen;
+        } else {
+            lossScreen.SetActive(true);
+            endScreen = lossScreen;
+        }
         
-    // }
+        Color color = endScreen.GetComponent<RawImage>().color;
+        color.a = 0;
+        endScreen.GetComponent<RawImage>().color = color;
+        endScreen.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+        StartCoroutine(EndScreenCoroutine(endScreen));
+    }
+
+    // Screen takes 1 second to pop out and fade in
+    IEnumerator EndScreenCoroutine(GameObject endScreen) {
+        Color color = endScreen.GetComponent<RawImage>().color;
+        Debug.Log(color);
+
+        while (color.a < 1) {
+            color.a += 0.1f;
+            endScreen.GetComponent<RawImage>().color = color;
+            
+            if (endScreen.transform.localScale.x < 1) {
+                endScreen.transform.localScale = new Vector3(
+                    endScreen.transform.localScale.x + 0.05f,
+                    endScreen.transform.localScale.y + 0.05f,
+                    endScreen.transform.localScale.z + 0.05f
+                );
+            }
+    
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        StartCoroutine(EndScreenPulseCoroutine(endScreen));
+    }
+
+    IEnumerator EndScreenPulseCoroutine(GameObject endScreen) {        
+        for (int i = 0; i < 5; i++) {
+            while (endScreen.transform.localScale.x < 1.05) {
+                endScreen.transform.localScale = new Vector3(
+                    endScreen.transform.localScale.x + 0.0003f,
+                    endScreen.transform.localScale.y + 0.0003f,
+                    endScreen.transform.localScale.z + 0.0003f
+                );
+                yield return new WaitForSeconds(0.01f);
+            }    
+
+            while (endScreen.transform.localScale.x > 1) {
+                endScreen.transform.localScale = new Vector3(
+                    endScreen.transform.localScale.x - 0.0003f,
+                    endScreen.transform.localScale.y - 0.0003f,
+                    endScreen.transform.localScale.z - 0.0003f
+                );
+                yield return new WaitForSeconds(0.01f);
+            }
+        }
+
+        Debug.Log("Stopping client");
+        GameManager.instance.StopClient();
+    }
 }
