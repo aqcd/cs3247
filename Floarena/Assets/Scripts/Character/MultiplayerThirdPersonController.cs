@@ -161,6 +161,7 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
         _animator.SetBool("BasicAttack", false);
         _animator.SetBool("isHeal", false);
         _animator.SetBool("isDead", false);
+        _animator.SetFloat("ASModifier", 1.0f);
     }
 
     private void Update()
