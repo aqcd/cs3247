@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 public static class SkillConstants
 {
-    public static float HEAL_HP_RATIO = 0.3f;
+    public static float HEAL_HP_RATIO = 0.25f;
     public static float HEAL_COOLDOWN = 7.0f;
 
     public static float RUSH_DAMAGE = 10.0f;

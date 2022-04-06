@@ -19,7 +19,7 @@ public class HealBerry : MonoBehaviour, IBerry {
   {
     Vector3 positionOnGrid = transform.position;
     mapVisualizer.SpawnPickupItem(positionOnGrid);
-    Destroy(gameObject);
+    Destroy(gameObject.transform.parent.gameObject);
   }
   public void EnableCanvas()
   {

@@ -14,10 +14,13 @@ public class BerryPickupManager : NetworkBehaviour {
 
     private AudioManager audioManager;
 
+    private Animator _animator;
+
     void Start()
     {
         berryCollider.radius = BerryConstants.PICKUP_RANGE;
         audioManager = GetComponent<AudioManager>();
+        _animator = GetComponent<Animator>();
         if (isLocalPlayer) {
             GameObject channel = GameObject.Find("ChannelButton");
             channelButton = channel.GetComponent<ChannelButtonController>();
@@ -38,8 +41,10 @@ public class BerryPickupManager : NetworkBehaviour {
     void Update()
     {   
         if (isChanneling) {
+            _animator.SetBool("isPicking", true);
             if (activeBerry == null) {
                 InterruptChannel();
+                _animator.SetBool("isPicking", false);
                 channelButton.DisableButton();
                 return;
             }
@@ -48,6 +53,7 @@ public class BerryPickupManager : NetworkBehaviour {
             if (channelTime >= BerryConstants.CHANNEL_DURATION) {
                 if (isLocalPlayer) {
                     ResolveChannel();
+                    _animator.SetBool("isPicking", false);
                     channelButton.DisableButton();
                 }
             }
