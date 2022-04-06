@@ -9,8 +9,8 @@ public class GameManager : NetworkManager {
     public static GameManager instance;
     
     private int joinConfirmations = 0;
-    private NetworkConnectionToClient player1Conn;
-    private NetworkConnectionToClient player2Conn;
+    public NetworkConnectionToClient player1Conn;
+    public NetworkConnectionToClient player2Conn;
     private Vector3 player1SpawnPos = new Vector3(5, 0, 5);
     private Vector3 player2SpawnPos = new Vector3(8, 0, 8); //(55, 0, 55);
 
@@ -137,7 +137,9 @@ public class GameManager : NetworkManager {
 
             SkillManager.instance.LoadSkills();
 
-            MatchManager.instance.NewRound();
+            // Spawn both players
+            MatchManager.instance.RespawnPlayer(player1Conn);
+            MatchManager.instance.RespawnPlayer(player2Conn);
         }
     }
 

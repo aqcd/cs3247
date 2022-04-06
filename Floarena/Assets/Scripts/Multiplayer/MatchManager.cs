@@ -8,45 +8,47 @@ using TMPro;
 public class MatchManager : NetworkBehaviour {
     public static MatchManager instance;
     
+
     // Player references and numbers
     private int playerNum;
     private int opponentNum;
     private GameObject playerRef;
     private GameObject opponentRef;
     private Vector3 localPlayerSpawnPos;
+
+
     
-    // Player score variables
+    // Player score variables and references
     [SyncVar(hook = nameof(UpdateScoreboardPlayer1))]
     private int player1Score = 0;
     [SyncVar(hook = nameof(UpdateScoreboardPlayer2))]
     private int player2Score = 0;
-    private TMP_Text player1ScoreText;
-    private TMP_Text player2ScoreText;
+    public TMP_Text player1ScoreText;
+    public TMP_Text player2ScoreText;
+    public GameObject player1ScoreAdd;
+    public GameObject player2ScoreAdd;
 
+
+    
     // Countdown variables
-    [SyncVar(hook = nameof(UpdateCountdown))]
     private int countdownVal = 0;
-    private Text countdownText;
-    private GameObject countdownOverlay;
+    public Text countdownText;
+    public GameObject countdownOverlay;
 
-    private GameObject player1ScoreAdd;
-    private GameObject player2ScoreAdd;
+
+
+    // Overall match state variables and references
+    public GameObject winScreen;
+    public GameObject lossScreen;
+    public TMP_Text timerText;
+    // [SyncVar(hook = nameof())]
+    // private int matchTime;
+
 
     void Awake() {
         if (instance == null) {
             instance = this;
         }
-
-        player1ScoreText = transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>();
-        player2ScoreText = transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>();
-        player1ScoreText.text = player1Score.ToString();
-        player2ScoreText.text = player2Score.ToString();
-
-        countdownText = transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<Text>();
-        countdownOverlay = transform.GetChild(0).GetChild(3).gameObject;
-
-        player1ScoreAdd = transform.GetChild(0).GetChild(4).gameObject;
-        player2ScoreAdd = transform.GetChild(0).GetChild(5).gameObject;
     }
 
     [Command(requiresAuthority = false)]
@@ -62,45 +64,35 @@ public class MatchManager : NetworkBehaviour {
         }
     }
 
+    // Hook that triggers when player 1's score changes
     private void UpdateScoreboardPlayer1(int oldScore, int newScore) {
         player1ScoreText.text = newScore.ToString();
         int scoreChange = newScore - oldScore;
         player1ScoreAdd.GetComponent<ScoreAdd>().StartAnim("+" + scoreChange.ToString());
     }
 
+    // Hook that triggers when player 2's score changes
     private void UpdateScoreboardPlayer2(int oldScore, int newScore) {
         player2ScoreText.text = newScore.ToString();
         int scoreChange = newScore - oldScore;
         player2ScoreAdd.GetComponent<ScoreAdd>().StartAnim("+" + scoreChange.ToString());
     }
 
-    private void UpdateCountdown(int oldCount, int newCount) {
-        if (newCount == 0) {
-            countdownText.text = "Start!";
-        } else {
-            countdownText.text = newCount.ToString();
-        }
-    }
-
-    private void StartCountdown() {
-        StartCoroutine(CountdownCoroutine(3));
-    }
-
     IEnumerator CountdownCoroutine(int startVal) {
         countdownVal = startVal;
+        countdownText.text = startVal.ToString();
         while (countdownVal > 0) {
             yield return new WaitForSeconds(1f);
             countdownVal--;
+            countdownText.text = countdownVal.ToString();
         }
+        countdownText.text = "Start!";
+
+        // 
+        // playerRef.SetActive(true);
 
         // Once countdown has ended, tell clients to fade out the countdown
         // text and panel
-        FadeoutCountdown();
-    }
-
-    [ClientRpc]
-    private void FadeoutCountdown() {
-        Debug.Log("Starting fade out");
         StartCoroutine(FadeoutCountdownCoroutine());
     }
 
@@ -115,7 +107,6 @@ public class MatchManager : NetworkBehaviour {
         }
 
         countdownOverlay.SetActive(false);
-        Debug.Log("Faded out!");
     }
 
     private void SetCountdownOpacity(float opacity) {
@@ -127,25 +118,23 @@ public class MatchManager : NetworkBehaviour {
         countdownOverlay.transform.GetChild(0).GetComponent<Text>().color = textColorRef;
     }
 
-    [ClientRpc]
-    private void ResetCountdownOpacity() {
+    private void ResetCountdown() {
+        // playerRef.SetActive(false);
         countdownOverlay.SetActive(true);
         SetCountdownOpacity(0.7f);
+        StartCoroutine(CountdownCoroutine(3));
     }
 
-    // Runs on server to instruct all clients to restart the round
-    // Also updates score based on winning player
-    public void NewRound(int winningPlayer) {
-        CommandAddScore(winningPlayer, 10);
-        NewRound();
-    }   
-
-    // Runs on server to instruct all clients to restart the round
-    public void NewRound() {
-        Debug.Log("Starting new round!");
-        ResetCountdownOpacity();
-        ResetPlayerPosition();
-        StartCountdown();
+    // Runs on server
+    public void HandleKill(int killerPlayer) {
+        CommandAddScore(killerPlayer, 10);
+        if (killerPlayer == 1) {
+            RespawnPlayer(GameManager.instance.player2Conn);    
+        } else if (killerPlayer == 2) {
+            RespawnPlayer(GameManager.instance.player1Conn);    
+        } else {
+            throw new System.Exception("Unknown player killed player!");
+        }
     }
 
     // Return reference to my player object, relative to me
@@ -188,8 +177,8 @@ public class MatchManager : NetworkBehaviour {
             }
         }
 
-        Debug.Log("Player name: " + playerRef.name);
-        Debug.Log("Opponent name: " + opponentRef.name);
+        Debug.Log("Player num: " + playerNum);
+        Debug.Log("Opponent num: " + opponentNum);
 
         if (playerRef == null || opponentRef == null) {
             throw new System.Exception("Player or opponent gameobject not found during match initialization");
@@ -197,26 +186,50 @@ public class MatchManager : NetworkBehaviour {
 
         // Generate map based on random seed         
         MapGenerator.instance.GenerateMap(mapSeed); 
-        Debug.Log("Game ready to start!");
-    }
-
-    [ClientRpc]
-    private void ResetPlayerPosition() {
-        // Need to disable character controller before teleporting player
-        // see https://forum.unity.com/threads/unity-multiplayer-through-mirror-teleporting-player-inconsistent.867079/
-        playerRef.GetComponent<CharacterController>().enabled = false;
-
-        // Set own player's position
-        playerRef.transform.position = localPlayerSpawnPos;
-        Debug.Log("New round started!");
-
-        playerRef.GetComponent<CharacterController>().enabled = true;
-
-        // Reset current player health on all clients
-        playerRef.GetComponent<Health>().ResetHealth();
+        
+        // Set player and opponent colours locally
         playerRef.GetComponent<Health>().healthBar.SetBarColor(GetPlayerNum());
         opponentRef.GetComponent<Health>().healthBar.SetBarColor(GetOpponentNum());
         playerRef.GetComponentInChildren<MinimapPlayerColour>().SetMaterials(GetPlayerNum());
         opponentRef.GetComponentInChildren<MinimapPlayerColour>().SetMaterials(GetOpponentNum());
+
+        // Spawn local player in their default location
+        RespawnPlayer(target);
+
+        // Set game timer to 120 seconds
+        Debug.Log("Game ready to start!");
     }
+
+    // Function runs on a single client, except a call to server which resets player position
+    // on both clients
+    [TargetRpc]
+    public void RespawnPlayer(NetworkConnection target) {
+        // Need to disable character controller before teleporting player
+        // see https://forum.unity.com/threads/unity-multiplayer-through-mirror-teleporting-player-inconsistent.867079/
+        playerRef.GetComponent<CharacterController>().enabled = false;
+        // Reset player position on both clients. This should update transform on both clients 
+        // due to the network transform component on the gameobject
+        playerRef.transform.position = localPlayerSpawnPos;
+        playerRef.GetComponent<CharacterController>().enabled = true;
+
+        // Reset current player health on all clients
+        playerRef.GetComponent<Health>().ResetHealth();
+
+        ResetCountdown();
+    }
+    // [Command(requiresAuthority = false)]
+    // private void CmdResetPlayerPosition(int playerNumToReset) {
+    //     RpcResetPlayerPosition(playerNumToReset);
+    // }
+    // [ClientRpc]
+    // private void RpcResetPlayerPosition(int playerNumToReset) {
+    //     if (playerNumToReset == playerNum) {
+            
+    //     } else if (playerNumToReset == opponentNum) {
+    //         opponentRef.transform.position = 
+    //     } else {
+    //         throw new System.Exception("Unknown player's position trying to be reset!");
+    //     }
+        
+    // }
 }

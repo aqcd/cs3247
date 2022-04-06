@@ -63,14 +63,14 @@ public class Health : NetworkBehaviour
     }
 
     [Command(requiresAuthority = false)]
-    public void CmdTakeDamage(float damage, int sourcePlayer) {
+    public void CmdTakeDamage(float damage, int dmgSourcePlayer) {
         currentHealth -= damage;
         audioManager.PlaySound(AudioIndex.DECREASE_HEALTH_AUDIO, transform.position);
         if (currentHealth <= 0) {
             if (!isDead) {
                 isDead = true;
                 audioManager.PlaySound(AudioIndex.DEATH_AUDIO, transform.position);
-                StartCoroutine(StartNewRound(sourcePlayer));
+                StartCoroutine(RespawnCoroutine(dmgSourcePlayer));
             }
         }
 
@@ -79,10 +79,10 @@ public class Health : NetworkBehaviour
         obj.GetComponent<ShrinkingIndicator>().StartAnim("-" + damage.ToString());
     }
 
-    IEnumerator StartNewRound(int sourcePlayer) {
+    IEnumerator RespawnCoroutine(int killerPlayer) {
         yield return new WaitForSeconds(1f);
         isDead = false;
-        MatchManager.instance.NewRound(sourcePlayer);
+        MatchManager.instance.HandleKill(killerPlayer);
     }
 
     [Command(requiresAuthority=false)]
