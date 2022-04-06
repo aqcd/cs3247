@@ -12,6 +12,8 @@ public class EditLoadoutUIManager : MonoBehaviour
     [SerializeField]
     Text descriptionComponent;
 
+    private Color green = new Color(0.007075459f, 0.5f, 0.1753192f, 1);
+
     void Awake() {
         if (instance == null) {
             instance = this;
@@ -33,7 +35,7 @@ public class EditLoadoutUIManager : MonoBehaviour
         component.text = val.ToString();
         if (increase > 0.0) {
             component.text = component.text + " (+" + increase.ToString("#0.0") + ")";
-            component.GetComponent<Text>().color = Color.green;
+            component.GetComponent<Text>().color = green;
         } else if (increase < 0.0) {
             component.text = component.text + " (-" + Math.Abs(increase).ToString("#0.0") + ")";
             component.GetComponent<Text>().color = Color.red;

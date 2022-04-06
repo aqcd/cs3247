@@ -108,11 +108,14 @@ public class MapVisualizer : MonoBehaviour {
     private bool PlaceBrush(MapData data, Vector3 positionOnGrid) {
         foreach (var brushItem in data.brushList) {
             if (brushItem.Position == positionOnGrid) {
-                float randomHeight = Random.Range(0.0f, 0.8f);
+                float randomHeight = Random.Range(0.0f, 0.3f);
                 brushPrefab.transform.localScale += new Vector3(0.0f, randomHeight, 0.0f);
-                GameObject obj = Instantiate(brushPrefab, positionOnGrid, Quaternion.identity);
+                int randomRotation = Random.Range(0, 180);
+                Quaternion rotation = Quaternion.Euler(0, randomRotation, 0);
+
+                GameObject obj = Instantiate(brushPrefab, positionOnGrid, rotation);
                 obj.transform.parent = gameObject.transform;
-                brushPrefab.transform.localScale = Vector3.one;
+                brushPrefab.transform.localScale = new Vector3(0.8f, 0.7f, 0.8f);
                 return true;
             }
         }
