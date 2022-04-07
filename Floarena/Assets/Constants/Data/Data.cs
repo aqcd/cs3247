@@ -50,7 +50,12 @@ public static class Data
             Skill.AimType.SKILLSHOT,    
             SkillConstants.VINE_PULL_COOLDOWN, SkillConstants.VINE_PULL_RANGE
         ),
-        new Skill("Test Placeholder", "Test Placeholder", Skill.AimType.SELF, 0, 0),
+        new Skill(
+            "Invulnerability",
+            "Become immune to damage for " + SkillConstants.INVUL_DURATION + ". " + "Cooldown: " + SkillConstants.INVUL_COOLDOWN + " seconds.",
+            Skill.AimType.SELF,
+            SkillConstants.INVUL_COOLDOWN, 0.0f
+        ),    
     };
 
     public static Item[] DEFAULT_ITEMS = new Item[]{ITEMS[0], ITEMS[1]};

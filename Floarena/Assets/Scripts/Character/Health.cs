@@ -15,6 +15,9 @@ public class Health : NetworkBehaviour
     public bool hasBar = true;
     public HealthBar healthBar;
     public UnityEvent damageTakenEvent;
+
+    public bool isInvulnerable = false;
+    public GameObject invulSphere;
     
     private ParticleSystemManager particleSystemManager;
 
@@ -53,9 +56,12 @@ public class Health : NetworkBehaviour
     }
 
     public void TakeDamage(float damage) {
-        CmdTakeDamage(damage, MatchManager.instance.GetOpponentNum());
-        if (particleSystemManager != null) {
-            particleSystemManager.PlayDMG();
+        if (isInvulnerable == false)
+        {
+            CmdTakeDamage(damage, MatchManager.instance.GetOpponentNum());
+            if (particleSystemManager != null) {
+                particleSystemManager.PlayDMG();
+            }
         }
     }
 
@@ -102,11 +108,30 @@ public class Health : NetworkBehaviour
     }
 
     [Command(requiresAuthority=false)]
-    public void DestroyRoutine() {
-        // if (hasBar) {
-            // GameObject.Destroy(healthBar.gameObject);
-        // }
-        // GameObject.Destroy(gameObject);
+    public void BecomeInvulnerable(float duration)
+    {
+        StartCoroutine(Invulnerable(duration));
+    }
+
+    IEnumerator Invulnerable(float duration)
+    {
+        EnableInvulnerable();
+        yield return new WaitForSeconds(duration);
+        DisableInvulnerable();
+    }
+
+    [ClientRpc]
+    public void EnableInvulnerable()
+    {
+        isInvulnerable = true;
+        invulSphere.SetActive(true);
+    }
+
+    [ClientRpc]
+    public void DisableInvulnerable()
+    {
+        isInvulnerable = false;
+        invulSphere.SetActive(false);
     }
 
     // Resets player health on all clients
