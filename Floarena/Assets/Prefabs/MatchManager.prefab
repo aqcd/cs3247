@@ -1391,7 +1391,7 @@ MonoBehaviour:
   player2ScoreAdd: {fileID: 2952266468993157824}
   countdownText: {fileID: 847650569835740333}
   countdownOverlay: {fileID: 370839507739557857}
-  maxScore: 11
+  maxScore: 50
   winScreen: {fileID: 8754350329150748952}
   lossScreen: {fileID: 4264277995254223338}
   drawScreen: {fileID: 7452763917759957882}
