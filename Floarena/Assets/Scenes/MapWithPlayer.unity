@@ -503,6 +503,12 @@ PrefabInstance:
       propertyPath: m_TagString
       value: SkillJoystick
       objectReference: {fileID: 0}
+    - target: {fileID: 3882854107767029887, guid: 50d161084b28ac642aab324dedb3640e,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 63186f04bb16ef146aa49ed614651b5e,
+        type: 3}
     - target: {fileID: 3882854107809581154, guid: 50d161084b28ac642aab324dedb3640e,
         type: 3}
       propertyPath: m_Name
@@ -979,6 +985,12 @@ PrefabInstance:
       propertyPath: m_TagString
       value: SkillJoystick
       objectReference: {fileID: 0}
+    - target: {fileID: 3882854107767029887, guid: 50d161084b28ac642aab324dedb3640e,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 63186f04bb16ef146aa49ed614651b5e,
+        type: 3}
     - target: {fileID: 3882854107809581154, guid: 50d161084b28ac642aab324dedb3640e,
         type: 3}
       propertyPath: m_Name
@@ -2003,6 +2015,12 @@ PrefabInstance:
       propertyPath: m_TagString
       value: SkillJoystick
       objectReference: {fileID: 0}
+    - target: {fileID: 3882854107767029887, guid: 50d161084b28ac642aab324dedb3640e,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 63186f04bb16ef146aa49ed614651b5e,
+        type: 3}
     - target: {fileID: 3882854107809581154, guid: 50d161084b28ac642aab324dedb3640e,
         type: 3}
       propertyPath: m_Name
@@ -2286,6 +2304,12 @@ PrefabInstance:
       propertyPath: m_TagString
       value: SkillJoystick
       objectReference: {fileID: 0}
+    - target: {fileID: 3882854107767029887, guid: 50d161084b28ac642aab324dedb3640e,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 63186f04bb16ef146aa49ed614651b5e,
+        type: 3}
     - target: {fileID: 3882854107809581154, guid: 50d161084b28ac642aab324dedb3640e,
         type: 3}
       propertyPath: m_Name
