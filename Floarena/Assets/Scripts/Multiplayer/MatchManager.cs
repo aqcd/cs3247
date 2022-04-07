@@ -197,12 +197,14 @@ public class MatchManager : NetworkBehaviour {
     // Runs on server
     public void HandleKill(int killerPlayer) {
         CommandAddScore(killerPlayer, 10);
-        if (killerPlayer == 1) {
-            RespawnPlayer(GameManager.instance.player2Conn);    
-        } else if (killerPlayer == 2) {
-            RespawnPlayer(GameManager.instance.player1Conn);    
-        } else {
-            throw new System.Exception("Unknown player killed player!");
+        if (!matchEnded) { // Don't respawn killed player if this kill caused the match to end
+            if (killerPlayer == 1) {
+                RespawnPlayer(GameManager.instance.player2Conn);    
+            } else if (killerPlayer == 2) {
+                RespawnPlayer(GameManager.instance.player1Conn);    
+            } else {
+                throw new System.Exception("Unknown player killed player!");
+            }
         }
     }
 
