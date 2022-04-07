@@ -12,8 +12,6 @@ public class BasicAttack : NetworkBehaviour, ISkill
     private float baseAttackSpeed;
     private float attackCooldown;
 
-    private AudioManager audioManager;
-
     private PlayerManager playerManager;
     private float timeToAttack = 0.0f;
 
@@ -27,7 +25,6 @@ public class BasicAttack : NetworkBehaviour, ISkill
             attackRange = stats.GetAttributeValue(Attribute.AR);
             baseAttackSpeed = stats.GetAttributeValue(Attribute.AS);
             attackCooldown = 1/baseAttackSpeed;
-            audioManager = player.GetComponent<AudioManager>();
         }
     }
 
@@ -80,7 +77,7 @@ public class BasicAttack : NetworkBehaviour, ISkill
             if (bestHit != null) {
                 float damage = attackDamage + playerManager.GetAttributeBuff(Attribute.AD);
                 bestHit.SendMessage("TakeDamage", damage);
-                audioManager.PlaySound(AudioIndex.BASIC_ATTACK_AUDIO, skillPosition);
+                AudioManager.instance.PlaySound(AudioIndex.BASIC_ATTACK_AUDIO, skillPosition);
             }
             
         }

@@ -94,3 +94,5 @@ MonoBehaviour:
     type: 3}
   SkillManagerPrefab: {fileID: 6076235477984777718, guid: 1af5393004ee86e4f9a83d13be4b7006,
     type: 3}
+  AudioManagerPrefab: {fileID: 1188099579132166617, guid: ee4f71c06677db646b6ef3328d63e198,
+    type: 3}

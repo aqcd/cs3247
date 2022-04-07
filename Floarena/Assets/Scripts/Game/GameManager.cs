@@ -19,6 +19,7 @@ public class GameManager : NetworkManager {
     [Header("Initialization Prefabs")]
     public GameObject MatchManagerPrefab;
     public GameObject SkillManagerPrefab;
+    public GameObject AudioManagerPrefab;
 
     public override void Awake() {
         Debug.Log("Server awake");
@@ -29,6 +30,7 @@ public class GameManager : NetworkManager {
         joinConfirmations = 0;
         spawnPrefabs.Add(MatchManagerPrefab);
         spawnPrefabs.Add(SkillManagerPrefab);
+        spawnPrefabs.Add(AudioManagerPrefab);
     }
 
     public void HostGame() {
@@ -111,7 +113,7 @@ public class GameManager : NetworkManager {
 
     public override void OnServerSceneChanged(string sceneName) {
         base.OnServerSceneChanged(sceneName);
-        
+
     }
 
     // Runs on a server when a client requests to be added as a player
@@ -130,6 +132,10 @@ public class GameManager : NetworkManager {
             // Spawn MatchManagers on both clients
             GameObject matchManager = Instantiate(MatchManagerPrefab);
             NetworkServer.Spawn(matchManager);
+
+            // Spawn AudioManager on both clients
+            GameObject audioManager = Instantiate(AudioManagerPrefab);
+            NetworkServer.Spawn(audioManager);
 
             // Send initial spawn positions and map seed to MatchManager via a TargetRpc
             int mapSeed = Random.Range(int.MinValue, int.MaxValue);

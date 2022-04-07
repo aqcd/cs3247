@@ -8,21 +8,18 @@ public class VineAttack : NetworkBehaviour, ISkill
     private GameObject player;
     private GameObject projectilePrefab;
 
-    private AudioManager audioManager; 
-
     // Start is called before the first frame update
     void Start() {
         projectilePrefab = transform.GetComponent<ProjectileManager>().projectilePrefabs[0];
         if (!isServer) {
             player = MatchManager.instance.GetPlayer();
-            audioManager = player.GetComponent<AudioManager>();
         }
     }
 
     public void Execute(Vector3 skillPosition)
     {
         SpawnProjectile(skillPosition.normalized, player.transform.position, MatchManager.instance.GetPlayerNum());
-        audioManager.PlaySound(AudioIndex.VINE_ATTACK_AUDIO, skillPosition);
+        AudioManager.instance.PlaySound(AudioIndex.VINE_ATTACK_AUDIO, skillPosition);
     }
 
     [Command(requiresAuthority = false)]

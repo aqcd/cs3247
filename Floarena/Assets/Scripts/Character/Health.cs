@@ -20,9 +20,6 @@ public class Health : NetworkBehaviour
     public GameObject invulSphere;
     
     private ParticleSystemManager particleSystemManager;
-
-    public AudioManager audioManager;
-
     public GameObject dmgIndicator;
     public GameObject healIndicator;
 
@@ -33,7 +30,6 @@ public class Health : NetworkBehaviour
             damageTakenEvent.AddListener(gameObject.GetComponent<BerryPickupManager>().InterruptChannel);
         }
         // damageTakenEvent.AddListener(gameObject.GetComponent<BerryPickupManager>().InterruptChannel);
-        audioManager = GetComponent<AudioManager>();
 
         particleSystemManager = gameObject.GetComponent<ParticleSystemManager>();
         Debug.Log("HP: " + particleSystemManager);
@@ -68,11 +64,11 @@ public class Health : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void CmdTakeDamage(float damage, int dmgSourcePlayer) {
         currentHealth -= damage;
-        audioManager.PlaySound(AudioIndex.DECREASE_HEALTH_AUDIO, transform.position);
+        AudioManager.instance.PlaySound(AudioIndex.DECREASE_HEALTH_AUDIO, transform.position);
         if (currentHealth <= 0) {
             if (!isDead) {
                 isDead = true;
-                audioManager.PlaySound(AudioIndex.DEATH_AUDIO, transform.position);
+                AudioManager.instance.PlaySound(AudioIndex.DEATH_AUDIO, transform.position);
                 StartCoroutine(RespawnCoroutine(dmgSourcePlayer));
             }
         }
@@ -96,7 +92,7 @@ public class Health : NetworkBehaviour
             currentHealth += healing;
         }
 
-        audioManager.PlaySound(AudioIndex.INCREASE_HEALTH_AUDIO, transform.position);
+        AudioManager.instance.PlaySound(AudioIndex.INCREASE_HEALTH_AUDIO, transform.position);
 
         if (particleSystemManager != null) {
             particleSystemManager.PlayHeal();

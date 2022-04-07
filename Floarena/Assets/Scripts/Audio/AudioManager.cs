@@ -4,17 +4,23 @@ using UnityEngine;
 using Mirror;
 
 public class AudioManager : NetworkBehaviour {
-
-    public AudioSource audioSource;
+    public static AudioManager instance;
     public AudioClip[] clips;
 
-    void Start() {
-        audioSource = GetComponent<AudioSource>(); 
+
+    void Awake() {
+        if (instance == null) {
+            instance = this;
+        }
     }
 
     public void PlaySound(int id, Vector3 position) {
         if (id >= 0 && id < clips.Length) {
-            CmdSendServerSoundID(id, position);
+            if (isServer) {
+                RpcSendSoundIdToClients(id, position);
+            } else {
+                CmdSendServerSoundID(id, position);
+            }
         }
     }
 
