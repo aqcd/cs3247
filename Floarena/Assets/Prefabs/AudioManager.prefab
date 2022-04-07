@@ -63,7 +63,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  audioSource: {fileID: 0}
   clips:
   - {fileID: 8300000, guid: 5f8a520265d7f984484cedf66d82e479, type: 3}
   - {fileID: 8300000, guid: 031cdbb8358ed74408dd2a075ea1c147, type: 3}
@@ -78,3 +77,4 @@ MonoBehaviour:
   - {fileID: 8300000, guid: da06407bada7ece4eae18f27b1234368, type: 3}
   - {fileID: 8300000, guid: 6ea98a711ca1fc345805bb66e1590089, type: 3}
   - {fileID: 8300000, guid: 9ca22e90f1f3acb41af380048a910921, type: 3}
+  - {fileID: 8300000, guid: da06407bada7ece4eae18f27b1234368, type: 3}
