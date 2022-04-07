@@ -35,7 +35,12 @@ public class VineAttackProjectile : NetworkBehaviour
 
     private IEnumerator DeathRoutine() {
         yield return new WaitForSeconds(range/projectileSpeed);
-        GameObject.Destroy(gameObject);
+        CmdDestroy();
+    }
+
+    [Command(requiresAuthority = false)]
+    private void CmdDestroy() {
+        NetworkServer.Destroy(gameObject);
     }
 
     private void OnCollisionEnter(Collision other) 
@@ -47,7 +52,7 @@ public class VineAttackProjectile : NetworkBehaviour
             {
                 otherHealth.TakeDamage(damageMagnitude);
             }
-            GameObject.Destroy(gameObject);
+            CmdDestroy();
         }
     }
 }
