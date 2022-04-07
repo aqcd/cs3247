@@ -38,25 +38,26 @@ public class BerryPickupManager : NetworkBehaviour {
         }
     }
 
-    void Update()
-    {   
-        if (isChanneling) {
-            _animator.SetBool("isPicking", true);
-            if (activeBerry == null) {
-                InterruptChannel();
-                channelButton.DisableButton();
-                return;
-            }
-            channelTime += Time.deltaTime;
-            channelBar.SetChannel(BerryConstants.CHANNEL_DURATION - channelTime);
-            if (channelTime >= BerryConstants.CHANNEL_DURATION) {
-                if (isLocalPlayer) {
-                    ResolveChannel();
+    void Update() {   
+        if (!isServer) {
+            if (isChanneling) {
+                _animator.SetBool("isPicking", true);
+                if (activeBerry == null) {
+                    InterruptChannel();
                     channelButton.DisableButton();
+                    return;
                 }
+                channelTime += Time.deltaTime;
+                channelBar.SetChannel(BerryConstants.CHANNEL_DURATION - channelTime);
+                if (channelTime >= BerryConstants.CHANNEL_DURATION) {
+                    if (isLocalPlayer) {
+                        ResolveChannel();
+                        channelButton.DisableButton();
+                    }
+                }
+            } else {
+                channelTime = 0.0f;
             }
-        } else {
-            channelTime = 0.0f;
         }
     }
 

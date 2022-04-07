@@ -91,10 +91,7 @@ public class ParticleSystemManager : NetworkBehaviour {
         DMG.Play();
     }
 
-
-
-
-    [Command(requiresAuthority = false)]
+    // Runs on server
     public void PlayHeal() {
         RpcPlayHeal();
     }

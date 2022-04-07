@@ -106,6 +106,9 @@ public class MatchManager : NetworkBehaviour {
 
     [Command(requiresAuthority = false)]
     public void CommandAddScore(int playerNum, int scoreToAdd) {
+        AddScore(playerNum, scoreToAdd);
+    }
+    public void AddScore(int playerNum, int scoreToAdd) {
         Debug.Log("Server updating score");
         if (playerNum == 1) {
             player1Score += scoreToAdd;
@@ -196,7 +199,7 @@ public class MatchManager : NetworkBehaviour {
 
     // Runs on server
     public void HandleKill(int killerPlayer) {
-        CommandAddScore(killerPlayer, 10);
+        AddScore(killerPlayer, 10); // Run non command version of function to prevent exception
         if (!matchEnded) { // Don't respawn killed player if this kill caused the match to end
             if (killerPlayer == 1) {
                 RpcRespawnPlayer(GameManager.instance.player2Conn);    
