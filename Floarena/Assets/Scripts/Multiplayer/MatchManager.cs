@@ -68,7 +68,6 @@ public class MatchManager : NetworkBehaviour {
         }
 
         // Game will end once coroutine reaches here
-        backgroundMusic.StopAudio();
 
         if (player1Score > player2Score) {
             ShowEndScreen(GameManager.instance.player1Conn, true);
@@ -81,13 +80,14 @@ public class MatchManager : NetworkBehaviour {
         } else {
             // Handle draws one day lol
             Debug.Log("It's a draw!");
-            backgroundMusic.StopAudio();
+            RpcDrawAudio();
         }
         
     } 
     
     [ClientRpc]
     void RpcPlayer1WinsAudio() {
+        backgroundMusic.StopAudio();
         if (playerNum == 1) {
             backgroundMusic.PlayLossAudio();
         } else {
@@ -97,11 +97,18 @@ public class MatchManager : NetworkBehaviour {
 
     [ClientRpc]
     void RpcPlayer2WinsAudio() {
+        backgroundMusic.StopAudio();
         if (playerNum == 1) {
             backgroundMusic.PlayWinAudio();
         } else {
             backgroundMusic.PlayLossAudio();
         }
+    }
+
+    [ClientRpc]
+    void RpcDrawAudio() {
+        backgroundMusic.StopAudio();
+        backgroundMusic.PlayDrawAudio();
     }
 
     // Hook that triggers locally whenever server updates match time

@@ -1594,6 +1594,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: da06407bada7ece4eae18f27b1234368, type: 3}
     - target: {fileID: 1065673786, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
+      propertyPath: DrawGameClip
+      value: 
+      objectReference: {fileID: 8300000, guid: ab8e97945b5b08e4f83ec2a2a11e1480, type: 3}
+    - target: {fileID: 1065673786, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: LoseGameClip
       value: 
       objectReference: {fileID: 8300000, guid: 6ea98a711ca1fc345805bb66e1590089, type: 3}

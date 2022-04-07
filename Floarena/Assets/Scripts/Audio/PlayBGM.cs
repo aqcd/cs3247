@@ -7,6 +7,7 @@ public class PlayBGM : MonoBehaviour {
     private AudioSource audioSource;
     public AudioClip WinGameClip;
     public AudioClip LoseGameClip;
+    public AudioClip DrawGameClip;
     
     void Start() {
         audioSource = GetComponent<AudioSource>();
@@ -18,10 +19,14 @@ public class PlayBGM : MonoBehaviour {
     }
 
     public void PlayWinAudio() {
-        audioSource.PlayOneShot(WinGameClip, 1.0f);
+        audioSource.PlayOneShot(WinGameClip, 0.8f);
     }
 
     public void PlayLossAudio() {
-        audioSource.PlayOneShot(LoseGameClip, 1.0f);
+        audioSource.PlayOneShot(LoseGameClip, 0.8f);
+    }
+
+    public void PlayDrawAudio() {
+        audioSource.PlayOneShot(DrawGameClip, 0.8f);
     }
 }
