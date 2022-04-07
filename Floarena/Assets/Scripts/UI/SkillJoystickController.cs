@@ -138,7 +138,7 @@ public class SkillJoystickController : MonoBehaviour
         if (skill.aimType == Skill.AimType.TARGETCIRCLE && !isCooldown)
         {
             skillInUseEvent.Invoke();
-            Vector3 newPosition = skillCanvas.transform.position + position;
+            Vector3 newPosition = skillCanvas.transform.position + (skill.range * position);
             float distance = Vector3.Distance(newPosition, skillCanvas.transform.position);
             distance = Mathf.Min(distance, skill.range);
             Vector3 offset = new Vector3(0.0f, 0.01f, 0.0f);
@@ -191,7 +191,7 @@ public class SkillJoystickController : MonoBehaviour
         cancelNormal.enabled = false;
         cancelRed.enabled = false;
 
-        Vector3 skillPosition = new Vector3(pointerPosition.x, 0.0f, pointerPosition.y);
+        Vector3 skillPosition = skill.range * (new Vector3(pointerPosition.x, 0.0f, pointerPosition.y));
         // Vector3 localPosition = new Vector3(pointerPosition.x, pointerPosition.y, 0.0f);
         // Vector3 worldPosition = transform.TransformPoint(transform.localPosition + localPosition);
 
