@@ -109,6 +109,11 @@ public class GameManager : NetworkManager {
         }
     }
 
+    public override void OnServerSceneChanged(string sceneName) {
+        base.OnServerSceneChanged(sceneName);
+        
+    }
+
     // Runs on a server when a client requests to be added as a player
     public override void OnServerAddPlayer(NetworkConnectionToClient conn) {
         base.OnServerAddPlayer(conn);

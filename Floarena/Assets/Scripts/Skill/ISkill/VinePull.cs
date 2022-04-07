@@ -11,11 +11,12 @@ public class VinePull : NetworkBehaviour, ISkill
     private AudioManager audioManager;
 
     // Start is called before the first frame update
-    void Awake()
-    {
-        player = MatchManager.instance.GetPlayer();
+    void Start() {
         projectilePrefab = transform.GetComponent<ProjectileManager>().projectilePrefabs[0];
-        audioManager = player.GetComponent<AudioManager>();
+        if (!isServer) {
+            player = MatchManager.instance.GetPlayer();
+            audioManager = player.GetComponent<AudioManager>();
+        }
     }
 
     public void Execute(Vector3 skillPosition)

@@ -62,7 +62,7 @@ public class MatchManager : NetworkBehaviour {
         backgroundMusic = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<PlayBGM>();
     }
 
-    [Command(requiresAuthority = false)]
+    // Runs on server
     public void StartMatch() {
         StartCoroutine(MatchTimerCoroutine(matchTotalTime));
     }
@@ -277,6 +277,7 @@ public class MatchManager : NetworkBehaviour {
     public void RpcRespawnPlayer(NetworkConnection target) {
         RespawnPlayer();
     }
+    // Runs locally on player
     public void RespawnPlayer() {
         // Need to disable character controller before teleporting player
         // see https://forum.unity.com/threads/unity-multiplayer-through-mirror-teleporting-player-inconsistent.867079/

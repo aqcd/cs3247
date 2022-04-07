@@ -134,12 +134,9 @@ public class Health : NetworkBehaviour
         invulSphere.SetActive(false);
     }
 
-    // Resets player health on all clients
-    [Command(requiresAuthority = false)]
     public void ResetHealth() {
         float temp  = GameManager.instance.loadout.GetLoadoutStats().GetAttributeValue(Attribute.HP);
         SetMaxHealth(temp);
-        currentHealth = maxHealth;
     }
 
     [Command(requiresAuthority = false)]
