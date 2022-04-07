@@ -12,7 +12,7 @@ public class GameManager : NetworkManager {
     public NetworkConnectionToClient player1Conn;
     public NetworkConnectionToClient player2Conn;
     private Vector3 player1SpawnPos = new Vector3(5, 0, 5);
-    private Vector3 player2SpawnPos = new Vector3(8, 0, 8); //(55, 0, 55);
+    private Vector3 player2SpawnPos = new Vector3(55, 0, 55); // (8, 0, 8)
 
     public Loadout loadout;
 
