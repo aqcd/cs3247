@@ -41,11 +41,19 @@ public class MatchManager : NetworkBehaviour {
     public int maxScore = 10; //50;
     public GameObject winScreen;
     public GameObject lossScreen;
+    public GameObject drawScreen;
     public TMP_Text timerText;
     public int matchTotalTime = 999; //123;
     [SyncVar(hook = nameof(UpdateMatchTime))]
     private int matchTime;
     private bool matchEnded = false;
+    private enum EndState {
+        Win,
+        Loss,
+        Draw
+    }
+
+
 
     void Awake() {
         if (instance == null) {
@@ -72,14 +80,14 @@ public class MatchManager : NetworkBehaviour {
         if (!matchEnded) {
             matchEnded = true;
             if (player1Score > player2Score) {            
-                ShowEndScreen(GameManager.instance.player1Conn, true);
-                ShowEndScreen(GameManager.instance.player2Conn, false);
+                ShowEndScreen(GameManager.instance.player1Conn, EndState.Win);
+                ShowEndScreen(GameManager.instance.player2Conn, EndState.Loss);
             } else if (player1Score < player2Score) {
-                ShowEndScreen(GameManager.instance.player1Conn, false);
-                ShowEndScreen(GameManager.instance.player2Conn, true);
+                ShowEndScreen(GameManager.instance.player1Conn, EndState.Loss);
+                ShowEndScreen(GameManager.instance.player2Conn, EndState.Win);
             } else {
-                // Handle draws one day lol
-                Debug.Log("It's a draw!");
+                ShowEndScreen(GameManager.instance.player1Conn, EndState.Draw);
+                ShowEndScreen(GameManager.instance.player2Conn, EndState.Draw);
             }
         } 
     }   
@@ -106,8 +114,8 @@ public class MatchManager : NetworkBehaviour {
             if (player1Score >= maxScore) {
                 if (!matchEnded) {
                     matchEnded = true;
-                    ShowEndScreen(GameManager.instance.player1Conn, true);
-                    ShowEndScreen(GameManager.instance.player2Conn, false);
+                    ShowEndScreen(GameManager.instance.player1Conn, EndState.Win);
+                    ShowEndScreen(GameManager.instance.player2Conn, EndState.Loss);
                 }
             }
 
@@ -118,8 +126,8 @@ public class MatchManager : NetworkBehaviour {
             if (player2Score >= maxScore) {
                 if (!matchEnded) {
                     matchEnded = true;
-                    ShowEndScreen(GameManager.instance.player1Conn, false);
-                    ShowEndScreen(GameManager.instance.player2Conn, true);
+                    ShowEndScreen(GameManager.instance.player1Conn, EndState.Loss);
+                    ShowEndScreen(GameManager.instance.player2Conn, EndState.Win);
                 }
             }
             
@@ -280,17 +288,23 @@ public class MatchManager : NetworkBehaviour {
     }
 
     [TargetRpc]
-    private void ShowEndScreen(NetworkConnection target, bool didWin) {
+    private void ShowEndScreen(NetworkConnection target, EndState endState) {
         GameObject endScreen;
         backgroundMusic.StopAudio();
-        if (didWin) {
+        if (endState == EndState.Win) {
             winScreen.SetActive(true);
             endScreen = winScreen;
             backgroundMusic.PlayWinAudio();
-        } else {
+        } else if (endState == EndState.Loss) {
             lossScreen.SetActive(true);
             endScreen = lossScreen;
             backgroundMusic.PlayLossAudio();
+        } else if (endState == EndState.Draw) {
+            drawScreen.SetActive(true);
+            endScreen = drawScreen;
+            backgroundMusic.PlayDrawAudio();
+        } else {
+            throw new System.Exception("Unknown end state encountered!");
         }
         
         Color color = endScreen.GetComponent<RawImage>().color;
@@ -346,6 +360,6 @@ public class MatchManager : NetworkBehaviour {
         }
 
         Debug.Log("Stopping client");
-        GameManager.instance.StopClient();
+        GameManager.instance.OnClientDisconnect();
     }
 }
