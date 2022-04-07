@@ -325,7 +325,7 @@ public class MatchManager : NetworkBehaviour {
     }
 
     IEnumerator EndScreenPulseCoroutine(GameObject endScreen) {        
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 2; i++) {
             while (endScreen.transform.localScale.x < 1.05) {
                 endScreen.transform.localScale = new Vector3(
                     endScreen.transform.localScale.x + 0.0003f,
