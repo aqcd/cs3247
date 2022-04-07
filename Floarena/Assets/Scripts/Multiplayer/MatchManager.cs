@@ -72,43 +72,14 @@ public class MatchManager : NetworkBehaviour {
         if (player1Score > player2Score) {
             ShowEndScreen(GameManager.instance.player1Conn, true);
             ShowEndScreen(GameManager.instance.player2Conn, false);
-            RpcPlayer1WinsAudio();
         } else if (player1Score < player2Score) {
             ShowEndScreen(GameManager.instance.player1Conn, false);
             ShowEndScreen(GameManager.instance.player2Conn, true);
-            RpcPlayer2WinsAudio();
         } else {
             // Handle draws one day lol
             Debug.Log("It's a draw!");
-            RpcDrawAudio();
         }
         
-    } 
-    
-    [ClientRpc]
-    void RpcPlayer1WinsAudio() {
-        backgroundMusic.StopAudio();
-        if (playerNum == 1) {
-            backgroundMusic.PlayLossAudio();
-        } else {
-            backgroundMusic.PlayWinAudio();
-        }
-    }
-
-    [ClientRpc]
-    void RpcPlayer2WinsAudio() {
-        backgroundMusic.StopAudio();
-        if (playerNum == 1) {
-            backgroundMusic.PlayWinAudio();
-        } else {
-            backgroundMusic.PlayLossAudio();
-        }
-    }
-
-    [ClientRpc]
-    void RpcDrawAudio() {
-        backgroundMusic.StopAudio();
-        backgroundMusic.PlayDrawAudio();
     }
 
     // Hook that triggers locally whenever server updates match time
@@ -303,12 +274,15 @@ public class MatchManager : NetworkBehaviour {
     [TargetRpc]
     private void ShowEndScreen(NetworkConnection target, bool didWin) {
         GameObject endScreen;
+        backgroundMusic.StopAudio();
         if (didWin) {
             winScreen.SetActive(true);
             endScreen = winScreen;
+            backgroundMusic.PlayWinAudio();
         } else {
             lossScreen.SetActive(true);
             endScreen = lossScreen;
+            backgroundMusic.PlayLossAudio();
         }
         
         Color color = endScreen.GetComponent<RawImage>().color;
