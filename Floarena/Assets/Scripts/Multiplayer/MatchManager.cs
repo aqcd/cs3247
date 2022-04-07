@@ -199,9 +199,9 @@ public class MatchManager : NetworkBehaviour {
         CommandAddScore(killerPlayer, 10);
         if (!matchEnded) { // Don't respawn killed player if this kill caused the match to end
             if (killerPlayer == 1) {
-                RespawnPlayer(GameManager.instance.player2Conn);    
+                RpcRespawnPlayer(GameManager.instance.player2Conn);    
             } else if (killerPlayer == 2) {
-                RespawnPlayer(GameManager.instance.player1Conn);    
+                RpcRespawnPlayer(GameManager.instance.player1Conn);    
             } else {
                 throw new System.Exception("Unknown player killed player!");
             }
@@ -265,7 +265,7 @@ public class MatchManager : NetworkBehaviour {
         opponentRef.GetComponentInChildren<MinimapPlayerColour>().SetMaterials(GetOpponentNum());
 
         // Spawn local player in their default location
-        RespawnPlayer(target);
+        RespawnPlayer();
 
         // Set game timer to 120 seconds
         Debug.Log("Game ready to start!");
@@ -274,7 +274,10 @@ public class MatchManager : NetworkBehaviour {
     // Function runs on a single client, except a call to server which resets player position
     // on both clients
     [TargetRpc]
-    public void RespawnPlayer(NetworkConnection target) {
+    public void RpcRespawnPlayer(NetworkConnection target) {
+        RespawnPlayer();
+    }
+    public void RespawnPlayer() {
         // Need to disable character controller before teleporting player
         // see https://forum.unity.com/threads/unity-multiplayer-through-mirror-teleporting-player-inconsistent.867079/
         playerRef.GetComponent<CharacterController>().enabled = false;

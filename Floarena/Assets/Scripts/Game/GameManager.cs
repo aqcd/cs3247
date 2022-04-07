@@ -138,8 +138,8 @@ public class GameManager : NetworkManager {
             SkillManager.instance.LoadSkills();
 
             // Spawn both players
-            MatchManager.instance.RespawnPlayer(player1Conn);
-            MatchManager.instance.RespawnPlayer(player2Conn);
+            MatchManager.instance.RpcRespawnPlayer(player1Conn);
+            MatchManager.instance.RpcRespawnPlayer(player2Conn);
 
             MatchManager.instance.StartMatch();
         }
