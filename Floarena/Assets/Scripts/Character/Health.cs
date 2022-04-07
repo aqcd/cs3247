@@ -58,7 +58,7 @@ public class Health : NetworkBehaviour
     }
 
     public void TakeDamage(float damage) {
-        if (!isInvulnerable)
+        if (isInvulnerable == false)
         {
             CmdTakeDamage(damage, MatchManager.instance.GetOpponentNum());
             if (particleSystemManager != null) {
@@ -109,6 +109,7 @@ public class Health : NetworkBehaviour
         obj.GetComponent<ShrinkingIndicator>().StartAnim("+" + healing.ToString());
     }
 
+    [Command(requiresAuthority=false)]
     public void BecomeInvulnerable(float duration)
     {
         StartCoroutine(Invulnerable(duration));
@@ -116,15 +117,22 @@ public class Health : NetworkBehaviour
 
     IEnumerator Invulnerable(float duration)
     {
-        isInvulnerable = true;
+        EnableInvulnerable();
         yield return new WaitForSeconds(duration);
-        isInvulnerable = false;
+        DisableInvulnerable();
     }
 
-    // public void EndInvulnerable()
-    // {
-    //     isInvulnerable = false;
-    // }
+    [Command(requiresAuthority=false)]
+    public void EnableInvulnerable()
+    {
+        isInvulnerable = true;
+    }
+
+    [Command(requiresAuthority=false)]
+    public void DisableInvulnerable()
+    {
+        isInvulnerable = false;
+    }
 
     [Command(requiresAuthority=false)]
     public void DestroyRoutine() {
