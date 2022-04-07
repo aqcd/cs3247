@@ -97,20 +97,27 @@ public class Health : NetworkBehaviour
     [Command(requiresAuthority=false)]
     public void BecomeInvulnerable(float duration)
     {
-        isInvulnerable = true;
         StartCoroutine(Invulnerable(duration));
     }
 
     IEnumerator Invulnerable(float duration)
     {
+        EnableInvulnerable();
         yield return new WaitForSeconds(duration);
-        isInvulnerable = false;
+        DisableInvulnerable();
     }
 
-    // public void EndInvulnerable()
-    // {
-    //     isInvulnerable = false;
-    // }
+    [Command(requiresAuthority=false)]
+    public void EnableInvulnerable()
+    {
+        isInvulnerable = true;
+    }
+
+    [Command(requiresAuthority=false)]
+    public void DisableInvulnerable()
+    {
+        isInvulnerable = false;
+    }
 
     [Command(requiresAuthority=false)]
     public void DestroyRoutine() {
