@@ -55,7 +55,7 @@ public class Health : NetworkBehaviour
     }
 
     public void TakeDamage(float damage) {
-        if (!isInvulnerable)
+        if (isInvulnerable == false)
         {
             CmdTakeDamage(damage, MatchManager.instance.GetOpponentNum());
             if (particleSystemManager != null) {
@@ -94,14 +94,15 @@ public class Health : NetworkBehaviour
         }
     }
 
+    [Command(requiresAuthority=false)]
     public void BecomeInvulnerable(float duration)
     {
+        isInvulnerable = true;
         StartCoroutine(Invulnerable(duration));
     }
 
     IEnumerator Invulnerable(float duration)
     {
-        isInvulnerable = true;
         yield return new WaitForSeconds(duration);
         isInvulnerable = false;
     }
