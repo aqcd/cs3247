@@ -19,14 +19,14 @@ public class PlayBGM : MonoBehaviour {
     }
 
     public void PlayWinAudio() {
-        audioSource.PlayOneShot(WinGameClip, 0.8f);
+        audioSource.PlayOneShot(WinGameClip, 0.6f);
     }
 
     public void PlayLossAudio() {
-        audioSource.PlayOneShot(LoseGameClip, 0.8f);
+        audioSource.PlayOneShot(LoseGameClip, 0.6f);
     }
 
     public void PlayDrawAudio() {
-        audioSource.PlayOneShot(DrawGameClip, 0.8f);
+        audioSource.PlayOneShot(DrawGameClip, 0.6f);
     }
 }

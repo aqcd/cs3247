@@ -1587,7 +1587,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1065673785, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_Volume
-      value: 0.8
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1065673786, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: WinGameClip

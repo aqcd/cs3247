@@ -26,7 +26,7 @@ public class AudioManager : NetworkBehaviour {
     [ClientRpc]
     void RpcSendSoundIdToClients(int id, Vector3 position) {
         if (id == AudioIndex.CHANNEL_AUDIO) {
-            AudioSource.PlayClipAtPoint(clips[id], position, 0.5f);
+            AudioSource.PlayClipAtPoint(clips[id], position, 0.2f);
         } else {
             AudioSource.PlayClipAtPoint(clips[id], position, 1.0f);
         }
