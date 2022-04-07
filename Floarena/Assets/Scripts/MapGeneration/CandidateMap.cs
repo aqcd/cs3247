@@ -130,7 +130,7 @@ public class CandidateMap {
             int halfLength = (int)(0.5 * grid.Length);
             position = fixedStructure.Position;
             for (int i = 0; i < halfLength; i++) {
-                if ((i >= 6 && i <= 8) || (i >= 22 && i <= 24)) { // gap in diagonal wall
+                if ((i >= 7 && i <= 9) || (i >= 23 && i <= 25)) { // gap in diagonal wall
                     position += new Vector3(1, 0, -1);
                     continue;
                 }
@@ -144,7 +144,7 @@ public class CandidateMap {
             int thirdLength = (int)(0.3 * grid.Length);
             position = fixedStructure.Position;
             for (int i = 0; i < thirdLength; i++) {
-                if (i >= 5 && i <= 7) { // gap
+                if (i >= 7 && i <= 9) { // gap
                     position += new Vector3(1, 0, 0);
                     continue;
                 }

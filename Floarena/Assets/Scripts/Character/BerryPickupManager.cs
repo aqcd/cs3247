@@ -110,7 +110,17 @@ public class BerryPickupManager : NetworkBehaviour {
     public void BeginChannel()
     {
         isChanneling = true;
+        PlayAudio();
         RpcEnableBar();
+    }
+
+    public void PlayAudio() {
+        StartCoroutine(Wait());
+    }
+
+    IEnumerator Wait() {
+        yield return new WaitForSeconds(0.5f);
+        audioManager.PlaySound(AudioIndex.CHANNEL_AUDIO, this.transform.position);
     }
 
     [Command]
