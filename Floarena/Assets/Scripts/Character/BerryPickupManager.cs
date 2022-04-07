@@ -44,7 +44,6 @@ public class BerryPickupManager : NetworkBehaviour {
             _animator.SetBool("isPicking", true);
             if (activeBerry == null) {
                 InterruptChannel();
-                _animator.SetBool("isPicking", false);
                 channelButton.DisableButton();
                 return;
             }
@@ -53,7 +52,6 @@ public class BerryPickupManager : NetworkBehaviour {
             if (channelTime >= BerryConstants.CHANNEL_DURATION) {
                 if (isLocalPlayer) {
                     ResolveChannel();
-                    _animator.SetBool("isPicking", false);
                     channelButton.DisableButton();
                 }
             }
@@ -123,17 +121,28 @@ public class BerryPickupManager : NetworkBehaviour {
         audioManager.PlaySound(AudioIndex.CHANNEL_AUDIO, this.transform.position);
     }
 
-    [Command]
     public void InterruptChannel()
     {
+        _animator.SetBool("isPicking", false);
+        CmdInterruptChannel();
+    }
+
+    [Command]
+    public void CmdInterruptChannel() {
         if (isChanneling) {
             Debug.Log("Interrupting");
             isChanneling = false;
             RpcDisableBar();
         }
     }
-    [Command]
+
     private void ResolveChannel() {
+        _animator.SetBool("isPicking", false);
+        CmdResolveChannel();
+    }
+
+    [Command]
+    private void CmdResolveChannel() {
         isChanneling = false;
         RpcConsumeBerry();
         RpcDisableBar();
