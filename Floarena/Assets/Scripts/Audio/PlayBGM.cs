@@ -5,10 +5,28 @@ using UnityEngine;
 public class PlayBGM : MonoBehaviour {
 
     private AudioSource audioSource;
+    public AudioClip WinGameClip;
+    public AudioClip LoseGameClip;
+    public AudioClip DrawGameClip;
     
-    void Start()
-    {
+    void Start() {
         audioSource = GetComponent<AudioSource>();
         audioSource.Play();
+    }
+    
+    public void StopAudio() {
+        audioSource.Stop();
+    }
+
+    public void PlayWinAudio() {
+        audioSource.PlayOneShot(WinGameClip, 0.6f);
+    }
+
+    public void PlayLossAudio() {
+        audioSource.PlayOneShot(LoseGameClip, 0.6f);
+    }
+
+    public void PlayDrawAudio() {
+        audioSource.PlayOneShot(DrawGameClip, 0.6f);
     }
 }

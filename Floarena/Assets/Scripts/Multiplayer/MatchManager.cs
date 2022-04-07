@@ -7,7 +7,7 @@ using TMPro;
 
 public class MatchManager : NetworkBehaviour {
     public static MatchManager instance;
-    
+    PlayBGM backgroundMusic;
 
     // Player references and numbers
     private int playerNum;
@@ -50,6 +50,7 @@ public class MatchManager : NetworkBehaviour {
         if (instance == null) {
             instance = this;
         }
+        backgroundMusic = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<PlayBGM>();
     }
 
     [Command(requiresAuthority = false)]
@@ -67,6 +68,7 @@ public class MatchManager : NetworkBehaviour {
         }
 
         // Game will end once coroutine reaches here
+
         if (player1Score > player2Score) {
             ShowEndScreen(GameManager.instance.player1Conn, true);
             ShowEndScreen(GameManager.instance.player2Conn, false);
@@ -77,7 +79,8 @@ public class MatchManager : NetworkBehaviour {
             // Handle draws one day lol
             Debug.Log("It's a draw!");
         }
-    }   
+        
+    }
 
     // Hook that triggers locally whenever server updates match time
     private void UpdateMatchTime(int oldTime, int newTime) {
@@ -271,12 +274,15 @@ public class MatchManager : NetworkBehaviour {
     [TargetRpc]
     private void ShowEndScreen(NetworkConnection target, bool didWin) {
         GameObject endScreen;
+        backgroundMusic.StopAudio();
         if (didWin) {
             winScreen.SetActive(true);
             endScreen = winScreen;
+            backgroundMusic.PlayWinAudio();
         } else {
             lossScreen.SetActive(true);
             endScreen = lossScreen;
+            backgroundMusic.PlayLossAudio();
         }
         
         Color color = endScreen.GetComponent<RawImage>().color;

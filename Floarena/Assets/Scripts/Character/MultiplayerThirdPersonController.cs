@@ -374,15 +374,9 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
     private void SetPlayerInvisible() {
         if (this.isLocalPlayer) {
             SetSelfInvisible();
-            /*this.GetComponentInChildren<SkinnedMeshRenderer>().material = transparentMaterial;
-            Color color = transparentMaterial.color;
-            color.a = 0.8f;
-            this.GetComponentInChildren<SkinnedMeshRenderer>().material.color = color;
-
-            Color barColor = _slider.GetComponent<Image>().color;
-            barColor.a = 0.2f;
-            _slider.GetComponent<Image>().color = barColor;*/
         } else {
+            // Check for current particle effects
+            // If yes, disable particle effects 
             float distance = Vector3.Distance(MatchManager.instance.GetPlayer().transform.position, transform.position);
             if (distance < 3.0f) {
                 SetSelfInvisible();
@@ -415,6 +409,9 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
 
     // Fully visible
     private void SetPlayerVisible() {
+        // Check for current particle effects
+        // If yes, enable particle effects 
+
         this.GetComponentInChildren<SkinnedMeshRenderer>().material = opaqueMaterial;
 
         Color barColor = _slider.GetComponent<Image>().color;

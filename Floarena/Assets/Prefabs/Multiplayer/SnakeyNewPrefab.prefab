@@ -457,13 +457,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 18a8d8a09de33d74ab9bf9e51d2a2e74, type: 3}
   - {fileID: 8300000, guid: 8dd0012e383fd99468e38029499595ac, type: 3}
   - {fileID: 8300000, guid: 9d4e7b2eb2a89304295c177157da5e85, type: 3}
-  - {fileID: 8300000, guid: cb08707e78ed5d247afa1bc809fd2001, type: 3}
+  - {fileID: 8300000, guid: 6cbbe5dd40ed9924bbd0f3a7aaabfe10, type: 3}
   - {fileID: 8300000, guid: 3c1d9ec2c40a4e0448c9e844527cba30, type: 3}
   - {fileID: 8300000, guid: 73473110341acd348a719447451e8ca5, type: 3}
   - {fileID: 8300000, guid: 73473110341acd348a719447451e8ca5, type: 3}
   - {fileID: 8300000, guid: fa72a5e13e5ea3c49adcd1bf85d851b7, type: 3}
   - {fileID: 8300000, guid: da06407bada7ece4eae18f27b1234368, type: 3}
   - {fileID: 8300000, guid: 6ea98a711ca1fc345805bb66e1590089, type: 3}
+  - {fileID: 8300000, guid: 9ca22e90f1f3acb41af380048a910921, type: 3}
 --- !u!81 &4397725404128212478
 AudioListener:
   m_ObjectHideFlags: 0

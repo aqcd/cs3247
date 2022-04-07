@@ -13,4 +13,5 @@ public static class AudioIndex {
     public static int TAKE_BERRY_AUDIO = 9;
     public static int WIN_GAME_AUDIO = 10;
     public static int LOSE_GAME_AUDIO = 11;
+    public static int CHANNEL_AUDIO = 12;
 }
