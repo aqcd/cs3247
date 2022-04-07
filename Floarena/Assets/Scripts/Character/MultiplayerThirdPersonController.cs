@@ -452,10 +452,4 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
             SetPlayerVisible();
         } 
     }
-
-    // private void OnCollisionEnter(Collision other) {
-    //     if (other.gameObject.tag == "Player") {
-    //         other.gameObject.GetComponent<Health>().TakeDamage(10);
-    //     }
-    // }
 }
