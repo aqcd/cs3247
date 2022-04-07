@@ -38,11 +38,11 @@ public class MatchManager : NetworkBehaviour {
 
 
     // Overall match state variables and references
-    public int maxScore = 20; //50;
+    public int maxScore = 10; //50;
     public GameObject winScreen;
     public GameObject lossScreen;
     public TMP_Text timerText;
-    public int matchTotalTime = 30; //123;
+    public int matchTotalTime = 999; //123;
     [SyncVar(hook = nameof(UpdateMatchTime))]
     private int matchTime;
     private bool matchEnded = false;

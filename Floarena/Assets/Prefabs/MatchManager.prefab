@@ -1322,7 +1322,7 @@ MonoBehaviour:
   winScreen: {fileID: 8754350329150748952}
   lossScreen: {fileID: 4264277995254223338}
   timerText: {fileID: 3123172320090728714}
-  matchTotalTime: 30
+  matchTotalTime: 123
 --- !u!1 &8754350329150748952
 GameObject:
   m_ObjectHideFlags: 0
