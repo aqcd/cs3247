@@ -90,6 +90,7 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
 
     public Material transparentMaterial;
     public Material opaqueMaterial;
+    public GameObject pfxParent;
 
     private const float _threshold = 0.01f;
 
@@ -371,32 +372,46 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
     }
 
     // Transcluent to self and completely invisible to others 
-    private void SetPlayerInvisible() {
+    private void HandlePlayerVisibility() {
         if (this.isLocalPlayer) {
-            SetSelfInvisible();
+            SetSelfTranslucent();
+
         } else {
             // Check for current particle effects
             // If yes, disable particle effects 
             float distance = Vector3.Distance(MatchManager.instance.GetPlayer().transform.position, transform.position);
+           
+            // Set opponent translucent if in close proximity
             if (distance < 3.0f) {
-                SetSelfInvisible();
+                SetSelfTranslucent();
                 foreach (SkinnedMeshRenderer s in _controller.GetComponentsInChildren<SkinnedMeshRenderer>()) {
                     s.enabled = true;
                 }
                 _slider.SetActive(true);
+                // Handle visiblity of particle effects
+                for (int i = 0; i < pfxParent.transform.childCount; i++) {
+                    GameObject child = pfxParent.transform.GetChild(i).gameObject;
+                    child.layer = 0; // Invisible layer
+                }
                 this.GetComponentInChildren<MeshRenderer>().enabled = true; // Minimap
+            
+            // Make the opponent actually invisible
             } else {
                 foreach (SkinnedMeshRenderer s in _controller.GetComponentsInChildren<SkinnedMeshRenderer>()) {
                     s.enabled = false;
                 }
                 _slider.SetActive(false);
+                // Handle visiblity of particle effects
+                for (int i = 0; i < pfxParent.transform.childCount; i++) {
+                    GameObject child = pfxParent.transform.GetChild(i).gameObject;
+                    child.layer = 8; // Invisible layer
+                }
                 this.GetComponentInChildren<MeshRenderer>().enabled = false; // Minimap
             }
-
         }
     }
 
-    private void SetSelfInvisible() {
+    private void SetSelfTranslucent() {
         this.GetComponentInChildren<SkinnedMeshRenderer>().material = transparentMaterial;
         Color color = transparentMaterial.color;
         color.a = 0.8f;
@@ -422,7 +437,11 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
             s.enabled = true;
         }
         _slider.SetActive(true);
-
+        // Handle visiblity of particle effects
+        for (int i = 0; i < pfxParent.transform.childCount; i++) {
+            GameObject child = pfxParent.transform.GetChild(i).gameObject;
+            child.layer = 0;
+        }
         this.GetComponentInChildren<MeshRenderer>().enabled = true; // Minimap
     }
 
@@ -434,13 +453,13 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
 
     private void OnTriggerEnter(Collider collider) {
         if (collider.tag == "Brush") {
-            SetPlayerInvisible();
+            HandlePlayerVisibility();
         } 
     }
 
     private void OnTriggerStay(Collider collider) {
         if (collider.tag == "Brush") {
-            SetPlayerInvisible();
+            HandlePlayerVisibility();
         }
     }
 
