@@ -41,8 +41,10 @@ public class BerryPickupManager : NetworkBehaviour {
     void Update()
     {   
         if (isChanneling) {
+            _animator.SetBool("isPicking", true);
             if (activeBerry == null) {
                 InterruptChannel();
+                _animator.SetBool("isPicking", false);
                 channelButton.DisableButton();
                 return;
             }
@@ -51,6 +53,7 @@ public class BerryPickupManager : NetworkBehaviour {
             if (channelTime >= BerryConstants.CHANNEL_DURATION) {
                 if (isLocalPlayer) {
                     ResolveChannel();
+                    _animator.SetBool("isPicking", false);
                     channelButton.DisableButton();
                 }
             }
@@ -107,7 +110,6 @@ public class BerryPickupManager : NetworkBehaviour {
     public void BeginChannel()
     {
         isChanneling = true;
-        _animator.SetBool("isPicking", true);
         RpcEnableBar();
     }
 
@@ -117,14 +119,12 @@ public class BerryPickupManager : NetworkBehaviour {
         if (isChanneling) {
             Debug.Log("Interrupting");
             isChanneling = false;
-            _animator.SetBool("isPicking", false);
             RpcDisableBar();
         }
     }
     [Command]
     private void ResolveChannel() {
         isChanneling = false;
-        _animator.SetBool("isPicking", false);
         RpcConsumeBerry();
         RpcDisableBar();
     }
