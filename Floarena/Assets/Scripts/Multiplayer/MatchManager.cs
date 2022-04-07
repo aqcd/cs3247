@@ -7,7 +7,7 @@ using TMPro;
 
 public class MatchManager : NetworkBehaviour {
     public static MatchManager instance;
-    
+    PlayBGM backgroundMusic;
 
     // Player references and numbers
     private int playerNum;
@@ -50,6 +50,7 @@ public class MatchManager : NetworkBehaviour {
         if (instance == null) {
             instance = this;
         }
+        backgroundMusic = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<PlayBGM>();
     }
 
     [Command(requiresAuthority = false)]
@@ -67,17 +68,41 @@ public class MatchManager : NetworkBehaviour {
         }
 
         // Game will end once coroutine reaches here
+        backgroundMusic.StopAudio();
+
         if (player1Score > player2Score) {
             ShowEndScreen(GameManager.instance.player1Conn, true);
             ShowEndScreen(GameManager.instance.player2Conn, false);
+            RpcPlayer1WinsAudio();
         } else if (player1Score < player2Score) {
             ShowEndScreen(GameManager.instance.player1Conn, false);
             ShowEndScreen(GameManager.instance.player2Conn, true);
+            RpcPlayer2WinsAudio();
         } else {
             // Handle draws one day lol
             Debug.Log("It's a draw!");
+            backgroundMusic.StopAudio();
         }
-    }   
+        
+    } 
+    
+    [ClientRpc]
+    void RpcPlayer1WinsAudio() {
+        if (playerNum == 1) {
+            backgroundMusic.PlayLossAudio();
+        } else {
+            backgroundMusic.PlayWinAudio();
+        }
+    }
+
+    [ClientRpc]
+    void RpcPlayer2WinsAudio() {
+        if (playerNum == 1) {
+            backgroundMusic.PlayWinAudio();
+        } else {
+            backgroundMusic.PlayLossAudio();
+        }
+    }
 
     // Hook that triggers locally whenever server updates match time
     private void UpdateMatchTime(int oldTime, int newTime) {

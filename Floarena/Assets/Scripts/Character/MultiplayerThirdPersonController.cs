@@ -374,14 +374,6 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
     private void SetPlayerInvisible() {
         if (this.isLocalPlayer) {
             SetSelfInvisible();
-            /*this.GetComponentInChildren<SkinnedMeshRenderer>().material = transparentMaterial;
-            Color color = transparentMaterial.color;
-            color.a = 0.8f;
-            this.GetComponentInChildren<SkinnedMeshRenderer>().material.color = color;
-
-            Color barColor = _slider.GetComponent<Image>().color;
-            barColor.a = 0.2f;
-            _slider.GetComponent<Image>().color = barColor;*/
         } else {
             float distance = Vector3.Distance(MatchManager.instance.GetPlayer().transform.position, transform.position);
             if (distance < 3.0f) {

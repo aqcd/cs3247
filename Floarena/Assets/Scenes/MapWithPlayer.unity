@@ -1589,6 +1589,14 @@ PrefabInstance:
       propertyPath: m_Volume
       value: 0.8
       objectReference: {fileID: 0}
+    - target: {fileID: 1065673786, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
+      propertyPath: WinGameClip
+      value: 
+      objectReference: {fileID: 8300000, guid: da06407bada7ece4eae18f27b1234368, type: 3}
+    - target: {fileID: 1065673786, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
+      propertyPath: LoseGameClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 6ea98a711ca1fc345805bb66e1590089, type: 3}
     - target: {fileID: 8944336655422409496, guid: f6d148d888ffbf54b9afe9936dfaec1f,
         type: 3}
       propertyPath: m_ClearFlags
