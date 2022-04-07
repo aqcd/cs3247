@@ -20,10 +20,7 @@ public class SkillManager : NetworkBehaviour {
         skillObjs = new List<GameObject>();
         skillImgs = new List<Sprite>();
     }
-
-    void Update() {
-        
-    }
+    
 
     [ClientRpc]
     public void LoadSkills() {

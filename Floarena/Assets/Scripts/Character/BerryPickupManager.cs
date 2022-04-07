@@ -11,15 +11,10 @@ public class BerryPickupManager : NetworkBehaviour {
     [SyncVar(hook = nameof(UpdateIsChanneling))]
     public bool isChanneling = false;
     public ChannelBar channelBar;
-
-    private AudioManager audioManager;
-
     private Animator _animator;
 
-    void Start()
-    {
+    void Start() {
         berryCollider.radius = BerryConstants.PICKUP_RANGE;
-        audioManager = GetComponent<AudioManager>();
         _animator = GetComponent<Animator>();
         if (isLocalPlayer) {
             GameObject channel = GameObject.Find("ChannelButton");
@@ -38,25 +33,26 @@ public class BerryPickupManager : NetworkBehaviour {
         }
     }
 
-    void Update()
-    {   
-        if (isChanneling) {
-            _animator.SetBool("isPicking", true);
-            if (activeBerry == null) {
-                InterruptChannel();
-                channelButton.DisableButton();
-                return;
-            }
-            channelTime += Time.deltaTime;
-            channelBar.SetChannel(BerryConstants.CHANNEL_DURATION - channelTime);
-            if (channelTime >= BerryConstants.CHANNEL_DURATION) {
-                if (isLocalPlayer) {
-                    ResolveChannel();
+    void Update() {   
+        if (!isServer) {
+            if (isChanneling) {
+                _animator.SetBool("isPicking", true);
+                if (activeBerry == null) {
+                    InterruptChannel();
                     channelButton.DisableButton();
+                    return;
                 }
+                channelTime += Time.deltaTime;
+                channelBar.SetChannel(BerryConstants.CHANNEL_DURATION - channelTime);
+                if (channelTime >= BerryConstants.CHANNEL_DURATION) {
+                    if (isLocalPlayer) {
+                        ResolveChannel();
+                        channelButton.DisableButton();
+                    }
+                }
+            } else {
+                channelTime = 0.0f;
             }
-        } else {
-            channelTime = 0.0f;
         }
     }
 
@@ -118,7 +114,7 @@ public class BerryPickupManager : NetworkBehaviour {
 
     IEnumerator Wait() {
         yield return new WaitForSeconds(0.5f);
-        audioManager.PlaySound(AudioIndex.CHANNEL_AUDIO, this.transform.position);
+        AudioManager.instance.PlaySound(AudioIndex.CHANNEL_AUDIO, this.transform.position);
     }
 
     public void InterruptChannel()
@@ -168,7 +164,7 @@ public class BerryPickupManager : NetworkBehaviour {
         if (isLocalPlayer) {
             activeBerry.SendMessage("DisableCanvas");
             activeBerry.SendMessage("Consume", MatchManager.instance.GetPlayer().GetComponent<PlayerManager>());
-            audioManager.PlaySound(AudioIndex.TAKE_BERRY_AUDIO, transform.position);
+            AudioManager.instance.PlaySound(AudioIndex.TAKE_BERRY_AUDIO, transform.position);
 
             Debug.Log("Giving player points!");
             MatchManager.instance.CommandAddScore(MatchManager.instance.GetOpponentNum(), 3);

@@ -31,7 +31,7 @@ RectTransform:
   m_Children:
   - {fileID: 5811141921315560405}
   m_Father: {fileID: 5123179235871792082}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1178,6 +1178,7 @@ RectTransform:
   - {fileID: 6486835135785972977}
   - {fileID: 4744735505856042011}
   - {fileID: 1696014359313518917}
+  - {fileID: 283298747162434009}
   - {fileID: 424547896765329108}
   m_Father: {fileID: 7370047323525045882}
   m_RootOrder: 0
@@ -1248,6 +1249,78 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!1 &7452763917759957882
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 283298747162434009}
+  - component: {fileID: 3369532540187427015}
+  - component: {fileID: 6068087296564119217}
+  m_Layer: 0
+  m_Name: DrawScreen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &283298747162434009
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7452763917759957882}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5123179235871792082}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 2457.6, y: 1228.8}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &3369532540187427015
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7452763917759957882}
+  m_CullTransparentMesh: 1
+--- !u!114 &6068087296564119217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7452763917759957882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 2800000, guid: 41ba750082a2e1e4fadac187e9897433, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!1 &8670354906546744981
 GameObject:
   m_ObjectHideFlags: 0
@@ -1321,6 +1394,7 @@ MonoBehaviour:
   maxScore: 11
   winScreen: {fileID: 8754350329150748952}
   lossScreen: {fileID: 4264277995254223338}
+  drawScreen: {fileID: 7452763917759957882}
   timerText: {fileID: 3123172320090728714}
   matchTotalTime: 123
 --- !u!1 &8754350329150748952

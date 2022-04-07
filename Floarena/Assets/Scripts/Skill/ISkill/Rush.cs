@@ -20,28 +20,28 @@ public class Rush : NetworkBehaviour, ISkill
 
     private bool isActive = false;
 
-    private AudioManager audioManager;
-
-    void Awake()
-    {
-        player = MatchManager.instance.GetPlayer();
-        characterController = player.GetComponent<CharacterController>();
-        playerManager = player.GetComponent<PlayerManager>();
-        audioManager = player.GetComponent<AudioManager>();
+    void Start() {
+        if (!isServer) {
+            player = MatchManager.instance.GetPlayer();
+            characterController = player.GetComponent<CharacterController>();
+            playerManager = player.GetComponent<PlayerManager>();
+        }
     }
 
     void Update() {
-        if (remainingDuration > 0.0f) {
-            characterController.Move(direction * (speed * Time.deltaTime));
-            remainingDuration -= Time.deltaTime;
+        if (!isServer) {
+            if (remainingDuration > 0.0f) {
+                characterController.Move(direction * (speed * Time.deltaTime));
+                remainingDuration -= Time.deltaTime;
 
-            if (characterController.velocity.magnitude < 0.99 * speed) {
-                remainingDuration = 0.0f;
+                if (characterController.velocity.magnitude < 0.99 * speed) {
+                    remainingDuration = 0.0f;
+                }
+            } else if (isActive) {
+                Damage();
+                playerManager.EnableMove();
+                isActive = false;
             }
-        } else if (isActive) {
-            Damage();
-            playerManager.EnableMove();
-            isActive = false;
         }
     }
 
@@ -51,7 +51,7 @@ public class Rush : NetworkBehaviour, ISkill
         remainingDuration = Mathf.Min(skillPosition.magnitude, range) / speed;
         direction = skillPosition.normalized;
         playerManager.DisableMoveForDuration(remainingDuration);
-        audioManager.PlaySound(AudioIndex.RUSH_AUDIO, skillPosition);
+        AudioManager.instance.PlaySound(AudioIndex.RUSH_AUDIO, skillPosition);
     }
 
     private void Damage() {

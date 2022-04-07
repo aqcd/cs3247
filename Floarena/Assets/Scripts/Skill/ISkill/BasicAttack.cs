@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class BasicAttack : MonoBehaviour, ISkill
+public class BasicAttack : NetworkBehaviour, ISkill
 {
     private GameObject player;
     private GameObject opponent;
@@ -11,27 +12,26 @@ public class BasicAttack : MonoBehaviour, ISkill
     private float baseAttackSpeed;
     private float attackCooldown;
 
-    private AudioManager audioManager;
-
     private PlayerManager playerManager;
     private float timeToAttack = 0.0f;
 
-    void Awake()
-    {
-        player = MatchManager.instance.GetPlayer();
-        playerManager = player.GetComponent<PlayerManager>();
-        // get attributes from loadout and calculate attack stats
-        PlayerStats stats = GameManager.instance.loadout.GetLoadoutStats();
-        attackDamage = stats.GetAttributeValue(Attribute.AD);
-        attackRange = stats.GetAttributeValue(Attribute.AR);
-        baseAttackSpeed = stats.GetAttributeValue(Attribute.AS);
-        attackCooldown = 1/baseAttackSpeed;
-        audioManager = player.GetComponent<AudioManager>();
+    void Start() {
+        if (!isServer) {
+            player = MatchManager.instance.GetPlayer();
+            playerManager = player.GetComponent<PlayerManager>();
+            // get attributes from loadout and calculate attack stats
+            PlayerStats stats = GameManager.instance.loadout.GetLoadoutStats();
+            attackDamage = stats.GetAttributeValue(Attribute.AD);
+            attackRange = stats.GetAttributeValue(Attribute.AR);
+            baseAttackSpeed = stats.GetAttributeValue(Attribute.AS);
+            attackCooldown = 1/baseAttackSpeed;
+        }
     }
 
-    void Update()
-    {
-        attackCooldown = 1/(baseAttackSpeed + playerManager.GetAttributeBuff(Attribute.AS));
+    void Update() {
+        if (!isServer) {
+            attackCooldown = 1/(baseAttackSpeed + playerManager.GetAttributeBuff(Attribute.AS));
+        }
     }
 
     public void Execute(Vector3 skillPosition) {
@@ -77,7 +77,7 @@ public class BasicAttack : MonoBehaviour, ISkill
             if (bestHit != null) {
                 float damage = attackDamage + playerManager.GetAttributeBuff(Attribute.AD);
                 bestHit.SendMessage("TakeDamage", damage);
-                audioManager.PlaySound(AudioIndex.BASIC_ATTACK_AUDIO, skillPosition);
+                AudioManager.instance.PlaySound(AudioIndex.BASIC_ATTACK_AUDIO, skillPosition);
             }
             
         }

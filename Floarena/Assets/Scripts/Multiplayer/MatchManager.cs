@@ -41,11 +41,19 @@ public class MatchManager : NetworkBehaviour {
     public int maxScore = 10; //50;
     public GameObject winScreen;
     public GameObject lossScreen;
+    public GameObject drawScreen;
     public TMP_Text timerText;
     public int matchTotalTime = 999; //123;
     [SyncVar(hook = nameof(UpdateMatchTime))]
     private int matchTime;
     private bool matchEnded = false;
+    private enum EndState {
+        Win,
+        Loss,
+        Draw
+    }
+
+
 
     void Awake() {
         if (instance == null) {
@@ -54,7 +62,7 @@ public class MatchManager : NetworkBehaviour {
         backgroundMusic = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<PlayBGM>();
     }
 
-    [Command(requiresAuthority = false)]
+    // Runs on server
     public void StartMatch() {
         StartCoroutine(MatchTimerCoroutine(matchTotalTime));
     }
@@ -72,14 +80,14 @@ public class MatchManager : NetworkBehaviour {
         if (!matchEnded) {
             matchEnded = true;
             if (player1Score > player2Score) {            
-                ShowEndScreen(GameManager.instance.player1Conn, true);
-                ShowEndScreen(GameManager.instance.player2Conn, false);
+                ShowEndScreen(GameManager.instance.player1Conn, EndState.Win);
+                ShowEndScreen(GameManager.instance.player2Conn, EndState.Loss);
             } else if (player1Score < player2Score) {
-                ShowEndScreen(GameManager.instance.player1Conn, false);
-                ShowEndScreen(GameManager.instance.player2Conn, true);
+                ShowEndScreen(GameManager.instance.player1Conn, EndState.Loss);
+                ShowEndScreen(GameManager.instance.player2Conn, EndState.Win);
             } else {
-                // Handle draws one day lol
-                Debug.Log("It's a draw!");
+                ShowEndScreen(GameManager.instance.player1Conn, EndState.Draw);
+                ShowEndScreen(GameManager.instance.player2Conn, EndState.Draw);
             }
         } 
     }   
@@ -98,6 +106,9 @@ public class MatchManager : NetworkBehaviour {
 
     [Command(requiresAuthority = false)]
     public void CommandAddScore(int playerNum, int scoreToAdd) {
+        AddScore(playerNum, scoreToAdd);
+    }
+    public void AddScore(int playerNum, int scoreToAdd) {
         Debug.Log("Server updating score");
         if (playerNum == 1) {
             player1Score += scoreToAdd;
@@ -106,8 +117,8 @@ public class MatchManager : NetworkBehaviour {
             if (player1Score >= maxScore) {
                 if (!matchEnded) {
                     matchEnded = true;
-                    ShowEndScreen(GameManager.instance.player1Conn, true);
-                    ShowEndScreen(GameManager.instance.player2Conn, false);
+                    ShowEndScreen(GameManager.instance.player1Conn, EndState.Win);
+                    ShowEndScreen(GameManager.instance.player2Conn, EndState.Loss);
                 }
             }
 
@@ -118,8 +129,8 @@ public class MatchManager : NetworkBehaviour {
             if (player2Score >= maxScore) {
                 if (!matchEnded) {
                     matchEnded = true;
-                    ShowEndScreen(GameManager.instance.player1Conn, false);
-                    ShowEndScreen(GameManager.instance.player2Conn, true);
+                    ShowEndScreen(GameManager.instance.player1Conn, EndState.Loss);
+                    ShowEndScreen(GameManager.instance.player2Conn, EndState.Win);
                 }
             }
             
@@ -188,13 +199,15 @@ public class MatchManager : NetworkBehaviour {
 
     // Runs on server
     public void HandleKill(int killerPlayer) {
-        CommandAddScore(killerPlayer, 10);
-        if (killerPlayer == 1) {
-            RespawnPlayer(GameManager.instance.player2Conn);    
-        } else if (killerPlayer == 2) {
-            RespawnPlayer(GameManager.instance.player1Conn);    
-        } else {
-            throw new System.Exception("Unknown player killed player!");
+        AddScore(killerPlayer, 10); // Run non command version of function to prevent exception
+        if (!matchEnded) { // Don't respawn killed player if this kill caused the match to end
+            if (killerPlayer == 1) {
+                RpcRespawnPlayer(GameManager.instance.player2Conn);    
+            } else if (killerPlayer == 2) {
+                RpcRespawnPlayer(GameManager.instance.player1Conn);    
+            } else {
+                throw new System.Exception("Unknown player killed player!");
+            }
         }
     }
 
@@ -255,7 +268,7 @@ public class MatchManager : NetworkBehaviour {
         opponentRef.GetComponentInChildren<MinimapPlayerColour>().SetMaterials(GetOpponentNum());
 
         // Spawn local player in their default location
-        RespawnPlayer(target);
+        RespawnPlayer();
 
         // Set game timer to 120 seconds
         Debug.Log("Game ready to start!");
@@ -264,7 +277,11 @@ public class MatchManager : NetworkBehaviour {
     // Function runs on a single client, except a call to server which resets player position
     // on both clients
     [TargetRpc]
-    public void RespawnPlayer(NetworkConnection target) {
+    public void RpcRespawnPlayer(NetworkConnection target) {
+        RespawnPlayer();
+    }
+    // Runs locally on player
+    public void RespawnPlayer() {
         // Need to disable character controller before teleporting player
         // see https://forum.unity.com/threads/unity-multiplayer-through-mirror-teleporting-player-inconsistent.867079/
         playerRef.GetComponent<CharacterController>().enabled = false;
@@ -280,17 +297,23 @@ public class MatchManager : NetworkBehaviour {
     }
 
     [TargetRpc]
-    private void ShowEndScreen(NetworkConnection target, bool didWin) {
+    private void ShowEndScreen(NetworkConnection target, EndState endState) {
         GameObject endScreen;
         backgroundMusic.StopAudio();
-        if (didWin) {
+        if (endState == EndState.Win) {
             winScreen.SetActive(true);
             endScreen = winScreen;
             backgroundMusic.PlayWinAudio();
-        } else {
+        } else if (endState == EndState.Loss) {
             lossScreen.SetActive(true);
             endScreen = lossScreen;
             backgroundMusic.PlayLossAudio();
+        } else if (endState == EndState.Draw) {
+            drawScreen.SetActive(true);
+            endScreen = drawScreen;
+            backgroundMusic.PlayDrawAudio();
+        } else {
+            throw new System.Exception("Unknown end state encountered!");
         }
         
         Color color = endScreen.GetComponent<RawImage>().color;
@@ -346,6 +369,6 @@ public class MatchManager : NetworkBehaviour {
         }
 
         Debug.Log("Stopping client");
-        GameManager.instance.StopClient();
+        GameManager.instance.OnClientDisconnect();
     }
 }
