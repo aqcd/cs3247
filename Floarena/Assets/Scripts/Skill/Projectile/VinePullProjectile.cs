@@ -27,7 +27,6 @@ public class VinePullProjectile : NetworkBehaviour
     void Update()
     {
         if (playerCharacterController == null) {
-            Debug.Log("HERE");
             return;
         }
         if (remainingDuration > 0.0f) 
