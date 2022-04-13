@@ -6201,6 +6201,59 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 71633633133276519, guid: e714e4cbbc247c349b807a5bb7c25099,
+        type: 3}
+      propertyPath: spawnPrefabs.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 71633633133276519, guid: e714e4cbbc247c349b807a5bb7c25099,
+        type: 3}
+      propertyPath: spawnPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 7089059915774411105, guid: 4072885fe0e948e45ba86158119cb477,
+        type: 3}
+    - target: {fileID: 71633633133276519, guid: e714e4cbbc247c349b807a5bb7c25099,
+        type: 3}
+      propertyPath: spawnPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 456402227672069023, guid: b540c0d01b4b0bb499f7fc467b904f68,
+        type: 3}
+    - target: {fileID: 71633633133276519, guid: e714e4cbbc247c349b807a5bb7c25099,
+        type: 3}
+      propertyPath: spawnPrefabs.Array.data[4]
+      value: 
+      objectReference: {fileID: 18894367910785959, guid: 66aa669f10c8c43deb23ee850fe1fe05,
+        type: 3}
+    - target: {fileID: 71633633133276519, guid: e714e4cbbc247c349b807a5bb7c25099,
+        type: 3}
+      propertyPath: spawnPrefabs.Array.data[5]
+      value: 
+      objectReference: {fileID: 811564507369456149, guid: 6a2b0a69103fde8459b03cac232ac8de,
+        type: 3}
+    - target: {fileID: 71633633133276519, guid: e714e4cbbc247c349b807a5bb7c25099,
+        type: 3}
+      propertyPath: spawnPrefabs.Array.data[6]
+      value: 
+      objectReference: {fileID: 6260038252222902923, guid: 3779a6c3648c0dc4280ff3b7b4eb7874,
+        type: 3}
+    - target: {fileID: 71633633133276519, guid: e714e4cbbc247c349b807a5bb7c25099,
+        type: 3}
+      propertyPath: spawnPrefabs.Array.data[7]
+      value: 
+      objectReference: {fileID: 2301083902205358878, guid: cb67ffd2ae25f794eab3376332c74a85,
+        type: 3}
+    - target: {fileID: 71633633133276519, guid: e714e4cbbc247c349b807a5bb7c25099,
+        type: 3}
+      propertyPath: spawnPrefabs.Array.data[8]
+      value: 
+      objectReference: {fileID: 3222504523882686081, guid: a3e868787da3ffe4db4d76197acce098,
+        type: 3}
+    - target: {fileID: 71633633133276519, guid: e714e4cbbc247c349b807a5bb7c25099,
+        type: 3}
+      propertyPath: spawnPrefabs.Array.data[9]
+      value: 
+      objectReference: {fileID: 2301083902205358878, guid: 9a0bb1484bb9e1041aa3969495094d3e,
+        type: 3}
     - target: {fileID: 1664565133651870900, guid: e714e4cbbc247c349b807a5bb7c25099,
         type: 3}
       propertyPath: m_RootOrder

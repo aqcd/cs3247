@@ -20,6 +20,8 @@ public class SkillManager : NetworkBehaviour {
         skillObjs = new List<GameObject>();
         skillImgs = new List<Sprite>();
     }
+
+
     
 
     [ClientRpc]
@@ -36,13 +38,13 @@ public class SkillManager : NetworkBehaviour {
             skillNames[i] = loadoutSkills[i].name;
 
             // Load skill object prefab and register it on the server
-            GameObject skillObjPrefab = Resources.Load("Skills/" + skillNames[i]) as GameObject;
-            NetworkClient.RegisterPrefab(skillObjPrefab);
+            // GameObject skillObjPrefab = Resources.Load("Skills/" + skillNames[i]) as GameObject;
+            // NetworkClient.RegisterPrefab(skillObjPrefab);
 
             // Load projectile prefabs for each skill
-            foreach (var projectile in skillObjPrefab.GetComponent<ProjectileManager>().projectilePrefabs) {
-                NetworkClient.RegisterPrefab(projectile);
-            }
+            // foreach (var projectile in skillObjPrefab.GetComponent<ProjectileManager>().projectilePrefabs) {
+            //     NetworkClient.RegisterPrefab(projectile);
+            // }
             
             // Load skill images
             Texture2D skillImg = Resources.Load("SkillIcons/" + loadoutSkills[i].ToString()) as Texture2D;
@@ -70,13 +72,13 @@ public class SkillManager : NetworkBehaviour {
     [Command(requiresAuthority=false)]
     private void ServerLoadSkills(int targetPlayer, string[] skillNames) {
         Debug.Log("called by " + targetPlayer);
-        
+
         // Load skills
         for (int i = 0; i < skillNames.Length; i++) {
             GameObject skillObjPrefab = Resources.Load("Skills/" + skillNames[i]) as GameObject;
             GameObject skillObj = Instantiate(skillObjPrefab);
             skillObj.transform.parent = transform;
-            NetworkServer.Spawn(skillObj);
+            NetworkServer.Spawn(skillObj); 
             SetSkillObject(targetPlayer, skillObj, i);
         }
     }
@@ -84,10 +86,8 @@ public class SkillManager : NetworkBehaviour {
     [ClientRpc]
     private void SetSkillObject(int targetPlayer, GameObject skillObj, int index) {
         if (MatchManager.instance.GetPlayerNum() == targetPlayer) {
-            Debug.Log("Player " + targetPlayer + " setting skills");
             List<SkillJoystickController> skillJoysticks = JoystickReferences.instance.skillJoysticks;
             skillJoysticks[index].SetSkillObject(skillObj);
-            Debug.Log("Object id: " + skillObj.GetComponent<NetworkIdentity>().netId);
         }
     }
 
