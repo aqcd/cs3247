@@ -47,8 +47,8 @@ public class GameManager : NetworkManager {
     public void JoinGame() {
         Debug.Log("Clicked");
         if (!NetworkClient.isConnected && !NetworkServer.active) {
-            networkAddress = "13.215.67.49";
-            // networkAddress = "localhost";
+            // networkAddress = "13.215.67.49";
+            networkAddress = "localhost";
             Debug.Log("Not connected");
 
             if (!NetworkClient.active) {
@@ -83,7 +83,8 @@ public class GameManager : NetworkManager {
         }
     }
 
-    // Ran on a client when it first boots up
+    // Ran on a client when it requests to connect to a server
+    // By this point, user has already selected loadout, so store this one
     public override void OnStartClient() {
         base.OnStartClient();
         loadout = LoadoutManager.instance.GetLoadout();
@@ -93,14 +94,13 @@ public class GameManager : NetworkManager {
     // Ran on client when it established connection to a server
     public override void OnClientConnect() {
         base.OnClientConnect();
-        Debug.Log("This client connected to server. Connections: " + NetworkServer.connections.Count);
+        Debug.Log("Client connected to server");
     }
 
     public override void OnClientChangeScene(string newSceneName, SceneOperation sceneOperation, bool customHandling) {
         base.OnClientChangeScene(newSceneName, sceneOperation, customHandling);
         if (newSceneName == "MapWithPlayer") {
-            loadout = LoadoutManager.instance.GetLoadout();
-            Debug.Log(loadout.GetLoadoutStats().GetAttributeValue(Attribute.HP));
+            Debug.Log("Client asked to load scene...");
         }
     }
 
@@ -146,6 +146,7 @@ public class GameManager : NetworkManager {
             GameObject skillManager = Instantiate(SkillManagerPrefab);
             NetworkServer.Spawn(skillManager);
 
+            // Trigger respective spell loading for each client
             SkillManager.instance.LoadSkills();
 
             // Spawn both players

@@ -1,3 +1,6 @@
+using System;
+using System.Text;
+
 public class Loadout
 {
     public Item[] items;
@@ -45,5 +48,24 @@ public class Loadout
     public PlayerStats GetLoadoutStats() {
         PlayerStats stats = Data.BASE_ATTRIBUTES.DeepCopy().ApplyItems(items);
         return stats;
+    }
+
+    
+    public override string ToString() { 
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine("Player loadout:");
+        sb.AppendLine("Items:");
+        for (int i = 0; i < items.Length; i++) {
+            sb.Append("    " + (i + 1).ToString() + " ");
+            sb.AppendLine(items[i].name);
+        }
+
+        sb.AppendLine("Skills:");
+        for (int i = 0; i < skills.Length; i++) {
+            sb.Append("    " + (i + 1).ToString() + " ");
+            sb.AppendLine(skills[i].name);
+        }
+
+        return sb.ToString();
     }
 }
