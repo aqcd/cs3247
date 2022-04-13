@@ -393,9 +393,12 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
                     GameObject child = pfxParent.transform.GetChild(i).gameObject;
                     child.layer = 0; // Invisible layer
                 }
-                this.GetComponentInChildren<MeshRenderer>().enabled = true; // Minimap
-            
-            // Make the opponent actually invisible
+                // Minimap
+                foreach (MeshRenderer m in this.GetComponentsInChildren<MeshRenderer>()) {
+                    m.enabled = true;
+                }
+
+                // Make the opponent actually invisible
             } else {
                 foreach (SkinnedMeshRenderer s in _controller.GetComponentsInChildren<SkinnedMeshRenderer>()) {
                     s.enabled = false;
@@ -406,7 +409,10 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
                     GameObject child = pfxParent.transform.GetChild(i).gameObject;
                     child.layer = 8; // Invisible layer
                 }
-                this.GetComponentInChildren<MeshRenderer>().enabled = false; // Minimap
+                // Minimap
+                foreach (MeshRenderer m in this.GetComponentsInChildren<MeshRenderer>()) {
+                    m.enabled = false;
+                }
             }
         }
     }
@@ -442,7 +448,10 @@ public class MultiplayerThirdPersonController : NetworkBehaviour {
             GameObject child = pfxParent.transform.GetChild(i).gameObject;
             child.layer = 0;
         }
-        this.GetComponentInChildren<MeshRenderer>().enabled = true; // Minimap
+        // Minimap
+        foreach (MeshRenderer m in this.GetComponentsInChildren<MeshRenderer>()) {
+            m.enabled = true;
+        }
     }
 
     private void Heal() {
