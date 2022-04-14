@@ -23,3 +23,22 @@ Hello! Welcome to Florarena!
     - Setup ParrelSync clone:
         - In Unity project, go to `ParrelSync > Clones Manager` and click `Add new clone`
         - `Open in New Editor` the new clone
+		
+#### 4. Build Client
+1. Android
+	 
+	- Go to `File > Build Settings`
+	- Under `Platform` select `Android` and click `Switch Platform`
+	- Go to `Build > Build Client (Android)` to build
+	- The APK will be located in the `/Build` folder of this repository
+
+2. Windows (Only for testing)
+
+	- Go to `File > Build Settings`
+	- Under `Platform` select `Android` and click `Switch Platform`
+	- Go to `Build > Build Client (Android)` to build
+	- The APK will be located in the `/Build` folder of this repository
+
+#### 6. Build & Deploy Server
+
+For the gold submission, the server has already been deployed on AWS. If you would like detailed instructions on how this is done, please feel free to ask Raghav (@ephemeralrag on Telegram) for more info!
